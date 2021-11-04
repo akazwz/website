@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router'
 import { Button, Flex, Heading, Input, useColorMode, useColorModeValue } from '@chakra-ui/react'
 
 const IndexPage = () => {
+  const router = useRouter()
   const { toggleColorMode } = useColorMode()
   const formBackground = useColorModeValue('grey.100', 'grey.700')
   return (
@@ -9,7 +11,7 @@ const IndexPage = () => {
         <Heading mb={6}>Log in</Heading>
         <Input placeholder="akazwz@pm.me" variant="filled" mb={3} type="email" />
         <Input placeholder="********" variant="filled" mb={6} type="password" />
-        <Button mb={6} colorScheme="teal">Log in</Button>
+        <Button mb={6} colorScheme="teal" onClick={() => router.push('/about')}>Log in</Button>
         <Button onClick={toggleColorMode}>Toggle Color Mode</Button>
       </Flex>
     </Flex>
