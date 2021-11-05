@@ -5,9 +5,10 @@ type Props = {
   children: React.ReactNode
 }
 
-const Layout = () => {
+const Layout = ({ preview, children }: Props) => {
   return (
     <>
+      <main>{children}</main>
     </>
   )
 }
