@@ -3,7 +3,7 @@ import { Button, Flex, Heading, Input, useColorMode, useColorModeValue } from '@
 
 const IndexPage = () => {
   const router = useRouter()
-  const { toggleColorMode } = useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode()
   const formBackground = useColorModeValue('grey.100', 'grey.700')
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">
@@ -12,7 +12,9 @@ const IndexPage = () => {
         <Input placeholder="akazwz@pm.me" variant="filled" mb={3} type="email" />
         <Input placeholder="********" variant="filled" mb={6} type="password" />
         <Button mb={6} colorScheme="teal" onClick={() => router.push('/about')}>Log in</Button>
-        <Button onClick={toggleColorMode}>Toggle Color Mode</Button>
+        <Button onClick={toggleColorMode}>
+          {colorMode}
+        </Button>
       </Flex>
     </Flex>
   )
