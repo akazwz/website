@@ -1,10 +1,13 @@
-import { Box, Progress } from '@chakra-ui/react'
+import { Center } from '@chakra-ui/react'
+import Layout from '../components/layout';
 
 const AboutPage = () => {
   return (
-    <Box>
-      <Progress isIndeterminate value={70} />
-    </Box>
+    <Layout loading={true}>
+      <Center>
+        this is about
+      </Center>
+    </Layout>
   )
 }
 
