@@ -16,7 +16,7 @@ const IndexPage = () => {
           textAlign="center"
         >
           <Heading size="4xl">
-            I Create Interesting Things
+            Creating Interesting Things
           </Heading>
         </Flex>
       </Layout>
