@@ -1097,6 +1097,11 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
+animate.css@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npm.taobao.org/animate.css/download/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
+  integrity sha1-YU7FqBEx1+TcNipYFD90BqvWgHU=
+
 anser@1.4.9:
   version "1.4.9"
   resolved "https://registry.npmmirror.com/anser/download/anser-1.4.9.tgz#1f85423a5dcf8da4631a341665ff675b96845760"
@@ -2381,6 +2386,11 @@ hoist-non-react-statics@^3.3.1:
   integrity sha1-7OCsr3HWLClpwuxZ/v9CpLGoW0U=
   dependencies:
     react-is "^16.7.0"
+
+hover.css@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.nlark.com/hover.css/download/hover.css-2.3.2.tgz#f07193d9c7409d4e395134d3b2215b99eb55e0d3"
+  integrity sha1-8HGT2cdAnU45UTTTsiFbmetV4NM=
 
 http-errors@1.7.3:
   version "1.7.3"

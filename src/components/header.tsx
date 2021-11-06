@@ -6,7 +6,7 @@ import {
   Flex,
   useColorMode,
   Link,
-  useColorModeValue, useBoolean
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import { BsLightningChargeFill } from 'react-icons/bs'
@@ -17,8 +17,6 @@ const Header = () => {
   const { toggleColorMode } = useColorMode()
   const text = useColorModeValue('dark', 'light')
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
-  const [projectsHover, setProjectsHover] = useBoolean()
-  const [aboutHover, setAboutHover] = useBoolean()
 
   return (
     <>
@@ -31,12 +29,8 @@ const Header = () => {
           <Link
             mr="2rem"
             onClick={() => router.push('/projects')}
-            onMouseEnter={setProjectsHover.on}
-            onMouseLeave={setProjectsHover.off}
             style={{
-              textDecoration: projectsHover ? 'underline' : 'none',
-              color: projectsHover ? '#0070f3' : '',
-              fontSize: projectsHover ? '1.3rem' : '1rem'
+              fontSize: '1.2rem'
             }}
           >
             Projects
@@ -44,12 +38,8 @@ const Header = () => {
           <Link
             mr="3rem"
             onClick={() => router.push('/about')}
-            onMouseEnter={setAboutHover.on}
-            onMouseLeave={setAboutHover.off}
             style={{
-              textDecoration: aboutHover ? 'underline' : 'none',
-              color: aboutHover ? '#0070f3' : '',
-              fontSize: aboutHover ? '1.3rem' : '1rem',
+              fontSize: '1.2rem'
             }}
           >
             About
