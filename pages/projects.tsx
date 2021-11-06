@@ -1,8 +1,11 @@
 import Layout from '../src/components/layout'
-import { Box, Image, Flex, Heading, SimpleGrid, Spacer, Center, Button, useBoolean } from '@chakra-ui/react'
+import { Box, Image, Flex, Heading, SimpleGrid, Spacer, Center, Button, useBoolean, Link } from '@chakra-ui/react'
 import styles from '../styles/Projects.module.css'
+import React from 'react'
+import { useRouter } from 'next/router'
 
 const Projects = () => {
+  const router = useRouter()
   return (
     <>
       <Layout>
@@ -25,11 +28,16 @@ const Projects = () => {
               overflow="hidden"
             >
             </Box>
-            <a href="/projects">
-              <Heading>
-                Project One
-              </Heading>
-            </a>
+            <Link
+              mr="1.5rem"
+              onClick={() => router.push('/projects')}
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bolder',
+              }}
+            >
+              Project One
+            </Link>
           </Flex>
           <Flex
             height="70vh"
@@ -46,9 +54,15 @@ const Projects = () => {
               overflow="hidden"
             >
             </Box>
-            <Heading>
+            <Link
+              onClick={() => router.push('/projects')}
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bolder',
+              }}
+            >
               Project Two
-            </Heading>
+            </Link>
           </Flex>
         </SimpleGrid>
       </Layout>
