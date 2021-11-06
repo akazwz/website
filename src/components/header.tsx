@@ -27,7 +27,7 @@ const Header = () => {
         <Spacer />
         <Box>
           <Link
-            mr="1rem"
+            mr="1.5rem"
             onClick={() => router.push('/projects')}
             style={{
               fontSize: '1.2rem'
@@ -36,7 +36,7 @@ const Header = () => {
             Projects
           </Link>
           <Link
-            mr="1rem"
+            mr="1.5rem"
             onClick={() => router.push('/about')}
             style={{
               fontSize: '1.2rem'
