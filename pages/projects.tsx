@@ -1,10 +1,7 @@
-import {
-  Heading,
-  Center,
-} from '@chakra-ui/react'
 import Layout from '../src/components/layout'
+import { Center, Heading } from '@chakra-ui/react'
 
-const IndexPage = () => {
+const Projects = () => {
   return (
     <>
       <Layout>
@@ -12,7 +9,7 @@ const IndexPage = () => {
           height="100%"
         >
           <Heading size="4xl" textAlign="center">
-            Creating Interesting Things
+            Created Things
           </Heading>
         </Center>
       </Layout>
@@ -20,4 +17,4 @@ const IndexPage = () => {
   )
 }
 
-export default IndexPage
+export default Projects

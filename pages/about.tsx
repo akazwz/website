@@ -1,13 +1,17 @@
-import { Center } from '@chakra-ui/react'
+import { Center, Heading } from '@chakra-ui/react'
 import Layout from '../src/components/layout'
 
 const AboutPage = () => {
   return (
-    <Layout>
-      <Center>
-        this is about
-      </Center>
-    </Layout>
+    <>
+      <Layout>
+        <Center height="100%">
+          <Heading size="4xl">
+            👋Hola!
+          </Heading>
+        </Center>
+      </Layout>
+    </>
   )
 }
 
