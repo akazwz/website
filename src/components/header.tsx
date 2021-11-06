@@ -22,7 +22,11 @@ const Header = () => {
     <>
       <Flex height="10vh" alignContent="center" alignItems="center">
         <Box>
-          <BsLightningChargeFill size={30} onClick={() => router.push('/')} />
+          <BsLightningChargeFill
+            size={30}
+            onClick={() => router.push('/')}
+            color={router.route === '/' ? '#0070f3' : ''}
+          />
         </Box>
         <Spacer />
         <Box>

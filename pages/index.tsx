@@ -1,8 +1,6 @@
-import {
-  Heading,
-  Center,
-} from '@chakra-ui/react'
+import { Center } from '@chakra-ui/react'
 import Layout from '../src/components/layout'
+import styles from '../styles/Home.module.css'
 
 const IndexPage = () => {
   return (
@@ -10,10 +8,17 @@ const IndexPage = () => {
       <Layout>
         <Center
           height="80vh"
+          flexDirection="column"
         >
-          <Heading size="4xl" textAlign="center">
-            Creating Interesting Things
-          </Heading>
+          <span className={styles.wordOne}>
+            Creating.
+          </span>
+          <span className={styles.wordTwo}>
+            Interesting.
+          </span>
+          <span className={styles.wordThree}>
+            Thing.
+          </span>
         </Center>
       </Layout>
     </>
