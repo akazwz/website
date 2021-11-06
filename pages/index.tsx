@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import {
   Flex,
   Heading,
@@ -17,7 +16,7 @@ const IndexPage = () => {
           textAlign="center"
         >
           <Heading size="4xl">
-            We Create Interesting Things
+            I Create Interesting Things
           </Heading>
         </Flex>
       </Layout>
