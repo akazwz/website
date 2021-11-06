@@ -9,7 +9,7 @@ const IndexPage = () => {
     <>
       <Layout>
         <Center
-          height="100%"
+          height="80vh"
         >
           <Heading size="4xl" textAlign="center">
             Creating Interesting Things

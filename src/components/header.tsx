@@ -30,7 +30,9 @@ const Header = () => {
             mr="1.5rem"
             onClick={() => router.push('/projects')}
             style={{
-              fontSize: '1.2rem'
+              fontSize: '1.2rem',
+              fontWeight: 'bolder',
+              color: router.route === '/projects' ? '#0070f3' : '',
             }}
           >
             Projects
@@ -39,7 +41,9 @@ const Header = () => {
             mr="1.5rem"
             onClick={() => router.push('/about')}
             style={{
-              fontSize: '1.2rem'
+              fontSize: '1.2rem',
+              fontWeight: 'bolder',
+              color: router.route === '/about' ? '#0070f3' : '',
             }}
           >
             About

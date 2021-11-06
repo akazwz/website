@@ -5,7 +5,7 @@ const AboutPage = () => {
   return (
     <>
       <Layout>
-        <Center height="100%">
+        <Center height="80vh">
           <Heading size="4xl">
             👋Hola!
           </Heading>
