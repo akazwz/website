@@ -16,6 +16,10 @@ const Projects = () => {
             imageSrc: '/mini.jpg',
             projectName: 'Z HotSearch MiniProgram'
         },
+        {
+            imageSrc: '/pixel.png',
+            projectName: 'Z Pixel'
+        },
     ]
 
     const ProjectCards = () => {
