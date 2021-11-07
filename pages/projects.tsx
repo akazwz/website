@@ -24,17 +24,18 @@ const Projects = () => {
                 <>
                     <Center
                         key={index}
-                        height="70vh"
+                        height="700px"
                         flexDirection="column"
                         margin="2rem"
                         className={styles.card}
                     >
                         <Image
                             src={project.imageSrc}
-                            height="600px"
+                            height="630px"
                             width="300px"
                             layout="fixed"
                             alt="project image"
+                            className={styles.image}
                         />
                         <Link style={{marginTop: '1rem'}}>
                             <Heading size="md">
