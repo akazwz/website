@@ -1,9 +1,9 @@
-import Layout from '../src/components/layout'
 import Image from 'next/image'
 import {Heading, SimpleGrid, Center, Link} from '@chakra-ui/react'
 import styles from '../styles/Projects.module.css'
 import React from 'react'
 import {useRouter} from 'next/router'
+import Layout from '../src/components/layout'
 
 const Projects = () => {
     const router = useRouter()
