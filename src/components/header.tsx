@@ -1,11 +1,10 @@
-import React from 'react'
 import {
   Box,
   IconButton,
   Spacer,
   Flex,
-  useColorMode,
   Link,
+  useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
 import { FaMoon, FaSun } from 'react-icons/fa'
@@ -28,7 +27,7 @@ const Header = () => {
             color={router.route === '/' ? '#0070f3' : ''}
           />
         </Box>
-        <Spacer />
+        <Spacer/>
         <Box>
           <Link
             mr="1.5rem"
@@ -60,7 +59,7 @@ const Header = () => {
             color="current"
             ml={{ base: '0', md: '3' }}
             onClick={toggleColorMode}
-            icon={<SwitchIcon />}
+            icon={<SwitchIcon/>}
           />
         </Box>
       </Flex>
