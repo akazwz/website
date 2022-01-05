@@ -1,5 +1,10 @@
 {
-  "name": "personal-site",
+  "name": "website",
+  "author": {
+    "email": "akazwz@pm.me",
+    "name": "zhaowenzhuo",
+    "url": "zhaowenzhuo.me"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,21 +13,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.6.12",
-    "@emotion/react": "^11",
-    "@emotion/styled": "^11",
-    "framer-motion": "^5.3.1",
-    "next": "12.0.2",
+    "@chakra-ui/react": "^1.7.4",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "framer-motion": "^5.5.5",
+    "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1"
   },
   "devDependencies": {
-    "@types/node": "16.11.6",
-    "@types/react": "17.0.34",
-    "eslint": "^7.23.0",
-    "eslint-config-next": "12.0.2",
-    "typescript": "4.4.4",
-    "@babel/core": "^7.0.0"
+    "@babel/core": "^7.16.7",
+    "@types/node": "17.0.8",
+    "@types/react": "17.0.38",
+    "eslint": "^8.6.0",
+    "eslint-config-next": "12.0.7",
+    "typescript": "4.5.4"
   }
 }
