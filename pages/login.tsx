@@ -1,7 +1,8 @@
-import { Button, Flex, Heading, Input, useColorModeValue } from '@chakra-ui/react'
+import { FC } from 'react'
 import { useRouter } from 'next/router'
+import { Button, Flex, Heading, Input, useColorModeValue } from '@chakra-ui/react'
 
-const Login = () => {
+const Login:FC = () => {
   const router = useRouter()
   const formBackground = useColorModeValue('grey.100', 'grey.700')
   return (

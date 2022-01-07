@@ -51,6 +51,17 @@ const Header = () => {
           >
             About
           </Link>
+          <Link
+            mr="1.5rem"
+            onClick={() => router.push('/login')}
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'bolder',
+              color: router.route === '/login' ? '#0070f3' : '',
+            }}
+          >
+            About
+          </Link>
           <IconButton
             size="md"
             fontSize="lg"
