@@ -5,9 +5,9 @@ import {
   Flex,
   Link,
   useColorMode,
-  useColorModeValue,
+  useColorModeValue, useBreakpointValue,
 } from '@chakra-ui/react'
-import { FaMoon, FaSun } from 'react-icons/fa'
+import { FaMoon, FaSun, FaList } from 'react-icons/fa'
 import { BsLightningChargeFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 
@@ -16,6 +16,7 @@ const Header = () => {
   const { toggleColorMode } = useColorMode()
   const text = useColorModeValue('dark', 'light')
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
+  const showMore = useBreakpointValue({ base: false, sm: true, md: false })
 
   return (
     <>
@@ -29,39 +30,43 @@ const Header = () => {
         </Box>
         <Spacer/>
         <Box>
-          <Link
-            mr="1.5rem"
-            onClick={() => router.push('/projects')}
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'bolder',
-              color: router.route === '/projects' ? '#0070f3' : '',
-            }}
-          >
-            Projects
-          </Link>
-          <Link
-            mr="1.5rem"
-            onClick={() => router.push('/about')}
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'bolder',
-              color: router.route === '/about' ? '#0070f3' : '',
-            }}
-          >
-            About
-          </Link>
-          <Link
-            mr="1.5rem"
-            onClick={() => router.push('/login')}
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'bolder',
-              color: router.route === '/login' ? '#0070f3' : '',
-            }}
-          >
-            About
-          </Link>
+          {showMore
+            ?
+            <IconButton
+              size="md"
+              fontSize="lg"
+              aria-label={`Switch to ${text} mode`}
+              variant="ghost"
+              color="current"
+              icon={<FaList/>}
+            />
+            :
+            <>
+              <Link
+                mr="1.5rem"
+                onClick={() => router.push('/projects')}
+                style={{
+                  fontSize: '1.2rem',
+                  fontWeight: 'bolder',
+                  color: router.route === '/projects' ? '#0070f3' : '',
+                }}
+              >
+                Projects
+              </Link>
+              <Link
+                mr="1.5rem"
+                onClick={() => router.push('/login')}
+                style={{
+                  fontSize: '1.2rem',
+                  fontWeight: 'bolder',
+                  color: router.route === '/login' ? '#0070f3' : '',
+                }}
+              >
+                About
+              </Link>
+            </>
+          }
+
           <IconButton
             size="md"
             fontSize="lg"
