@@ -1,13 +1,19 @@
 import { FC } from 'react'
 import Image from 'next/image'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 
 const Footer: FC = () => {
   return (
     <Flex justifyContent="center" alignItems="center" height="7vh">
       <footer style={{ textAlign: 'center' }}>
         <Flex>
-          Powered by{' '}
+          <Text
+            style={{
+              fontWeight: '500',
+            }}
+          >
+            Powered By {' '}
+          </Text>
           <a
             href="https://vercel.com/"
             target="_blank"

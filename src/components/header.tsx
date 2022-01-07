@@ -5,9 +5,9 @@ import {
   Flex,
   Link,
   useColorMode,
-  useColorModeValue, useBreakpointValue,
+  useColorModeValue, useBreakpointValue, Menu, MenuButton, MenuList, MenuItem, Text,
 } from '@chakra-ui/react'
-import { FaMoon, FaSun, FaList } from 'react-icons/fa'
+import { FaMoon, FaSun, FaBars } from 'react-icons/fa'
 import { BsLightningChargeFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 
@@ -20,26 +20,63 @@ const Header = () => {
 
   return (
     <>
-      <Flex height="10vh" alignContent="center" alignItems="center">
-        <Box>
+      <Flex
+        height="10vh"
+        alignContent="center"
+        alignItems="center"
+      >
+        <Link href="/">
           <BsLightningChargeFill
             size={30}
-            onClick={() => router.push('/')}
             color={router.route === '/' ? '#0070f3' : ''}
           />
-        </Box>
+        </Link>
         <Spacer/>
-        <Box>
+        <Flex
+          w="30%"
+          alignItems="center"
+          flexDirection={useBreakpointValue({ base: 'row', sm: 'row-reverse', md: 'row' })}
+        >
           {showMore
             ?
-            <IconButton
-              size="md"
-              fontSize="lg"
-              aria-label={`Switch to ${text} mode`}
-              variant="ghost"
-              color="current"
-              icon={<FaList/>}
-            />
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label={'toggle show navigation links'}
+                icon={<FaBars/>}
+                variant="outline"
+              />
+              <MenuList>
+                <MenuItem
+                  aria-label={'navigate to projects page'}
+                  onClick={() => router.push('/projects')}
+                >
+                  <Text
+                    style={{
+                      fontSize: '1.2rem',
+                      fontWeight: 'bolder',
+                      color: router.route === '/projects' ? '#0070f3' : '',
+                    }}
+                  >
+                    Projects
+                  </Text>
+                </MenuItem>
+                <MenuItem
+                  aria-label={'navigate to about page'}
+                  onClick={() => router.push('/about')}
+                >
+                  <Text
+                    style={{
+                      fontSize: '1.2rem',
+                      fontWeight: 'bolder',
+                      color: router.route === '/about' ? '#0070f3' : '',
+                    }}
+                  >
+                    About
+                  </Text>
+                </MenuItem>
+              </MenuList>
+            </Menu>
             :
             <>
               <Link
@@ -53,31 +90,32 @@ const Header = () => {
               >
                 Projects
               </Link>
+              <Spacer/>
               <Link
                 mr="1.5rem"
-                onClick={() => router.push('/login')}
+                onClick={() => router.push('/about')}
                 style={{
                   fontSize: '1.2rem',
                   fontWeight: 'bolder',
-                  color: router.route === '/login' ? '#0070f3' : '',
+                  color: router.route === '/about' ? '#0070f3' : '',
                 }}
               >
                 About
               </Link>
             </>
           }
-
+          {showMore ? null : <Spacer/>}
           <IconButton
             size="md"
             fontSize="lg"
             aria-label={`Switch to ${text} mode`}
             variant="ghost"
             color="current"
-            ml={{ base: '0', md: '3' }}
+            m='3'
             onClick={toggleColorMode}
             icon={<SwitchIcon/>}
           />
-        </Box>
+        </Flex>
       </Flex>
     </>
   )
