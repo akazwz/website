@@ -1,5 +1,4 @@
 import {
-  Box,
   IconButton,
   Spacer,
   Flex,
@@ -10,13 +9,14 @@ import {
 import { FaMoon, FaSun, FaBars } from 'react-icons/fa'
 import { BsLightningChargeFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
+import isMobile from 'ismobilejs'
 
 const Header = () => {
   const router = useRouter()
   const { toggleColorMode } = useColorMode()
   const text = useColorModeValue('dark', 'light')
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
-  const showMore = useBreakpointValue({ base: false, sm: true, md: false })
+  const showMore = useBreakpointValue({ base: isMobile().phone, sm: true, md: false })
 
   return (
     <>
@@ -33,9 +33,7 @@ const Header = () => {
         </Link>
         <Spacer/>
         <Flex
-          w="30%"
           alignItems="center"
-          flexDirection={useBreakpointValue({ base: 'row', sm: 'row-reverse', md: 'row' })}
         >
           {showMore
             ?
@@ -90,7 +88,6 @@ const Header = () => {
               >
                 Projects
               </Link>
-              <Spacer/>
               <Link
                 mr="1.5rem"
                 onClick={() => router.push('/about')}
@@ -111,7 +108,7 @@ const Header = () => {
             aria-label={`Switch to ${text} mode`}
             variant="ghost"
             color="current"
-            m='3'
+            m="3"
             onClick={toggleColorMode}
             icon={<SwitchIcon/>}
           />
