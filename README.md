@@ -1,5 +1,5 @@
 # Personal Website
 
-### powered by nextjs and chakra-ui
+# pnpm dev 
 
 ### [zhaowenzhuo](https://zhaowenzhuo.me)
