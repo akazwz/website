@@ -5,19 +5,14 @@ import {
   HStack,
   Flex,
   Link,
-  useColorMode,
-  useColorModeValue,
 } from '@chakra-ui/react'
-import { FaMoon, FaSun } from 'react-icons/fa'
 import { BsLightningChargeFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 import MobileNav from './mobile-nav'
+import ColorModeToggle from './color-mode-toggle'
 
 const Header: FC = () => {
   const router = useRouter()
-  const { toggleColorMode } = useColorMode()
-  const text = useColorModeValue('dark', 'light')
-  const SwitchIcon = useColorModeValue(FaMoon, FaSun)
 
   return (
     <>
@@ -35,6 +30,7 @@ const Header: FC = () => {
         <Spacer/>
         <HStack
           alignItems="center"
+          spacing={5}
           display={{ base: 'none', md: 'flex' }}
         >
           <Link
@@ -59,16 +55,7 @@ const Header: FC = () => {
           >
             About
           </Link>
-          <IconButton
-            size="md"
-            fontSize="lg"
-            aria-label={`Switch to ${text} mode`}
-            variant="ghost"
-            color="current"
-            m="3"
-            onClick={toggleColorMode}
-            icon={<SwitchIcon/>}
-          />
+          <ColorModeToggle/>
         </HStack>
         <MobileNav/>
       </Flex>

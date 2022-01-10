@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import {
-  Flex,
+  HStack,
   IconButton,
   Menu, MenuButton,
   MenuItem,
@@ -9,11 +9,13 @@ import {
 } from '@chakra-ui/react'
 import { FaBars } from 'react-icons/fa'
 import { useRouter } from 'next/router'
+import ColorModeToggle from './color-mode-toggle'
 
 const MobileNav: FC = () => {
   const router = useRouter()
   return (
-    <Flex display={{ base: 'flex', md: 'none' }}>
+    <HStack display={{ base: 'flex', md: 'none' }}>
+      <ColorModeToggle/>
       <Menu>
         <MenuButton
           as={IconButton}
@@ -52,7 +54,7 @@ const MobileNav: FC = () => {
           </MenuItem>
         </MenuList>
       </Menu>
-    </Flex>
+    </HStack>
   )
 }
 
