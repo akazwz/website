@@ -1,4 +1,3 @@
-
 import Image from 'next/image'
 import { Heading, SimpleGrid, Center, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
