@@ -1,22 +1,23 @@
+import { FC } from 'react'
 import {
   IconButton,
   Spacer,
+  HStack,
   Flex,
   Link,
   useColorMode,
-  useColorModeValue, useBreakpointValue, Menu, MenuButton, MenuList, MenuItem, Text,
+  useColorModeValue,
 } from '@chakra-ui/react'
-import { FaMoon, FaSun, FaBars } from 'react-icons/fa'
+import { FaMoon, FaSun } from 'react-icons/fa'
 import { BsLightningChargeFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
-import isMobile from 'ismobilejs'
+import MobileNav from './mobile-nav'
 
-const Header = () => {
+const Header: FC = () => {
   const router = useRouter()
   const { toggleColorMode } = useColorMode()
   const text = useColorModeValue('dark', 'light')
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
-  const showMore = useBreakpointValue({ base: isMobile().phone, sm: true, md: false })
 
   return (
     <>
@@ -32,76 +33,32 @@ const Header = () => {
           />
         </Link>
         <Spacer/>
-        <Flex
+        <HStack
           alignItems="center"
+          display={{ base: 'none', md: 'flex' }}
         >
-          {showMore
-            ?
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                aria-label={'toggle show navigation links'}
-                icon={<FaBars/>}
-                variant="outline"
-              />
-              <MenuList>
-                <MenuItem
-                  aria-label={'navigate to projects page'}
-                  onClick={() => router.push('/projects')}
-                >
-                  <Text
-                    style={{
-                      fontSize: '1.2rem',
-                      fontWeight: 'bolder',
-                      color: router.route === '/projects' ? '#0070f3' : '',
-                    }}
-                  >
-                    Projects
-                  </Text>
-                </MenuItem>
-                <MenuItem
-                  aria-label={'navigate to about page'}
-                  onClick={() => router.push('/about')}
-                >
-                  <Text
-                    style={{
-                      fontSize: '1.2rem',
-                      fontWeight: 'bolder',
-                      color: router.route === '/about' ? '#0070f3' : '',
-                    }}
-                  >
-                    About
-                  </Text>
-                </MenuItem>
-              </MenuList>
-            </Menu>
-            :
-            <>
-              <Link
-                mr="1.5rem"
-                onClick={() => router.push('/projects')}
-                style={{
-                  fontSize: '1.2rem',
-                  fontWeight: 'bolder',
-                  color: router.route === '/projects' ? '#0070f3' : '',
-                }}
-              >
-                Projects
-              </Link>
-              <Link
-                mr="1.5rem"
-                onClick={() => router.push('/about')}
-                style={{
-                  fontSize: '1.2rem',
-                  fontWeight: 'bolder',
-                  color: router.route === '/about' ? '#0070f3' : '',
-                }}
-              >
-                About
-              </Link>
-            </>
-          }
-          {showMore ? null : <Spacer/>}
+          <Link
+            mr="1.5rem"
+            onClick={() => router.push('/projects')}
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'bolder',
+              color: router.route === '/projects' ? '#0070f3' : '',
+            }}
+          >
+            Projects
+          </Link>
+          <Link
+            mr="1.5rem"
+            onClick={() => router.push('/about')}
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'bolder',
+              color: router.route === '/about' ? '#0070f3' : '',
+            }}
+          >
+            About
+          </Link>
           <IconButton
             size="md"
             fontSize="lg"
@@ -112,7 +69,8 @@ const Header = () => {
             onClick={toggleColorMode}
             icon={<SwitchIcon/>}
           />
-        </Flex>
+        </HStack>
+        <MobileNav/>
       </Flex>
     </>
   )
