@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import {
-  IconButton,
   Spacer,
   HStack,
   Flex,
@@ -10,9 +9,34 @@ import { BsLightningChargeFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 import MobileNav from './mobile-nav'
 import ColorModeToggle from './color-mode-toggle'
+export type HeaderTrans = {
+  projects: string,
+  about: string,
+}
 
 const Header: FC = () => {
   const router = useRouter()
+  const {locale} = router
+  let trans: HeaderTrans
+  switch (locale) {
+    case 'en-US':
+      trans = {
+        projects: 'Projects',
+        about: 'About',
+      }
+      break
+    case 'zh-CN':
+      trans = {
+        projects: '项目',
+        about: '关于',
+      }
+      break
+    default:
+      trans = {
+        projects: 'Projects',
+        about: 'About',
+      }
+  }
 
   return (
     <>
@@ -42,7 +66,7 @@ const Header: FC = () => {
               color: router.route === '/projects' ? '#0070f3' : '',
             }}
           >
-            Projects
+            {trans.projects}
           </Link>
           <Link
             mr="1.5rem"
@@ -53,11 +77,11 @@ const Header: FC = () => {
               color: router.route === '/about' ? '#0070f3' : '',
             }}
           >
-            About
+            {trans.about}
           </Link>
           <ColorModeToggle/>
         </HStack>
-        <MobileNav/>
+        <MobileNav trans={trans}/>
       </Flex>
     </>
   )

@@ -10,8 +10,10 @@ import {
 import { FaBars } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import ColorModeToggle from './color-mode-toggle'
+import { HeaderTrans } from './header'
 
-const MobileNav: FC = () => {
+const MobileNav: (props: { trans: HeaderTrans }) => JSX.Element = (props:{trans: HeaderTrans}) => {
+  const {trans} = props
   const router = useRouter()
   return (
     <HStack display={{ base: 'flex', md: 'none' }}>
@@ -35,7 +37,7 @@ const MobileNav: FC = () => {
                 color: router.route === '/projects' ? '#0070f3' : '',
               }}
             >
-              Projects
+              {trans.projects}
             </Text>
           </MenuItem>
           <MenuItem
@@ -49,7 +51,7 @@ const MobileNav: FC = () => {
                 color: router.route === '/about' ? '#0070f3' : '',
               }}
             >
-              About
+              {trans.about}
             </Text>
           </MenuItem>
         </MenuList>
