@@ -5,8 +5,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Link,
-  useDisclosure,
 } from '@chakra-ui/react'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { useRouter } from 'next/router'
@@ -33,18 +31,18 @@ const MobileNav: (props: { trans: HeaderTrans }) => JSX.Element = (props: { tran
                 <MenuItem
                   aria-label={'navigate to projects page'}
                   fontWeight={router.route === '/projects' ? 'bolder' : 'normal'}
-                  _focus={{textDecoration: 'underline', border: '1px', borderColor: '#0070f3'}}
+                  _focus={{ border: '1px', borderColor: '#0070f3' }}
                   color={router.route === '/projects' ? '#0070f3' : ''}
-                  onClick={()=>router.push('/projects')}
+                  onClick={() => router.push('/projects')}
                 >
-                    {trans.projects}
+                  {trans.projects}
                 </MenuItem>
                 <MenuItem
                   aria-label={'navigate to about page'}
                   fontWeight={router.route === '/about' ? 'bolder' : 'normal'}
-                  _focus={{textDecoration: 'underline', border: '1px', borderColor: '#0070f3'}}
+                  _focus={{ border: '1px', borderColor: '#0070f3' }}
                   color={router.route === '/about' ? '#0070f3' : ''}
-                  onClick={()=>router.push('/about')}
+                  onClick={() => router.push('/about')}
                 >
                   {trans.about}
                 </MenuItem>

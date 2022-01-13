@@ -2,7 +2,11 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['bit.ly'],
+    domains: [
+      'bit.ly',
+      'image-component.nextjs.gallery',
+      'localhost'
+    ],
   },
   i18n: {
     locales: ['en', 'zh'],

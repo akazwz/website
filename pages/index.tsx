@@ -1,8 +1,10 @@
-import { Center } from '@chakra-ui/react'
+import { Center, Image, } from '@chakra-ui/react'
 import path from 'node:path'
 import * as fs from 'fs'
 import Layout from '../src/components/layout'
 import styles from '../styles/Home.module.css'
+import ChakraNextImage from '../src/components/chakra-next-image'
+import { useEffect, useState } from 'react'
 
 type IndexTrans = {
   creating: string,
@@ -23,8 +25,9 @@ export async function getStaticProps (ctx: { locale: string }) {
   }
 }
 
-const IndexPage:(props: { content: IndexTrans }) => JSX.Element = (props: { content: IndexTrans }) => {
+const IndexPage: (props: { content: IndexTrans }) => JSX.Element = (props: { content: IndexTrans }) => {
   const { content } = props
+
   return (
     <>
       <Layout>
