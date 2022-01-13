@@ -1,10 +1,28 @@
-import { IconButton, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { IconButton, useColorMode, useColorModeValue,useTheme,} from '@chakra-ui/react'
 import { FaMoon, FaSun } from 'react-icons/fa'
+import { useEnvironment } from '@chakra-ui/react-env'
+
 
 const ColorModeToggle = () => {
   const { toggleColorMode } = useColorMode()
   const text = useColorModeValue('dark', 'light')
+  let themeColor = useColorModeValue('#1A202C', '#ffffff',)
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
+  const { document } = useEnvironment()
+  const theme = useTheme()
+  console.log(theme)
+  const handleToggleColorMode = () => {
+    toggleColorMode()
+    let themeColorMeta = document.querySelector('meta[name="theme-color"]')
+    if (!themeColorMeta) {
+      let newThemeColorMeta = document.createElement('meta')
+      newThemeColorMeta.setAttribute('name', 'theme-color')
+      newThemeColorMeta.content = themeColor
+      document.getElementsByTagName('head')[0].appendChild(newThemeColorMeta)
+      return
+    }
+    themeColorMeta.setAttribute('content', themeColor)
+  }
 
   return (
     <>
@@ -15,7 +33,7 @@ const ColorModeToggle = () => {
         variant="ghost"
         color="current"
         m="3"
-        onClick={toggleColorMode}
+        onClick={handleToggleColorMode}
         icon={<SwitchIcon/>}
       />
     </>
