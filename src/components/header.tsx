@@ -5,8 +5,8 @@ import {
   Flex,
   Link,
 } from '@chakra-ui/react'
-import { BsLightningChargeFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
+import { BsLightningChargeFill } from 'react-icons/bs'
 import MobileNav from './mobile-nav'
 import ColorModeToggle from './color-mode-toggle'
 

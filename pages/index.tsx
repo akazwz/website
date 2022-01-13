@@ -25,7 +25,6 @@ export async function getStaticProps (ctx: { locale: string }) {
 
 const IndexPage: (props: { content: IndexTrans }) => JSX.Element = (props: { content: IndexTrans }) => {
   const { content } = props
-
   return (
     <>
       <Layout>

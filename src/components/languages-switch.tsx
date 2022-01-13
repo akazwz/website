@@ -1,4 +1,11 @@
-import { HStack, IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import {
+  HStack,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList
+} from '@chakra-ui/react'
 import Link from 'next/link'
 import { FaBars } from 'react-icons/fa'
 

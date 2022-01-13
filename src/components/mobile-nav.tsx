@@ -6,8 +6,8 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/react'
-import { FaBars, FaTimes } from 'react-icons/fa'
 import { useRouter } from 'next/router'
+import { FaBars, FaTimes } from 'react-icons/fa'
 import ColorModeToggle from './color-mode-toggle'
 import { HeaderTrans } from './header'
 
