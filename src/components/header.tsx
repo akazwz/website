@@ -9,6 +9,7 @@ import { BsLightningChargeFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 import MobileNav from './mobile-nav'
 import ColorModeToggle from './color-mode-toggle'
+
 export type HeaderTrans = {
   projects: string,
   about: string,
@@ -16,7 +17,7 @@ export type HeaderTrans = {
 
 const Header: FC = () => {
   const router = useRouter()
-  const {locale} = router
+  const { locale } = router
   let trans: HeaderTrans
   switch (locale) {
     case 'en-US':
@@ -42,44 +43,42 @@ const Header: FC = () => {
     <>
       <Flex
         height="10vh"
-        alignContent="center"
         alignItems="center"
       >
         <Link href="/">
           <BsLightningChargeFill
-            size={30}
+            size={33}
             color={router.route === '/' ? '#0070f3' : ''}
           />
         </Link>
         <Spacer/>
         <HStack
           alignItems="center"
-          spacing={5}
           display={{ base: 'none', md: 'flex' }}
         >
-          <Link
-            mr="1.5rem"
-            onClick={() => router.push('/projects')}
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'bolder',
-              color: router.route === '/projects' ? '#0070f3' : '',
-            }}
-          >
-            {trans.projects}
-          </Link>
-          <Link
-            mr="1.5rem"
-            onClick={() => router.push('/about')}
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'bolder',
-              color: router.route === '/about' ? '#0070f3' : '',
-            }}
-          >
-            {trans.about}
-          </Link>
-          <ColorModeToggle/>
+          <HStack spacing={7}>
+            <Link
+              href={'/projects'}
+              _hover={{ textDecoration: 'underline' }}
+              _focus={{ textDecoration: 'underline' }}
+              color={router.route === '/projects' ? '#0070f3' : ''}
+              fontSize="1.2rem"
+            >
+              {trans.projects}
+            </Link>
+            <Link
+              href={'/about'}
+              _hover={{ textDecoration: 'underline' }}
+              _focus={{ textDecoration: 'underline' }}
+              color={router.route === '/about' ? '#0070f3' : ''}
+              fontSize="1.2rem"
+            >
+              {trans.about}
+            </Link>
+          </HStack>
+          <Flex>
+            <ColorModeToggle/>
+          </Flex>
         </HStack>
         <MobileNav trans={trans}/>
       </Flex>

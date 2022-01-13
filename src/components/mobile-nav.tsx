@@ -32,20 +32,19 @@ const MobileNav: (props: { trans: HeaderTrans }) => JSX.Element = (props: { tran
               <MenuList>
                 <MenuItem
                   aria-label={'navigate to projects page'}
-                  _focus={{ textDecoration: 'none', color: '#0070f3' }}
                   fontWeight={router.route === '/projects' ? 'bolder' : 'normal'}
-                  fontSize={router.route === '/projects' ? 'large' : 'medium'}
+                  _focus={{textDecoration: 'underline', border: '1px', borderColor: '#0070f3'}}
+                  color={router.route === '/projects' ? '#0070f3' : ''}
                   onClick={()=>router.push('/projects')}
-              >
+                >
                     {trans.projects}
                 </MenuItem>
                 <MenuItem
                   aria-label={'navigate to about page'}
-                  _focus={{ textDecoration: 'none', color: '#0070f3' }}
                   fontWeight={router.route === '/about' ? 'bolder' : 'normal'}
-                  fontSize={router.route === '/about' ? 'large' : 'medium'}
+                  _focus={{textDecoration: 'underline', border: '1px', borderColor: '#0070f3'}}
+                  color={router.route === '/about' ? '#0070f3' : ''}
                   onClick={()=>router.push('/about')}
-
                 >
                   {trans.about}
                 </MenuItem>
