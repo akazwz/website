@@ -3,7 +3,14 @@
   font-weight: 800;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: huerotate 3s infinite;
   background-image: linear-gradient(90deg, #007CF0, #00DFD8);
+}
+
+@keyframes huerotate {
+  100% {
+    filter: hue-rotate(360deg);
+  }
 }
 
 .wordTwo {
@@ -11,7 +18,14 @@
   font-weight: 800;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: huerotate 6s infinite;
   background-image: linear-gradient(90deg, #7928CA, #FF0080);
+}
+
+@keyframes huerotate {
+  100% {
+    filter: hue-rotate(360deg);
+  }
 }
 
 .wordThree {
@@ -19,5 +33,12 @@
   font-weight: 800;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: huerotate 9s infinite;
   background-image: linear-gradient(90deg, #FF4D4D, #F9CB28);
+}
+
+@keyframes huerotate {
+  100% {
+    filter: hue-rotate(360deg);
+  }
 }
