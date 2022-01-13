@@ -31,7 +31,6 @@ const MobileNav: (props: { trans: HeaderTrans }) => JSX.Element = (props: { tran
                 <MenuItem
                   aria-label={'navigate to projects page'}
                   fontWeight={router.route === '/projects' ? 'bolder' : 'normal'}
-                  _focus={{ border: '1px', borderColor: '#0070f3' }}
                   color={router.route === '/projects' ? '#0070f3' : ''}
                   onClick={() => router.push('/projects')}
                 >
@@ -40,7 +39,6 @@ const MobileNav: (props: { trans: HeaderTrans }) => JSX.Element = (props: { tran
                 <MenuItem
                   aria-label={'navigate to about page'}
                   fontWeight={router.route === '/about' ? 'bolder' : 'normal'}
-                  _focus={{ border: '1px', borderColor: '#0070f3' }}
                   color={router.route === '/about' ? '#0070f3' : ''}
                   onClick={() => router.push('/about')}
                 >
