@@ -5,9 +5,9 @@ module.exports = {
     domains: ['bit.ly'],
   },
   i18n: {
-    locales: ['default', 'en-US', 'zh-CN'],
-    defaultLocale: 'default',
-    localeDetection: false,
+    locales: ['en', 'zh'],
+    defaultLocale: 'en',
+    localeDetection: true,
   },
   trailingSlash: true,
 }
