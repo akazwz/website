@@ -1,12 +1,16 @@
-import { IconButton, useColorMode, useColorModeValue,useTheme,} from '@chakra-ui/react'
-import { FaMoon, FaSun } from 'react-icons/fa'
+import { IconButton, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { Sun, DarkMode } from '@icon-park/react'
 import { useEnvironment } from '@chakra-ui/react-env'
 
 const ColorModeToggle = () => {
   const { toggleColorMode } = useColorMode()
+  const fillColor = useColorModeValue('black', 'white')
   const text = useColorModeValue('dark', 'light')
   let themeColor = useColorModeValue('#1A202C', '#ffffff',)
-  const SwitchIcon = useColorModeValue(FaMoon, FaSun)
+  const SwitchIcon = useColorModeValue(
+    <DarkMode theme="outline" size="24" fill={fillColor}/>,
+    <Sun theme="outline" size="24" fill={fillColor}/>
+  )
   const { document } = useEnvironment()
   const handleToggleColorMode = () => {
     toggleColorMode()
@@ -30,7 +34,7 @@ const ColorModeToggle = () => {
         variant="ghost"
         color="current"
         onClick={handleToggleColorMode}
-        icon={<SwitchIcon/>}
+        icon={SwitchIcon}
       />
     </>
   )

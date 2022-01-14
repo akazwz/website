@@ -11,7 +11,7 @@ import { BsLightningChargeFill } from 'react-icons/bs'
 import MobileNav from './mobile-nav'
 import ColorModeToggle from './color-mode-toggle'
 import LanguagesSwitch from './languages-switch'
-import { Text } from '@chakra-ui/layout'
+import { MainBlue } from '../../../colors'
 
 export type HeaderTrans = {
   projects: string,
@@ -52,7 +52,7 @@ const Header: FC = () => {
           <Link>
             <BsLightningChargeFill
               size={33}
-              color={router.route === '/' ? '#0070f3' : ''}
+              color={router.route === '/' ? MainBlue : ''}
             />
           </Link>
         </NextLink>
@@ -73,7 +73,7 @@ const Header: FC = () => {
               locale={router.locale}
               passHref
             >
-              <Link color={router.route === '/projects' ? '#0070f3' : ''}>
+              <Link color={router.route === '/projects' ? MainBlue : ''}>
                 {trans.projects}
               </Link>
             </NextLink>
@@ -82,7 +82,7 @@ const Header: FC = () => {
               locale={router.locale}
               passHref
             >
-              <Link color={router.route === '/about' ? '#0070f3' : ''}>
+              <Link color={router.route === '/about' ? MainBlue : ''}>
                 {trans.about}
               </Link>
             </NextLink>
