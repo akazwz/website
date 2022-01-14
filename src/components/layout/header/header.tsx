@@ -11,6 +11,7 @@ import { BsLightningChargeFill } from 'react-icons/bs'
 import MobileNav from './mobile-nav'
 import ColorModeToggle from './color-mode-toggle'
 import LanguagesSwitch from './languages-switch'
+import { Text } from '@chakra-ui/layout'
 
 export type HeaderTrans = {
   projects: string,
@@ -61,26 +62,27 @@ const Header: FC = () => {
           display={{ base: 'none', md: 'flex' }}
           spacing={5}
         >
-          <HStack spacing={7}>
-            <NextLink href="/projects" locale={router.locale} passHref>
-              <Link
-                _hover={{ textDecoration: 'underline' }}
-                _focus={{ textDecoration: 'underline' }}
-                color={router.route === '/projects' ? '#0070f3' : ''}
-                fontSize="1.2rem"
-                fontWeight="bold"
-              >
+          <HStack
+            name='links-container'
+            spacing={7}
+            fontSize='1.2rem'
+            fontWeight='bold'
+          >
+            <NextLink
+              href={'/projects'}
+              locale={router.locale}
+              passHref
+            >
+              <Link color={router.route === '/projects' ? '#0070f3' : ''}>
                 {trans.projects}
               </Link>
             </NextLink>
-            <NextLink href="/about" locale={router.locale} passHref>
-              <Link
-                _hover={{ textDecoration: 'underline' }}
-                _focus={{ textDecoration: 'underline' }}
-                color={router.route === '/about' ? '#0070f3' : ''}
-                fontSize="1.2rem"
-                fontWeight="bold"
-              >
+            <NextLink
+              href={'/about'}
+              locale={router.locale}
+              passHref
+            >
+              <Link color={router.route === '/about' ? '#0070f3' : ''}>
                 {trans.about}
               </Link>
             </NextLink>

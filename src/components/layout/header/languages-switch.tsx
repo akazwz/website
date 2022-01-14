@@ -4,9 +4,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Link,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import { IoLanguage } from 'react-icons/io5'
 import { useRouter } from 'next/router'
 
@@ -23,24 +21,26 @@ const LanguagesSwitch = () => {
         />
         <MenuList>
           <MenuItem
-            aria-label={'navigate to projects page'}
-            textDecoration="none"
+            aria-label={'navigate to about page'}
+            fontSize="1.2rem"
+            fontWeight="bold"
+            color={router.locale === 'en' ? '#0070f3' : ''}
+            onClick={() => {
+              router.push(router.asPath, router.asPath, { locale: 'en' }).then()
+            }}
           >
-            <NextLink href={router.asPath} locale="zh" passHref>
-              <Link flex={1}>
-                简体中文
-              </Link>
-            </NextLink>
+            English
           </MenuItem>
           <MenuItem
             aria-label={'navigate to about page'}
-            textDecoration="none"
+            fontSize="1.2rem"
+            fontWeight="bold"
+            color={router.locale === 'zh' ? '#0070f3' : ''}
+            onClick={() => {
+              router.push(router.asPath, router.asPath, { locale: 'zh' }).then()
+            }}
           >
-            <NextLink href={router.asPath} locale="en" passHref>
-              <Link flex={1}>
-                English
-              </Link>
-            </NextLink>
+            简体中文
           </MenuItem>
         </MenuList>
       </Menu>
