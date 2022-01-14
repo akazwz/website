@@ -1,8 +1,9 @@
 import { Center, } from '@chakra-ui/react'
 import path from 'node:path'
 import * as fs from 'fs'
-import Layout from '../src/components/layout'
+import Layout from '../src/components/layout/layout'
 import styles from '../styles/Home.module.css'
+import { Text } from '@chakra-ui/layout'
 
 type IndexTrans = {
   creating: string,
@@ -33,13 +34,19 @@ const IndexPage: (props: { content: IndexTrans }) => JSX.Element = (props: { con
           flexDirection="column"
         >
           <span className={styles.wordOne}>
-           {content.creating}
+            <Text fontSize={{base: '4rem', md: '6rem'}}>
+              {content.creating}
+            </Text>
           </span>
           <span className={styles.wordTwo}>
-            {content.interesting}
+            <Text fontSize={{base: '4rem', md: '6rem'}}>
+              {content.interesting}
+            </Text>
           </span>
           <span className={styles.wordThree}>
-            {content.thing}
+            <Text fontSize={{base: '4rem', md: '6rem'}}>
+              {content.thing}
+            </Text>
           </span>
         </Center>
       </Layout>

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Heading, SimpleGrid, Center, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import Layout from '../src/components/layout'
+import Layout from '../src/components/layout/layout'
 import styles from '../styles/Projects.module.css'
 
 const Projects = () => {

@@ -10,12 +10,14 @@ import { useRouter } from 'next/router'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import ColorModeToggle from './color-mode-toggle'
 import { HeaderTrans } from './header'
+import LanguagesSwitch from './languages-switch'
 
 const MobileNav: (props: { trans: HeaderTrans }) => JSX.Element = (props: { trans: HeaderTrans }) => {
   const { trans } = props
   const router = useRouter()
   return (
     <HStack display={{ base: 'flex', md: 'none' }}>
+      <LanguagesSwitch/>
       <ColorModeToggle/>
       <Menu>
         {

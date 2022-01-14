@@ -1,18 +1,39 @@
 import { FC } from 'react'
 import Image from 'next/image'
 import { Flex, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+
+export type FooterTrans = {
+  poweredBy: string,
+}
 
 const Footer: FC = () => {
+  const router = useRouter()
+  const { locale } = router
+  let trans: FooterTrans
+  switch (locale) {
+    case 'en':
+      trans = {
+        poweredBy: 'Powered By',
+      }
+      break
+    case 'zh':
+      trans = {
+        poweredBy: '动力源于',
+      }
+      break
+    default:
+      trans = {
+        poweredBy: 'Powered By',
+      }
+  }
+
   return (
     <Flex justifyContent="center" alignItems="center" height="7vh">
       <footer style={{ textAlign: 'center' }}>
         <Flex>
-          <Text
-            style={{
-              fontWeight: '500',
-            }}
-          >
-            Powered By {' '}
+          <Text fontWeight='normal'>
+            {trans.poweredBy + ' '}
           </Text>
           <a
             href="https://vercel.com/"

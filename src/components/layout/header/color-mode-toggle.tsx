@@ -8,8 +8,6 @@ const ColorModeToggle = () => {
   let themeColor = useColorModeValue('#1A202C', '#ffffff',)
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
   const { document } = useEnvironment()
-  const theme = useTheme()
-  console.log(theme)
   const handleToggleColorMode = () => {
     toggleColorMode()
     let themeColorMeta = document.querySelector('meta[name="theme-color"]')
@@ -31,7 +29,6 @@ const ColorModeToggle = () => {
         aria-label={`Switch to ${text} mode`}
         variant="ghost"
         color="current"
-        m="3"
         onClick={handleToggleColorMode}
         icon={<SwitchIcon/>}
       />

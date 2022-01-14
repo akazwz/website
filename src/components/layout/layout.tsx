@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { Container } from '@chakra-ui/react'
-import Header from './header'
+import Header from './header/header'
 import Footer from './footer'
 
 type Props = {

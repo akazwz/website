@@ -1,6 +1,5 @@
 .wordOne {
-  font-size: 4rem;
-  font-weight: 800;
+  font-weight: bolder;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: huerotate 3s infinite;
@@ -14,8 +13,7 @@
 }
 
 .wordTwo {
-  font-size: 4rem;
-  font-weight: 800;
+  font-weight: bolder;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: huerotate 6s infinite;
@@ -29,8 +27,7 @@
 }
 
 .wordThree {
-  font-size: 4rem;
-  font-weight: 800;
+  font-weight: bolder;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: huerotate 9s infinite;
