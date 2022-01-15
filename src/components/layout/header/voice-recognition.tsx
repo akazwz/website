@@ -29,15 +29,55 @@ const VoiceRecognition: FC = () => {
     stopRecording,
     mediaBlobUrl,
     clearBlobUrl,
-  } = useReactMediaRecorder({ audio: true })
+  } = useReactMediaRecorder({
+    audio: true,
+    blobPropertyBag: {
+      type: 'audio/wav'
+    },
+  })
+
+  const blobToBase64 = (blob: Blob, callback: any) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(blob)
+    reader.onload = () => {
+      callback(reader.result)
+    }
+  }
+
+  const sendBase64ToServer = (base64Audio: string) => {
+    let postRequest = new Request('/transcription/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8;'
+      },
+      body: JSON.stringify({ base64: base64Audio })
+    })
+    fetch(postRequest).then((res) => {
+      console.log(res)
+    })
+  }
 
   useEffect(() => {
-    if (status === 'recording') {
-      setIsMicReady(true)
-      return
+    switch (status) {
+      case 'recording':
+        setIsMicReady(true)
+        return
+      case 'stopped':
+        if (!mediaBlobUrl) {
+          return
+        }
+        fetch(mediaBlobUrl).then((res) => {
+          res.blob().then((blob) => {
+            blobToBase64(blob, (base64Audio: string) => {
+              console.log(base64Audio)
+              sendBase64ToServer(base64Audio)
+            })
+          })
+        })
+        return
     }
     setIsMicReady(false)
-  }, [status])
+  }, [mediaBlobUrl, status])
 
   return (
     <>
@@ -95,14 +135,6 @@ const VoiceRecognition: FC = () => {
               <Text>
                 {status}
               </Text>
-              <audio
-                hidden
-                src={mediaBlobUrl === null ? undefined : mediaBlobUrl}
-                controls
-                autoPlay
-                loop
-                muted={status === 'recording'}
-              />
             </Box>
           </DrawerBody>
         </DrawerContent>
