@@ -12,6 +12,7 @@ import MobileNav from './mobile-nav'
 import ColorModeToggle from './color-mode-toggle'
 import LanguagesSwitch from './languages-switch'
 import { MainBlue } from '../../../colors'
+import VoiceRecognition from './voice-recognition'
 
 export type HeaderTrans = {
   projects: string,
@@ -63,10 +64,10 @@ const Header: FC = () => {
           spacing={5}
         >
           <HStack
-            name='links-container'
+            name="links-container"
             spacing={7}
-            fontSize='1.2rem'
-            fontWeight='bold'
+            fontSize="1.2rem"
+            fontWeight="bold"
           >
             <NextLink
               href={'/projects'}
@@ -88,6 +89,7 @@ const Header: FC = () => {
             </NextLink>
           </HStack>
           <HStack spacing={5}>
+            <VoiceRecognition/>
             <LanguagesSwitch/>
             <ColorModeToggle/>
           </HStack>

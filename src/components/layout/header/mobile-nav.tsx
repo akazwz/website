@@ -12,6 +12,7 @@ import { HamburgerButton, Close } from '@icon-park/react'
 import ColorModeToggle from './color-mode-toggle'
 import LanguagesSwitch from './languages-switch'
 import { HeaderTrans } from './header'
+import VoiceRecognition from './voice-recognition'
 
 const MobileNav: (props: { trans: HeaderTrans }) => JSX.Element = (props: { trans: HeaderTrans }) => {
   const { trans } = props
@@ -19,6 +20,7 @@ const MobileNav: (props: { trans: HeaderTrans }) => JSX.Element = (props: { tran
   const fillColor = useColorModeValue('black', 'white')
   return (
     <HStack display={{ base: 'flex', md: 'none' }}>
+      <VoiceRecognition/>
       <LanguagesSwitch/>
       <ColorModeToggle/>
       <Menu>
