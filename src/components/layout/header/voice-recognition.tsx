@@ -14,10 +14,12 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
 import { useReactMediaRecorder } from 'react-media-recorder'
 
 const VoiceRecognition: FC = () => {
+  const router = useRouter()
   const fillColor = useColorModeValue('black', 'white')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isMicReady, setIsMicReady] = useState(false)
@@ -40,17 +42,43 @@ const VoiceRecognition: FC = () => {
     const reader = new FileReader()
     reader.readAsDataURL(blob)
     reader.onload = () => {
-      callback(reader.result)
+      if (reader.result) {
+        if (typeof reader.result === 'string') {
+          callback(reader.result)
+          return
+        }
+        callback('')
+        return
+      }
+      callback('')
     }
   }
 
-  const sendBase64ToServer = (base64Audio: string) => {
-    let postRequest = new Request('/transcription/', {
+  const sendBase64ToServer = (base64Audio: string, dataLen: number, locale: string) => {
+    let postRequest = new Request('/api/transcription/', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json;charset=utf-8;'
+        'Content-Type': 'application/json;'
       },
-      body: JSON.stringify({ base64: base64Audio })
+      body: JSON.stringify({
+        base64Audio,
+        dataLen,
+        locale,
+      })
+    })
+    fetch(postRequest).then((res) => {
+      console.log(res)
+    })
+  }
+
+  const sendFileToServer = (file: File, dataLen: number, locale: string) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('dataLen', dataLen.toString())
+    formData.append('locale', locale)
+    let postRequest = new Request('/api/transcription/', {
+      method: 'POST',
+      body: formData
     })
     fetch(postRequest).then((res) => {
       console.log(res)
@@ -68,16 +96,20 @@ const VoiceRecognition: FC = () => {
         }
         fetch(mediaBlobUrl).then((res) => {
           res.blob().then((blob) => {
-            blobToBase64(blob, (base64Audio: string) => {
+            const audioFile = new File([blob], 'audio.wav', { type: 'audio/wav' })
+            console.log(audioFile)
+            sendFileToServer(audioFile, audioFile.size, router.locale ?? 'en')
+            /*blobToBase64(blob, (base64Audio: string) => {
+              /!*base64 data-size locale*!/
               console.log(base64Audio)
-              sendBase64ToServer(base64Audio)
-            })
+              sendBase64ToServer(base64Audio, blob.size, router.locale ?? 'en')
+            })*/
           })
         })
         return
     }
     setIsMicReady(false)
-  }, [mediaBlobUrl, status])
+  }, [mediaBlobUrl, router.locale, status])
 
   return (
     <>
