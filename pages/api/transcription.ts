@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import * as TencentCloud from 'tencentcloud-sdk-nodejs'
 
 export default function handler (req: NextApiRequest, res: NextApiResponse) {
-  console.log(req.body)
   const { base64Audio, dataLen, locale } = JSON.parse(req.body)
   if (base64Audio.length < 1 || dataLen.length < 1 || locale.length < 1) {
     res.status(400).json({ msg: 'params error' })
@@ -31,10 +30,10 @@ export default function handler (req: NextApiRequest, res: NextApiResponse) {
       EngSerViceType = '16k_zh'
       break
     case 'en':
-      EngSerViceType = '16k_en'
+      EngSerViceType = '8k_en'
       break
     default:
-      EngSerViceType = '16k_en'
+      EngSerViceType = '8k_en'
   }
 
   const client = new AsrClient(clientConfig)
@@ -45,7 +44,7 @@ export default function handler (req: NextApiRequest, res: NextApiResponse) {
     'SourceType': 1,
     'VoiceFormat': 'wav',
     'UsrAudioKey': 'zwz',
-    'Data': base64Audio.slice(22),
+    'Data': base64Audio,
     'DataLen': dataLen,
   }
   client.SentenceRecognition(params).then(

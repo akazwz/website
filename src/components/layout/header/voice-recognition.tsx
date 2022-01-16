@@ -17,6 +17,7 @@ import {
 import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
 import { useReactMediaRecorder } from 'react-media-recorder'
+import * as fs from 'fs'
 
 const VoiceRecognition: FC = () => {
   const router = useRouter()
@@ -71,17 +72,18 @@ const VoiceRecognition: FC = () => {
     })
   }
 
-  const sendFileToServer = (file: File, dataLen: number, locale: string) => {
+  const getFileBase64FromServer = (file: File, dataLen: number, locale: string) => {
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('dataLen', dataLen.toString())
-    formData.append('locale', locale)
-    let postRequest = new Request('/api/transcription/', {
+    let postRequest = new Request('https://files-akazwz.vercel.app/api/file', {
       method: 'POST',
       body: formData
     })
     fetch(postRequest).then((res) => {
-      console.log(res)
+      res.json().then((data) => {
+        const { file } = data
+        sendBase64ToServer(file, dataLen, locale)
+      })
     })
   }
 
@@ -98,7 +100,8 @@ const VoiceRecognition: FC = () => {
           res.blob().then((blob) => {
             const audioFile = new File([blob], 'audio.wav', { type: 'audio/wav' })
             console.log(audioFile)
-            sendFileToServer(audioFile, audioFile.size, router.locale ?? 'en')
+            getFileBase64FromServer(audioFile, audioFile.size, router.locale ?? 'en')
+            //sendFileToServer(audioFile, audioFile.size, router.locale ?? 'en')
             /*blobToBase64(blob, (base64Audio: string) => {
               /!*base64 data-size locale*!/
               console.log(base64Audio)
