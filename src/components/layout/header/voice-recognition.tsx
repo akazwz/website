@@ -17,7 +17,6 @@ import {
 import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
 import { useReactMediaRecorder } from 'react-media-recorder'
-import * as fs from 'fs'
 
 const VoiceRecognition: FC = () => {
   const router = useRouter()
@@ -37,22 +36,23 @@ const VoiceRecognition: FC = () => {
     blobPropertyBag: {
       type: 'audio/wav'
     },
+    mediaRecorderOptions: {
+      /*audioBitsPerSecond: 16000,
+      bitsPerSecond: 16,*/
+    }
   })
 
-  const blobToBase64 = (blob: Blob, callback: any) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(blob)
-    reader.onload = () => {
-      if (reader.result) {
-        if (typeof reader.result === 'string') {
-          callback(reader.result)
-          return
-        }
-        callback('')
-        return
+  const blobToBase64 = (blob: Blob) => {
+    return new Promise(((resolve, reject) => {
+      const fileReader = new FileReader()
+      fileReader.onload = (e) => {
+        resolve(e!.target!.result)
       }
-      callback('')
-    }
+      fileReader.readAsDataURL(blob)
+      fileReader.onerror = () => {
+        reject(new Error('blob to base64 error'))
+      }
+    }))
   }
 
   const sendBase64ToServer = (base64Audio: string, dataLen: number, locale: string) => {
@@ -98,15 +98,17 @@ const VoiceRecognition: FC = () => {
         }
         fetch(mediaBlobUrl).then((res) => {
           res.blob().then((blob) => {
-            const audioFile = new File([blob], 'audio.wav', { type: 'audio/wav' })
+            /*const audioFile = new File([blob], 'audio.wav', { type: 'audio/wav' })
             console.log(audioFile)
-            getFileBase64FromServer(audioFile, audioFile.size, router.locale ?? 'en')
+            getFileBase64FromServer(audioFile, audioFile.size, router.locale ?? 'en')*/
             //sendFileToServer(audioFile, audioFile.size, router.locale ?? 'en')
-            /*blobToBase64(blob, (base64Audio: string) => {
-              /!*base64 data-size locale*!/
-              console.log(base64Audio)
-              sendBase64ToServer(base64Audio, blob.size, router.locale ?? 'en')
-            })*/
+            blobToBase64(blob)
+              .then((base64) => {
+                console.log(base64)
+              })
+              .catch((err) => {
+                console.log(err)
+              })
           })
         })
         return
