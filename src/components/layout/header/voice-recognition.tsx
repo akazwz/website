@@ -16,39 +16,29 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
-import { useReactMediaRecorder } from 'react-media-recorder'
+import { useMediaRecorder } from '../../../hooks/useMediaRecorder'
 
 const VoiceRecognition: FC = () => {
   const router = useRouter()
   const fillColor = useColorModeValue('black', 'white')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isMicReady, setIsMicReady] = useState(false)
+  const [voiceWords, setVoiceWords] = useState<string>('')
   const fill = isMicReady ? 'white' : 'red'
   const circleBg = isMicReady ? 'red' : 'white'
-  const {
-    status,
-    startRecording,
-    stopRecording,
-    mediaBlobUrl,
-    clearBlobUrl,
-  } = useReactMediaRecorder({
-    audio: true,
-    blobPropertyBag: {
-      type: 'audio/wav'
-    },
-    mediaRecorderOptions: {
-      /*audioBitsPerSecond: 16000,
-      bitsPerSecond: 16,*/
-    }
-  })
+
+  const { startRecording, stopRecording, blob, } = useMediaRecorder({})
 
   const blobToBase64 = (blob: Blob) => {
     return new Promise(((resolve, reject) => {
       const fileReader = new FileReader()
-      fileReader.onload = (e) => {
-        resolve(e!.target!.result)
-      }
       fileReader.readAsDataURL(blob)
+      fileReader.onload = (e) => {
+        if (typeof e!.target!.result === 'string') {
+          const value = e!.target!.result
+          resolve(value)
+        }
+      }
       fileReader.onerror = () => {
         reject(new Error('blob to base64 error'))
       }
@@ -68,53 +58,27 @@ const VoiceRecognition: FC = () => {
       })
     })
     fetch(postRequest).then((res) => {
-      console.log(res)
-    })
-  }
-
-  const getFileBase64FromServer = (file: File, dataLen: number, locale: string) => {
-    const formData = new FormData()
-    formData.append('file', file)
-    let postRequest = new Request('https://files-akazwz.vercel.app/api/file', {
-      method: 'POST',
-      body: formData
-    })
-    fetch(postRequest).then((res) => {
-      res.json().then((data) => {
-        const { file } = data
-        sendBase64ToServer(file, dataLen, locale)
+      res.json().then((res) => {
+        const { data } = res
+        const { Result } = data
+        setVoiceWords(Result)
       })
     })
   }
 
   useEffect(() => {
-    switch (status) {
-      case 'recording':
-        setIsMicReady(true)
-        return
-      case 'stopped':
-        if (!mediaBlobUrl) {
-          return
-        }
-        fetch(mediaBlobUrl).then((res) => {
-          res.blob().then((blob) => {
-            /*const audioFile = new File([blob], 'audio.wav', { type: 'audio/wav' })
-            console.log(audioFile)
-            getFileBase64FromServer(audioFile, audioFile.size, router.locale ?? 'en')*/
-            //sendFileToServer(audioFile, audioFile.size, router.locale ?? 'en')
-            blobToBase64(blob)
-              .then((base64) => {
-                console.log(base64)
-              })
-              .catch((err) => {
-                console.log(err)
-              })
-          })
-        })
-        return
+    if (!blob) {
+      return
     }
+    blobToBase64(blob).then((base64) => {
+      console.log(base64)
+      if (typeof base64 !== 'string') {
+        return
+      }
+      sendBase64ToServer(base64, blob.size, 'zh')
+    })
     setIsMicReady(false)
-  }, [mediaBlobUrl, router.locale, status])
+  }, [blob, router.locale])
 
   return (
     <>
@@ -127,7 +91,6 @@ const VoiceRecognition: FC = () => {
         icon={<Voice theme="outline" size="24" fill={fillColor}/>}
         onClick={() => {
           onOpen()
-          clearBlobUrl()
           startRecording()
         }}
       />
@@ -151,15 +114,7 @@ const VoiceRecognition: FC = () => {
                   alignContent="center"
                   alignItems="center"
                   onClick={() => {
-                    switch (status) {
-                      case 'recording':
-                        stopRecording()
-                        return
-                      case 'stopped':
-                        clearBlobUrl()
-                        startRecording()
-                        return
-                    }
+                    stopRecording()
                   }}
                 >
                   <Voice theme="filled" size="48px" fill={fill}/>
@@ -168,9 +123,9 @@ const VoiceRecognition: FC = () => {
             </Center>
           </DrawerHeader>
           <DrawerBody>
-            <Box height="5vh" minHeight="50px">
+            <Box height="5vh" minHeight="50px" textAlign="center">
               <Text>
-                {status}
+                {voiceWords}
               </Text>
             </Box>
           </DrawerBody>
