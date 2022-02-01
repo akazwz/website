@@ -9,7 +9,6 @@ export default function handler (req: NextApiRequest, res: NextApiResponse) {
   }
 
   base64Audio = base64Audio.slice(base64Audio.indexOf(',') + 1).replace(/[\r\n]/g, '')
-  console.log(base64Audio)
 
   const AsrClient = TencentCloud.asr.v20190614.Client
 
