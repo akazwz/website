@@ -46,7 +46,7 @@ const VoiceRecognition: FC = () => {
   }
 
   const sendBase64ToServer = (base64Audio: string, dataLen: number, locale: string) => {
-    let postRequest = new Request('/api/transcription/', {
+    fetch('/api/transcription/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;'
@@ -56,8 +56,7 @@ const VoiceRecognition: FC = () => {
         dataLen,
         locale,
       })
-    })
-    fetch(postRequest).then((res) => {
+    }).then((res) => {
       res.json().then((res) => {
         const { data } = res
         const { Result } = data
@@ -70,15 +69,62 @@ const VoiceRecognition: FC = () => {
     if (!blob) {
       return
     }
-    blobToBase64(blob).then((base64) => {
+    const getAliASR = async (blob: Blob) => {
+      const URL = 'https://nls-gateway.cn-shanghai.aliyuncs.com/stream/v1/asr'
+      const appkey = ''
+      const format = ''
+      const sample_rate = ''
+      const enable_punctuation_prediction = true
+      const requestUrl = URL + '?appkey=' + appkey + '&format=' + format
+        + '&sample_rate=' + sample_rate + '&enable_punctuation_prediction=' + enable_punctuation_prediction
+
+      const headers = new Headers()
+      const token = await getAliToken()
+      headers.append('X-NLS-Token', token)
+      headers.append('Content-type', 'application/octet-stream')
+      headers.append('Content-Length', String(blob.size))
+      headers.append('Host', 'nls-gateway.cn-shanghai.aliyuncs.com')
+      headers.append('origin', 'https://zhaowenzhuo.me')
+
+      fetch(requestUrl, {
+        method: 'POST',
+        headers: headers,
+        mode: 'cors',
+        /*body: blob,*/
+      })
+        .then((res) => {
+          console.log(res.json())
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+
+    getAliASR(blob).then()
+    /*blobToBase64(blob).then((base64) => {
       console.log(base64)
       if (typeof base64 !== 'string') {
         return
       }
       sendBase64ToServer(base64, blob.size, 'zh')
-    })
+    })*/
     setIsMicReady(false)
   }, [blob, router.locale])
+
+
+  const getAliToken = async (): Promise<string> => {
+    try {
+      const res = await fetch('/api/token', { method: 'GET' })
+      if (res.status !== 200) {
+        return ''
+      }
+      const { token, expire } = await res.json()
+      return token
+    } catch (e) {
+      console.log(e)
+      return ''
+    }
+  }
 
   return (
     <>
