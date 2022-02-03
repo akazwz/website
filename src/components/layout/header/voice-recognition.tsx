@@ -17,6 +17,7 @@ import {
 import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
 import { useMediaRecorder } from '../../../hooks/useMediaRecorder'
+import { useUpload } from '../../../hooks/useUpload'
 
 const VoiceRecognition: FC = () => {
   const router = useRouter()
@@ -28,103 +29,61 @@ const VoiceRecognition: FC = () => {
   const circleBg = isMicReady ? 'red' : 'white'
 
   const { startRecording, stopRecording, blob, } = useMediaRecorder({})
-
-  const blobToBase64 = (blob: Blob) => {
-    return new Promise(((resolve, reject) => {
-      const fileReader = new FileReader()
-      fileReader.readAsDataURL(blob)
-      fileReader.onload = (e) => {
-        if (typeof e!.target!.result === 'string') {
-          const value = e!.target!.result
-          resolve(value)
-        }
-      }
-      fileReader.onerror = () => {
-        reject(new Error('blob to base64 error'))
-      }
-    }))
-  }
-
-  const sendBase64ToServer = (base64Audio: string, dataLen: number, locale: string) => {
-    fetch('/api/transcription/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;'
-      },
-      body: JSON.stringify({
-        base64Audio,
-        dataLen,
-        locale,
-      })
-    }).then((res) => {
-      res.json().then((res) => {
-        const { data } = res
-        const { Result } = data
-        setVoiceWords(Result)
-      })
-    })
-  }
+  const [token, setToken] = useState<string | null>(null)
+  const [file, setFile] = useState<File | null>(null)
+  const [readyUpload, setReadyUpload] = useState<boolean>(false)
+  const { start, state, completeInfo } = useUpload(file, token)
 
   useEffect(() => {
     if (!blob) {
       return
     }
-    const getAliASR = async (blob: Blob) => {
-      const URL = 'https://nls-gateway.cn-shanghai.aliyuncs.com/stream/v1/asr'
-      const appkey = ''
-      const format = ''
-      const sample_rate = ''
-      const enable_punctuation_prediction = true
-      const requestUrl = URL + '?appkey=' + appkey + '&format=' + format
-        + '&sample_rate=' + sample_rate + '&enable_punctuation_prediction=' + enable_punctuation_prediction
-
-      const headers = new Headers()
-      const token = await getAliToken()
-      headers.append('X-NLS-Token', token)
-      headers.append('Content-type', 'application/octet-stream')
-      headers.append('Content-Length', String(blob.size))
-      headers.append('Host', 'nls-gateway.cn-shanghai.aliyuncs.com')
-      headers.append('origin', 'https://zhaowenzhuo.me')
-
-      fetch(requestUrl, {
-        method: 'POST',
-        headers: headers,
-        mode: 'cors',
-        /*body: blob,*/
-      })
-        .then((res) => {
-          console.log(res.json())
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-    }
-
-    getAliASR(blob).then()
-    /*blobToBase64(blob).then((base64) => {
-      console.log(base64)
-      if (typeof base64 !== 'string') {
-        return
-      }
-      sendBase64ToServer(base64, blob.size, 'zh')
-    })*/
+    setFile(new File([blob], 'audio.wav', { type: 'audio/wav' }))
     setIsMicReady(false)
-  }, [blob, router.locale])
+  }, [blob])
 
-
-  const getAliToken = async (): Promise<string> => {
-    try {
-      const res = await fetch('/api/token', { method: 'GET' })
+  useEffect(() => {
+    const getQiniuUploadToken = async (): Promise<string> => {
+      const res = await fetch('https://www.fhub.xyz/api/token/qiniu-upload-token', { method: 'GET' })
       if (res.status !== 200) {
         return ''
       }
-      const { token, expire } = await res.json()
-      return token
-    } catch (e) {
-      console.log(e)
-      return ''
+      const { uploadToken } = await res.json()
+      return uploadToken
     }
-  }
+    getQiniuUploadToken().then((uploadToken) => {setToken(uploadToken)})
+  }, [])
+
+  useEffect(() => {
+    if (file && token) {
+      setReadyUpload(true)
+    }
+  }, [file, token, router.locale])
+
+  useEffect(() => {
+    if (readyUpload) {
+      start()
+    }
+  }, [readyUpload, router.locale])
+
+  useEffect(() => {
+    if (!completeInfo) {
+      return
+    }
+    const key = completeInfo.key
+    fetch('/api/transcription?key=' + key + '&locale=' + router.locale, { method: 'GET' })
+      .then((res) => {
+        if (res.status !== 200) {
+          alert('error')
+          return
+        }
+        res.json().then((data) => {
+          const { Result } = data.data
+          setVoiceWords(Result)
+          setReadyUpload(false)
+        })
+      })
+  }, [completeInfo, router.locale])
 
   return (
     <>
@@ -138,6 +97,10 @@ const VoiceRecognition: FC = () => {
         onClick={() => {
           onOpen()
           startRecording()
+          setVoiceWords('')
+          setTimeout(()=>{
+            stopRecording()
+          }, 5000)
         }}
       />
       <Drawer
