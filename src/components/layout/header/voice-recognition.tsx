@@ -67,6 +67,7 @@ const VoiceRecognition: FC = () => {
   }, [readyUpload, router.locale])
 
   useEffect(() => {
+    setReadyUpload(false)
     if (!completeInfo) {
       return
     }
@@ -80,9 +81,9 @@ const VoiceRecognition: FC = () => {
         res.json().then((data) => {
           const { Result } = data.data
           setVoiceWords(Result)
-          setReadyUpload(false)
         })
       })
+
   }, [completeInfo, router.locale])
 
   return (
