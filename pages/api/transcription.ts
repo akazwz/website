@@ -4,7 +4,6 @@ import * as TencentCloud from 'tencentcloud-sdk-nodejs'
 
 export default function handler (req: NextApiRequest, res: NextApiResponse) {
   let { key, locale } = req.query
-  console.log('key:' + key)
   if (typeof key !== 'string') {
     res.status(500).json({
       err: 'params error',
@@ -12,14 +11,13 @@ export default function handler (req: NextApiRequest, res: NextApiResponse) {
     return
   }
   const url = getFileUrl(key)
-  console.log(url)
 
   const AsrClient = TencentCloud.asr.v20190614.Client
 
   const clientConfig = {
     credential: {
-      secretId: 'AKIDKTMyJNAgvtZy7zauzoMddNq2xc07wVno',
-      secretKey: 'lFUS8XgY9SVHm10jBMGvJPFp8AvPcZFf',
+      secretId: process.env.TAK,
+      secretKey: process.env.TAS,
     },
     region: '',
     profile: {
