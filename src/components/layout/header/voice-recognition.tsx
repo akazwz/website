@@ -16,7 +16,8 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
-import { useMediaRecorder } from '../../../hooks/useMediaRecorder'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { RecordStatus, useMediaRecorder } from '../../../hooks/useMediaRecorder'
 import { useUpload } from '../../../hooks/useUpload'
 
 const VoiceRecognition: FC = () => {
@@ -28,15 +29,23 @@ const VoiceRecognition: FC = () => {
   const fill = isMicReady ? 'white' : 'red'
   const circleBg = isMicReady ? 'red' : 'white'
 
-  const { startRecording, stopRecording, blob, } = useMediaRecorder({})
+  const { startRecording, stopRecording, cancelRecording, blob, status } = useMediaRecorder({})
   const [token, setToken] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const [readyUpload, setReadyUpload] = useState<boolean>(false)
-  const { start, state, completeInfo } = useUpload(file, token)
+  const { start, completeInfo } = useUpload(file, token)
 
   const { toggleColorMode, colorMode } = useColorMode()
 
+  /* voice order short keyboard */
+  useHotkeys('ctrl + z', () => {
+    openVoice()
+  })
+
   useEffect(() => {
+    if (RecordStatus.Canceled === status) {
+      return
+    }
     if (!blob) {
       return
     }
@@ -57,18 +66,28 @@ const VoiceRecognition: FC = () => {
   }, [])
 
   useEffect(() => {
+    if (RecordStatus.Canceled === status) {
+      return
+    }
     if (file && token) {
       setReadyUpload(true)
     }
   }, [file, token, router.locale])
 
   useEffect(() => {
+    if (RecordStatus.Canceled === status) {
+      return
+    }
+
     if (readyUpload) {
       start()
     }
   }, [readyUpload, router.locale])
 
   useEffect(() => {
+    if (RecordStatus.Canceled === status) {
+      return
+    }
     setReadyUpload(false)
     if (!completeInfo) {
       return
@@ -169,6 +188,22 @@ const VoiceRecognition: FC = () => {
     }
   }
 
+  const openVoice = () => {
+    onOpen()
+    startRecording()
+    setVoiceWords('')
+    setTimeout(() => {
+      stopRecording()
+      console.log('stop recording')
+    }, 5000)
+  }
+
+  const closeVoice = () => {
+    onClose()
+    stopRecording()
+    setVoiceWords('')
+  }
+
   return (
     <>
       <IconButton
@@ -178,21 +213,13 @@ const VoiceRecognition: FC = () => {
         variant="ghost"
         color="current"
         icon={<Voice theme="outline" size="24" fill={fillColor}/>}
-        onClick={() => {
-          onOpen()
-          startRecording()
-          setVoiceWords('')
-          setTimeout(() => {
-            stopRecording()
-          }, 5000)
-        }}
+        onClick={openVoice}
       />
       <Drawer
         isOpen={isOpen}
         placement="top"
         onClose={() => {
-          onClose()
-          stopRecording()
+          closeVoice()
         }}
       >
         <DrawerOverlay/>

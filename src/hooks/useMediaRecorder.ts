@@ -12,6 +12,7 @@ export type ReactMediaRecorderRenderProps = {
   stopRecording: () => void; // 结束录音
   pauseRecording?: () => void; // 暂停录音
   resumeRecording?: () => void; // 恢复录音
+  cancelRecording?: () => void; // 取消录音
   blob: Blob | null; // 二进制数据
   status?: RecordStatus
   previewAudioStream?: MediaStream | null
@@ -29,6 +30,7 @@ export enum RecordStatus {
   Recording,
   Stopped,
   Paused,
+  Canceled,
   PermissionDenied,
   RecorderError
 }
@@ -104,6 +106,9 @@ export function useMediaRecorder ({
     mediaRecorder.current = new MediaRecorder(mediaStream.current)
     /*音频数据可用时*/
     mediaRecorder.current.ondataavailable = async ({ data }: BlobEvent) => {
+      if (RecordStatus.Canceled === status) {
+        return
+      }
       audioContext.current
       && audioContext.current.decodeAudioData(await data.arrayBuffer(), (audioBuffer: AudioBuffer) => {
         /* 获取到 audio buffer */
@@ -166,11 +171,28 @@ export function useMediaRecorder ({
     setStatus(RecordStatus.Stopped)
   }
 
+  const cancelRecording = () => {
+    if (!mediaRecorder.current) {
+      return
+    }
+
+    /*停止音频流*/
+    mediaStream.current
+    && mediaStream.current.getTracks().forEach((track) => track.stop())
+
+    setStatus(RecordStatus.Canceled)
+
+    /* 关闭 media recorder  */
+    mediaRecorder.current.state !== 'inactive'
+    && mediaRecorder.current.stop()
+  }
+
   return {
     startRecording,
     stopRecording,
     pauseRecording,
     resumeRecording,
+    cancelRecording,
     blob: mediaBLob,
     status,
     previewAudioStream: mediaStream.current
