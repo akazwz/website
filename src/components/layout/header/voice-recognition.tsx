@@ -102,6 +102,10 @@ const VoiceRecognition: FC = () => {
         }
         res.json().then((data) => {
           const { Result } = data.data
+          if (Result === '') {
+            setVoiceWords(router.locale === 'zh' ? '请再试一次🐯': 'Please Try Again🐯')
+            return
+          }
           setVoiceWords(Result)
         })
       })
