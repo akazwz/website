@@ -17,6 +17,7 @@ import {
 import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { Bars } from 'react-loading-icons'
 import { RecordStatus, useMediaRecorder } from '../../../hooks/useMediaRecorder'
 import { useUpload } from '../../../hooks/useUpload'
 
@@ -230,21 +231,30 @@ const VoiceRecognition: FC = () => {
               <Circle bg={'transparent'} size="130px" alignContent="center" alignItems="center">
                 <Circle
                   bg={circleBg}
-                  size="78px"
+                  size={78}
                   alignContent="center"
                   alignItems="center"
                   onClick={() => {
                     stopRecording()
                   }}
                 >
-                  <Voice theme="filled" size="48px" fill={fill}/>
+                  {voiceWords === ''
+                    ? <Bars height="3rem" fill={fill} stroke={'transparent'}/>
+                    : <Voice theme="filled" size="48px" fill={fill}/>
+                  }
                 </Circle>
               </Circle>
             </Center>
           </DrawerHeader>
           <DrawerBody>
-            <Box height="5vh" minHeight="50px" textAlign="center">
-              <Text>
+            <Box
+              height="5vh"
+              minHeight="50px"
+              textAlign="center"
+              display={'flex'}
+              justifyContent={'center'}
+            >
+              <Text textAlign={'center'}>
                 {voiceWords}
               </Text>
             </Box>
