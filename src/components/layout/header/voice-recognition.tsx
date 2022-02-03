@@ -12,7 +12,7 @@ import {
   IconButton,
   Text,
   useColorModeValue,
-  useDisclosure,
+  useDisclosure, useColorMode,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
@@ -33,6 +33,8 @@ const VoiceRecognition: FC = () => {
   const [file, setFile] = useState<File | null>(null)
   const [readyUpload, setReadyUpload] = useState<boolean>(false)
   const { start, state, completeInfo } = useUpload(file, token)
+
+  const { toggleColorMode, colorMode } = useColorMode()
 
   useEffect(() => {
     if (!blob) {
@@ -86,6 +88,87 @@ const VoiceRecognition: FC = () => {
 
   }, [completeInfo, router.locale])
 
+  useEffect(() => {
+    if (voiceWords === '') {
+      return
+    }
+    switch (router.locale) {
+      case 'en':
+        enoOrders()
+        break
+      case 'zh':
+        zhoOrders()
+        break
+      default:
+    }
+  }, [voiceWords])
+
+  const zhoOrders = () => {
+    switch (true) {
+      case  voiceWords.indexOf('黑暗模式') !== -1 :
+        if (colorMode === 'dark') {
+          break
+        }
+        toggleColorMode()
+        break
+      case voiceWords.indexOf('明亮模式') !== -1:
+        if (colorMode === 'light') {
+          break
+        }
+        toggleColorMode()
+        break
+      case voiceWords.indexOf('主页') !== -1:
+        router.push('/', '/', { locale: router.locale }).then()
+        break
+      case voiceWords.indexOf('项目') !== -1:
+        router.push('/projects', '/projects', { locale: router.locale }).then()
+        break
+      case voiceWords.indexOf('关于') !== -1:
+        router.push('/about', '/about', { locale: router.locale }).then()
+        break
+      case voiceWords.indexOf('中文') !== -1:
+        router.push(router.asPath, router.asPath, { locale: 'zh' }).then()
+        break
+      case voiceWords.indexOf('英语') !== -1:
+        router.push(router.asPath, router.asPath, { locale: 'en' }).then()
+        break
+      default:
+    }
+  }
+
+  const enoOrders = () => {
+    switch (true) {
+      case  voiceWords.toLowerCase().indexOf('dark') !== -1 :
+        if (colorMode === 'dark') {
+          break
+        }
+        toggleColorMode()
+        break
+      case voiceWords.toLowerCase().indexOf('light') !== -1:
+        if (colorMode === 'light') {
+          break
+        }
+        toggleColorMode()
+        break
+      case voiceWords.toLowerCase().indexOf('homepage') !== -1:
+        router.push('/', '/', { locale: router.locale }).then()
+        break
+      case voiceWords.toLowerCase().indexOf('projects') !== -1:
+        router.push('/projects', '/projects', { locale: router.locale }).then()
+        break
+      case voiceWords.toLowerCase().indexOf('about') !== -1:
+        router.push('/about', '/about', { locale: router.locale }).then()
+        break
+      case voiceWords.toLowerCase().indexOf('chinese') !== -1:
+        router.push(router.asPath, router.asPath, { locale: 'zh' }).then()
+        break
+      case voiceWords.toLowerCase().indexOf('english') !== -1:
+        router.push(router.asPath, router.asPath, { locale: 'en' }).then()
+        break
+      default:
+    }
+  }
+
   return (
     <>
       <IconButton
@@ -99,7 +182,7 @@ const VoiceRecognition: FC = () => {
           onOpen()
           startRecording()
           setVoiceWords('')
-          setTimeout(()=>{
+          setTimeout(() => {
             stopRecording()
           }, 5000)
         }}
