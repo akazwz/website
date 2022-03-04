@@ -37,7 +37,8 @@
     "react-loading-icons": "^1.0.8",
     "react-media-recorder": "^1.6.3",
     "react-remove-scroll-bar": "^2.2.0",
-    "tencentcloud-sdk-nodejs": "^4.0.284"
+    "tencentcloud-sdk-nodejs": "^4.0.284",
+    "use-audio-recorder": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",

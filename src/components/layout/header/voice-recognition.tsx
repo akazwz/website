@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 import { Voice } from '@icon-park/react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Bars } from 'react-loading-icons'
-import { RecordStatus, useMediaRecorder } from '../../../hooks/useMediaRecorder'
+import { RecordStatus, useAudioRecorder } from 'use-audio-recorder'
 import { useUpload } from '../../../hooks/useUpload'
 
 const VoiceRecognition: FC = () => {
@@ -30,7 +30,7 @@ const VoiceRecognition: FC = () => {
   const fill = isMicReady ? 'white' : 'red'
   const circleBg = isMicReady ? 'red' : 'white'
 
-  const { startRecording, stopRecording, cancelRecording, blob, status } = useMediaRecorder({})
+  const { startRecording, stopRecording, cancelRecording, blob, status } = useAudioRecorder()
   const [token, setToken] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const [readyUpload, setReadyUpload] = useState<boolean>(false)
@@ -103,7 +103,7 @@ const VoiceRecognition: FC = () => {
         res.json().then((data) => {
           const { Result } = data.data
           if (Result === '') {
-            setVoiceWords(router.locale === 'zh' ? '请再试一次🐯': 'Please Try Again🐯')
+            setVoiceWords(router.locale === 'zh' ? '请再试一次🐯' : 'Please Try Again🐯')
             return
           }
           setVoiceWords(Result)
