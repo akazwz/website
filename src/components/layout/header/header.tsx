@@ -64,7 +64,6 @@ const Header: FC = () => {
           spacing={5}
         >
           <HStack
-            name="links-container"
             spacing={7}
             fontSize="1.2rem"
             fontWeight="bold"
