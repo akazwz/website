@@ -14,4 +14,7 @@ module.exports = {
     localeDetection: true,
   },
   trailingSlash: true,
+  experimental: {
+    outputStandalone: true,
+  },
 }
