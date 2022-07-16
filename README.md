@@ -1,3 +1,3 @@
-# Personal Website powered by NextJS and Chakra UI
+# Personal website built with next.js and chakra-ui
 
-### [zhaowenzhuo](https://zhaowenzhuo.me)
+### [akazwz](https://akazwz.com)
