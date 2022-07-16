@@ -9,8 +9,14 @@ import type { TextProps, ButtonGroupProps, } from '@chakra-ui/react'
 
 const Footer = () => {
 	return (
-		<Box as="footer" mx="auto" maxW="5xl" py="12" px={{ base: '4', md: '8' }}>
-			<Stack>
+		<Box
+			as="footer"
+			position="fixed"
+			bottom={0}
+			borderTopWidth={1}
+			w="100%"
+		>
+			<Stack maxW={'5xl'} mx={'auto'} p={3}>
 				<Stack
 					direction={{ base: 'column-reverse', md: 'row' }}
 					spacing="4"
