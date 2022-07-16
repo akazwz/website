@@ -1,18 +1,13 @@
-import { Center, Heading } from '@chakra-ui/react'
-import Layout from '../src/components/layout/layout'
+import { Heading, VStack } from '@chakra-ui/react'
 
-const AboutPage = () => {
-  return (
-    <>
-      <Layout>
-        <Center height="80vh">
-          <Heading size="4xl">
-            👋Hola!
-          </Heading>
-        </Center>
-      </Layout>
-    </>
-  )
+const About = () => {
+	return (
+		<VStack>
+			<Heading>
+				About
+			</Heading>
+		</VStack>
+	)
 }
 
-export default AboutPage
+export default About

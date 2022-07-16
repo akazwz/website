@@ -1,11 +1,7 @@
 {
-  "name": "zhaowenzhuio.me",
-  "author": {
-    "email": "akazwz@pm.me",
-    "name": "zhaowenzhuo",
-    "url": "zhaowenzhuo.me"
-  },
-  "private": true,
+  "name": "website",
+  "author": "akazwz akazwz@outlook.com",
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,32 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/layout": "^2.1.1",
     "@chakra-ui/react": "^2.2.4",
-    "@chakra-ui/react-env": "^2.0.4",
-    "@chakra-ui/system": "^2.2.2",
-    "@deepgram/sdk": "^1.4.2",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@icon-park/react": "^1.4.2",
     "axios": "^0.27.2",
-    "crypto": "^1.0.1",
     "framer-motion": "^6.5.1",
-    "ismobilejs": "^1.1.1",
     "next": "12.2.2",
-    "opus-to-pcm": "^1.0.2",
-    "puppeteer": "^15.4.0",
-    "qiniu": "^7.7.0",
-    "qiniu-js": "^3.4.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-hotkeys-hook": "^3.4.6",
-    "react-icons": "^4.4.0",
-    "react-loading-icons": "^1.1.0",
-    "react-media-recorder": "^1.6.6",
-    "react-remove-scroll-bar": "^2.3.3",
-    "tencentcloud-sdk-nodejs": "^4.0.381",
-    "use-audio-recorder": "^0.1.0"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
