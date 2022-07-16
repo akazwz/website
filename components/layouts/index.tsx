@@ -22,9 +22,10 @@ const Layout = ({ children }: LayoutProps) => {
 			<Header />
 			<Box
 				as="main"
-				mx="auto"
-				minH={{ base: '74vh', md: '77vh' }}
-				py={3}
+				maxW={'5xl'}
+				mx={'auto'}
+				px={5}
+				pt={24} pb={{ base: 24, md: 16 }}
 			>
 				{children}
 			</Box>

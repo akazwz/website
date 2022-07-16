@@ -9,7 +9,7 @@ import type { TextProps, ButtonGroupProps, } from '@chakra-ui/react'
 
 const Footer = () => {
 	return (
-		<Box as="footer" mx="auto" maxW="7xl" py="12" px={{ base: '4', md: '8' }}>
+		<Box as="footer" mx="auto" maxW="5xl" py="12" px={{ base: '4', md: '8' }}>
 			<Stack>
 				<Stack
 					direction={{ base: 'column-reverse', md: 'row' }}
