@@ -11,10 +11,12 @@ const Footer = () => {
 	return (
 		<Box
 			as="footer"
+			position="fixed"
+			bottom={0}
 			borderTopWidth={1}
 			w="100%"
 		>
-			<Stack maxW={'xl'} mx={'auto'} p={3}>
+			<Stack maxW={'2xl'} mx={'auto'} p={3}>
 				<Stack
 					direction={{ base: 'column-reverse', md: 'row' }}
 					spacing="4"

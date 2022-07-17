@@ -22,7 +22,7 @@ const Layout = ({ children }: LayoutProps) => {
 			<Header />
 			<Box
 				as="main"
-				maxW={'xl'}
+				maxW={'2xl'}
 				mx={'auto'}
 				px={5}
 				pt={24}
