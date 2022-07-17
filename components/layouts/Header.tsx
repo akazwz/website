@@ -5,7 +5,7 @@ import { NextChakraLink } from '../NextChakraLink'
 import { Logo } from '../Logo'
 
 const Header = () => {
-	const bg = useColorModeValue('whiteAlpha.900', 'blackAlpha.900')
+	// const bg = useColorModeValue('whiteAlpha.900', 'blackAlpha.900')
 	const router = useRouter()
 	return (
 		<Box
@@ -13,9 +13,8 @@ const Header = () => {
 			position="fixed"
 			w="100%"
 			zIndex={99}
-			borderBottomWidth="2px"
-			bg={bg}
-			backdropFilter={'blur(2px)'}
+			borderBottomWidth={1}
+			backdropFilter={'blur(5px)'}
 		>
 			<Box maxW={'2xl'} mx={'auto'} px={3}>
 				<HStack justify="space-between" w="100%" h={16}>

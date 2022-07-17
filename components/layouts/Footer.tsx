@@ -15,6 +15,7 @@ const Footer = () => {
 			bottom={0}
 			borderTopWidth={1}
 			w="100%"
+			backdropFilter={'blur(5px)'}
 		>
 			<Stack maxW={'2xl'} mx={'auto'} p={3}>
 				<Stack
