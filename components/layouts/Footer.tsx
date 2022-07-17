@@ -11,12 +11,10 @@ const Footer = () => {
 	return (
 		<Box
 			as="footer"
-			position="fixed"
-			bottom={0}
 			borderTopWidth={1}
 			w="100%"
 		>
-			<Stack maxW={'5xl'} mx={'auto'} p={3}>
+			<Stack maxW={'xl'} mx={'auto'} p={3}>
 				<Stack
 					direction={{ base: 'column-reverse', md: 'row' }}
 					spacing="4"
@@ -25,10 +23,9 @@ const Footer = () => {
 				>
 					<HStack>
 						<Logo size="21px" />
-						<Copyright
-							name={'AKAZWZ'}
-							alignSelf={{ base: 'center', sm: 'start' }}
-						/>
+						<Text color={'gray.600'}>
+							Built with Next.js.
+						</Text>
 					</HStack>
 					<HStack>
 						<LanguagesSwitch />

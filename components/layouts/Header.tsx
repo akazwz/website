@@ -15,8 +15,9 @@ const Header = () => {
 			zIndex={99}
 			borderBottomWidth="2px"
 			bg={bg}
+			backdropFilter={'blur(2px)'}
 		>
-			<Box maxW={'5xl'} mx={'auto'} px={3}>
+			<Box maxW={'xl'} mx={'auto'} px={3}>
 				<HStack justify="space-between" w="100%" h={16}>
 					<NextChakraLink href={'/'} color={router.pathname === '/' ? 'yellow.300' : ''}>
 						<Logo size="37px" />
