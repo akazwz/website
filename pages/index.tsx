@@ -4,9 +4,9 @@ const Index = () => {
 	return (
 		<VStack
 			display={'flex'}
-			minH={'70vh'}
 			justifyContent={'center'}
 			spacing={7}
+			minH={'50vh'}
 		>
 			<Image
 				boxSize={'100px'}
@@ -17,10 +17,10 @@ const Index = () => {
 			/>
 			<VStack>
 				<Heading>
-					👋 I&apos;m AKAZWZ,
+					AKAZWZ
 				</Heading>
 				<Heading>
-					a developer
+					A developer
 				</Heading>
 			</VStack>
 		</VStack>

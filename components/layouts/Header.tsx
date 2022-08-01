@@ -1,30 +1,37 @@
-import { Box, Button, HStack, Spacer, useColorModeValue, } from '@chakra-ui/react'
+import { Box, Button, HStack, Spacer, } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 import { NextChakraLink } from '../NextChakraLink'
 import { Logo } from '../Logo'
+import { ColorModeToggle } from '../ColorModeToggle'
 
 const Header = () => {
 	// const bg = useColorModeValue('whiteAlpha.900', 'blackAlpha.900')
 	const router = useRouter()
+
 	return (
 		<Box
 			as="header"
-			position="fixed"
-			w="100%"
-			zIndex={99}
-			borderBottomWidth={1}
-			backdropFilter={'blur(5px)'}
+			position="sticky"
+			rounded="lg"
+			p={3}
+			mx="auto"
+			maxW="3xl"
 		>
-			<Box maxW={'2xl'} mx={'auto'} px={3}>
-				<HStack justify="space-between" w="100%" h={16}>
-					<NextChakraLink href={'/'} color={router.pathname === '/' ? 'yellow.300' : ''}>
+			<HStack
+				rounded="lg"
+				justify="space-between"
+				backdropFilter={'blur(5px)'}
+			>
+				<NextChakraLink href={'/'} color={router.pathname === '/' ? 'purple.500' : ''}>
+					<Box aria-label={'home'}>
 						<Logo size="37px" />
-					</NextChakraLink>
-					<Spacer />
-					<Links />
-				</HStack>
-			</Box>
+					</Box>
+				</NextChakraLink>
+				<Spacer />
+				<Links />
+				<ColorModeToggle />
+			</HStack>
 		</Box>
 	)
 }
@@ -32,7 +39,10 @@ const Header = () => {
 const Links = () => {
 	const router = useRouter()
 	return (
-		<HStack fontWeight={'bold'} spacing={3}>
+		<HStack
+			as="nav"
+			fontWeight={'bold'}
+		>
 			<NextChakraLink href={'/about'}>
 				<Button variant={router.pathname.startsWith('/about') ? 'solid' : 'ghost'}>
 					About

@@ -13,7 +13,6 @@ const Footer = () => {
 			as="footer"
 			position="fixed"
 			bottom={0}
-			borderTopWidth={1}
 			w="100%"
 			backdropFilter={'blur(5px)'}
 		>
@@ -27,7 +26,7 @@ const Footer = () => {
 					<HStack>
 						<Logo size="21px" />
 						<Text color={'gray.600'}>
-							Built with Next.js.
+							Built with Next.js
 						</Text>
 					</HStack>
 					<HStack>
