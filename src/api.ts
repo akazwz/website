@@ -26,3 +26,14 @@ interface LoginData{
 export const LoginApi = async(data: LoginData) => {
 	return axios.post(`${API_HOST}/auth/login`, data)
 }
+
+export const MeApi = async(bearerToken: string) => {
+	if (bearerToken.length < 10) {
+		return null
+	}
+	return axios.get(`${API_HOST}/auth/me`, {
+		headers: {
+			Authorization: bearerToken,
+		}
+	})
+}

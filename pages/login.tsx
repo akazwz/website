@@ -26,7 +26,8 @@ const Login = () => {
 				const { data: serverData } = res.data
 				const { token } = serverData
 				setLogin(token)
-				await router.push('/dashboard')
+				console.log('login success')
+				router.push('/dashboard').then()
 			})
 			.catch((e) => {
 				toast({

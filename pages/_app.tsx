@@ -5,6 +5,7 @@ import { AppProps } from 'next/app'
 import theme from '../src/theme'
 import Layouts from '../components/layouts'
 
+
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<RecoilRoot>

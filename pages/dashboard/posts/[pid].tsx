@@ -3,8 +3,11 @@ import { GetServerSideProps } from 'next'
 import { marked } from 'marked'
 import dayjs from 'dayjs'
 
-import { GetPostApi } from '../../../src/api'
+import { DeletePostApi, GetPostApi } from '../../../src/api'
 import { Post } from '../../../src/types'
+import { useSWRConfig } from 'swr'
+import { useAuth } from '../../../src/hooks/useAuth'
+import { useRouter } from 'next/router'
 
 export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	const pid = params!.pid
@@ -29,6 +32,14 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 }
 
 const PostDetail = ({ post }: { post: Post }) => {
+	const { mutate } = useSWRConfig()
+	const { bearerToken } = useAuth()
+	const router = useRouter()
+	const handleDeletePost = async() => {
+		await DeletePostApi(post.uuid, bearerToken)
+		await mutate('get-posts')
+		await router.push('/dashboard/posts')
+	}
 	return (
 		<Box maxW={{ base: 'xl', md: '3xl' }} mx="auto">
 			<Heading mb={3}>{post.title}</Heading>
@@ -44,7 +55,7 @@ const PostDetail = ({ post }: { post: Post }) => {
 			<Box dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
 			<HStack mt={12}>
 				<Spacer />
-				<Button colorScheme="red">Delete</Button>
+				<Button colorScheme="red" onClick={handleDeletePost}>Delete</Button>
 			</HStack>
 		</Box>
 	)

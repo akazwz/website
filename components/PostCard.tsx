@@ -5,6 +5,7 @@ import { Post } from '../src/types'
 import { NextChakraLink } from './NextChakraLink'
 import { DeletePostApi } from '../src/api'
 import { useAuth } from '../src/hooks/useAuth'
+import { useSWRConfig } from 'swr'
 
 export const PostCard = ({ post }: { post: Post }) => {
 	return (
@@ -19,8 +20,12 @@ export const PostCard = ({ post }: { post: Post }) => {
 
 export const PostCardAdmin = ({ post }: { post: Post }) => {
 	const { bearerToken } = useAuth()
+
+	const { mutate } = useSWRConfig()
+
 	const handleDeletePost = async() => {
 		await DeletePostApi(post.uuid, bearerToken)
+		await mutate('get-posts')
 	}
 	return (
 		<Stack

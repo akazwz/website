@@ -8,15 +8,20 @@ import {
 	HStack,
 	Divider,
 	Text,
-	useColorModeValue,
+	useColorModeValue, Button,
 } from '@chakra-ui/react'
 
+import { useAccount } from '../src/hooks/useAccount'
+import { useAuth } from '../src/hooks/useAuth'
 import { useRouter } from 'next/router'
 
 export const UserMenu = () => {
 	const bgColor = useColorModeValue('white', 'black')
 
 	const router = useRouter()
+
+	const { signOut } = useAuth()
+	const { account } = useAccount()
 
 	return (
 		<Box>
@@ -27,11 +32,18 @@ export const UserMenu = () => {
 				<MenuList backgroundColor={bgColor}>
 					<VStack justifyContent="center" p={3} spacing={3}>
 						<HStack>
-							<Text>{'akazwz@pm.me'}</Text>
+							<Text>{account?.username}</Text>
 						</HStack>
 						<Divider />
 						<HStack>
-							<Text>{'admin'}</Text>
+							<Text>{account?.uid}</Text>
+						</HStack>
+						<Divider />
+						<HStack>
+							<Button onClick={() => {
+								signOut()
+								router.push('/login').then()
+							}}>Sign Out</Button>
 						</HStack>
 					</VStack>
 				</MenuList>

@@ -1,21 +1,10 @@
-import { GetServerSideProps } from 'next'
-
-import { GetPostsApi } from '../../../src/api'
-import { Post } from '../../../src/types'
 import { PostCardAdmin } from '../../../components/PostCard'
+import { usePost } from '../../../src/hooks/usePost'
+import { Button, HStack, Spacer } from '@chakra-ui/react'
+import { NextChakraLink } from '../../../components/NextChakraLink'
 
-export const getServerSideProps: GetServerSideProps = async() => {
-	const response = await GetPostsApi()
-	const json = response.data
-	const { data: posts } = json
-	return {
-		props: {
-			posts,
-		}
-	}
-}
-
-const Posts = ({ posts }: { posts: Post[] }) => {
+const Posts = () => {
+	const { posts } = usePost()
 	return (
 		<>
 			{
