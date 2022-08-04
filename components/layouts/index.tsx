@@ -25,7 +25,7 @@ const Layout = ({ children }: LayoutProps) => {
 				maxW={'2xl'}
 				mx={'auto'}
 				px={5}
-				pt={24}
+				pt={12}
 				pb={{ base: 24, md: 16 }}
 			>
 				{children}
