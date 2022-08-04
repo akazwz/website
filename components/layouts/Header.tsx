@@ -53,6 +53,11 @@ const Links = () => {
 					Projects
 				</Button>
 			</NextChakraLink>
+			<NextChakraLink href={'/posts'}>
+				<Button variant={router.pathname.startsWith('/posts') ? 'solid' : 'ghost'}>
+					Posts
+				</Button>
+			</NextChakraLink>
 		</HStack>
 	)
 }

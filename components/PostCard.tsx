@@ -1,25 +1,16 @@
-import { Box, Divider, HStack, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
+import dayjs from 'dayjs'
 
-const PostCard = () => {
-	const bg = useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
+import { Post } from '../src/types'
+import { NextChakraLink } from './NextChakraLink'
+
+export const PostCard = ({ post }: { post: Post }) => {
 	return (
-		<Box p={3} bg={bg} rounded={'lg'} my={3}>
-			<Text fontSize={'lg'} fontWeight={'bold'}>Post Title</Text>
-			<HStack color={'gray.600'}>
-				<Text>
-					2021/03/07
-				</Text>
-				<Divider orientation={'vertical'} />
-				<Text>
-					307 views
-				</Text>
-			</HStack>
-			<Text mt={3}>
-				Why is Rust being used to replace parts of the JavaScript web ecosystem like minification (Terser),
-				transpilation (Babel), formatting (Prettier), bundling (webpack), linting (ESLint), and more?
-			</Text>
-		</Box>
+		<NextChakraLink href={`/posts/${post.uuid}`}>
+			<Box p={7} borderWidth={1} mb={3} rounded="lg">
+				<Text fontWeight="bold" fontSize="lg">{post.title}</Text>
+				<Text>{dayjs(post.created_at).format('YYYY/MM/DD HH:mm')}</Text>
+			</Box>
+		</NextChakraLink>
 	)
 }
-
-export default PostCard
