@@ -1,6 +1,7 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import { Box, Heading, HStack, Image, Text } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { marked } from 'marked'
+import dayjs from 'dayjs'
 
 import { Post } from '../../src/types'
 import { getPost } from '../../src/api'
@@ -15,6 +16,11 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	const response = await getPost(pid)
 	const json = await response.json()
 	const { data: post } = json
+	if (!post) {
+		return {
+			notFound: true,
+		}
+	}
 	return {
 		props: {
 			post,
@@ -25,7 +31,11 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 const PostDetail = ({ post }: { post: Post }) => {
 	return (
 		<Box>
-			<Heading mb={7}>{post.title}</Heading>
+			<Heading mb={3}>{post.title}</Heading>
+			<HStack mb={7} color="gray.500">
+				<Text>{dayjs(post.created_at).format('YYYY/MM/DD HH:mm')}</Text>
+				<Text>• {post.viewed} views</Text>
+			</HStack>
 			<Image
 				alt={post.title}
 				src={post.cover}
