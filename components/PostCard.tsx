@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Button, HStack, Spacer, Stack, Text } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 
 import { Post } from '../src/types'
@@ -14,3 +14,28 @@ export const PostCard = ({ post }: { post: Post }) => {
 		</NextChakraLink>
 	)
 }
+
+export const PostCardAdmin = ({ post }: { post: Post }) => {
+	return (
+		<Stack
+			direction={{ base: 'column', md: 'row' }}
+			borderWidth={1}
+			mb={3}
+			rounded="lg"
+			p={7}
+		>
+			<NextChakraLink href={`/dashboard/posts/${post.uuid}`}>
+				<Box>
+					<Text fontWeight="bold" fontSize="lg">{post.title}</Text>
+					<Text>{dayjs(post.created_at).format('YYYY/MM/DD HH:mm')}</Text>
+				</Box>
+			</NextChakraLink>
+			<Spacer />
+			<HStack justify="space-around" rounded="lg" borderWidth={1} p={3}>
+				<Button colorScheme="blue">Edit</Button>
+				<Button colorScheme="red">Delete</Button>
+			</HStack>
+		</Stack>
+	)
+}
+
