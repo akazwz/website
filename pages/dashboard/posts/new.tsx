@@ -1,6 +1,7 @@
 import { Box, Heading, Input, Textarea } from '@chakra-ui/react'
 import { useState } from 'react'
 import { marked } from 'marked'
+import { ImageUploader } from '../../../components/ImageUploader'
 
 const NewPost = () => {
 	const [value, setValue] = useState('')
@@ -8,7 +9,8 @@ const NewPost = () => {
 	return (
 		<Box maxW="3xl" mx="auto">
 			<Heading mb={3}>New Post</Heading>
-			<Input size="lg" placeholder="title" mb={7} />
+			<Input size="lg" placeholder="title" />
+			<ImageUploader />
 			<Textarea
 				size="lg"
 				minH="md"
