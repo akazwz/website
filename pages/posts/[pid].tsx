@@ -4,7 +4,7 @@ import { marked } from 'marked'
 import dayjs from 'dayjs'
 
 import { Post } from '../../src/types'
-import { getPost } from '../../src/api'
+import { GetPostApi } from '../../src/api'
 
 export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	const pid = params!.pid
@@ -13,8 +13,8 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 			notFound: true,
 		}
 	}
-	const response = await getPost(pid)
-	const json = await response.json()
+	const response = await GetPostApi(pid)
+	const json = response.data
 	const { data: post } = json
 	if (!post) {
 		return {

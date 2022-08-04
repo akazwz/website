@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react'
-import { Box } from '@chakra-ui/react'
+import { Box, Center, Spinner } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 import Header from './Header'
 import Footer from './Footer'
 import { DashboardLayout } from '../dashboard/layout'
+import { useAuth } from '../../src/hooks/useAuth'
+import { Spanner } from '@icon-park/react'
 
 interface LayoutProps{
 	children: ReactNode
@@ -13,7 +15,32 @@ interface LayoutProps{
 const Layouts = ({ children }: LayoutProps) => {
 	const router = useRouter()
 	const pathname = router.pathname
+
+	const {loading, error, token} = useAuth()
+
+	const emptyLayoutRoutes = ['/login']
+	if (emptyLayoutRoutes.includes(pathname)) {
+		return <>{children}</>
+	}
+
 	if (pathname.startsWith('/dashboard')) {
+		if (loading) {
+			return (
+				<Center h="100vh">
+					<Spinner/>
+				</Center>
+			)
+		}
+
+		if (error || token.length < 10) {
+			router.push('/login').then()
+			return (
+				<Center h="100vh">
+					<Spinner />
+				</Center>
+			)
+		}
+
 		return (
 			<DashboardLayout>
 				{children}

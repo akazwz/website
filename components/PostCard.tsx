@@ -3,6 +3,8 @@ import dayjs from 'dayjs'
 
 import { Post } from '../src/types'
 import { NextChakraLink } from './NextChakraLink'
+import { DeletePostApi } from '../src/api'
+import { useAuth } from '../src/hooks/useAuth'
 
 export const PostCard = ({ post }: { post: Post }) => {
 	return (
@@ -16,6 +18,10 @@ export const PostCard = ({ post }: { post: Post }) => {
 }
 
 export const PostCardAdmin = ({ post }: { post: Post }) => {
+	const { bearerToken } = useAuth()
+	const handleDeletePost = async() => {
+		await DeletePostApi(post.uuid, bearerToken)
+	}
 	return (
 		<Stack
 			direction={{ base: 'column', md: 'row' }}
@@ -33,7 +39,7 @@ export const PostCardAdmin = ({ post }: { post: Post }) => {
 			<Spacer />
 			<HStack justify="space-around" rounded="lg" borderWidth={1} p={3}>
 				<Button colorScheme="blue">Edit</Button>
-				<Button colorScheme="red">Delete</Button>
+				<Button colorScheme="red" onClick={handleDeletePost}>Delete</Button>
 			</HStack>
 		</Stack>
 	)

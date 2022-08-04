@@ -1,11 +1,12 @@
 import { GetServerSideProps } from 'next'
-import { getPosts } from '../../../src/api'
+
+import { GetPostsApi } from '../../../src/api'
 import { Post } from '../../../src/types'
-import { PostCard, PostCardAdmin } from '../../../components/PostCard'
+import { PostCardAdmin } from '../../../components/PostCard'
 
 export const getServerSideProps: GetServerSideProps = async() => {
-	const response = await getPosts()
-	const json = await response.json()
+	const response = await GetPostsApi()
+	const json = response.data
 	const { data: posts } = json
 	return {
 		props: {

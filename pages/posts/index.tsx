@@ -1,13 +1,12 @@
-import { Box, VStack, Text } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 
 import { Post } from '../../src/types'
 import { PostCard } from '../../components/PostCard'
-import { getPosts } from '../../src/api'
+import { GetPostsApi } from '../../src/api'
 
 export const getServerSideProps: GetServerSideProps = async() => {
-	const response = await getPosts()
-	const json = await response.json()
+	const response = await GetPostsApi()
+	const json = response.data
 	const { data: posts } = json
 	return {
 		props: {
@@ -20,7 +19,7 @@ const Projects = ({ posts }: { posts: Post[] }) => {
 	return (
 		<>
 			{
-				posts.map((post)=><PostCard key={post.uuid} post={post} />)
+				posts.map((post) => <PostCard key={post.uuid} post={post} />)
 			}
 		</>
 	)

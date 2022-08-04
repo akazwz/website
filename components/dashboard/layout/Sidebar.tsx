@@ -16,7 +16,7 @@ import { LanguagesSwitch } from '../../LanguagesSwitch'
 import { ColorModeToggle } from '../../ColorModeToggle'
 
 interface SidebarProps extends BoxProps{
-	onClose: () => void;
+	onClose: () => void
 	mini: boolean
 	setMini: (mini: boolean) => void
 }

@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next'
 import { marked } from 'marked'
 import dayjs from 'dayjs'
 
-import { getPost } from '../../../src/api'
+import { GetPostApi } from '../../../src/api'
 import { Post } from '../../../src/types'
 
 export const getServerSideProps: GetServerSideProps = async({ params }) => {
@@ -13,8 +13,8 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 			notFound: true,
 		}
 	}
-	const response = await getPost(pid)
-	const json = await response.json()
+	const response = await GetPostApi(pid)
+	const json = response.data
 	const { data: post } = json
 	if (!post) {
 		return {
