@@ -10,6 +10,20 @@ export const GetPostApi = async(pid: string) => {
 	return axios.get(`${API_HOST}/posts/${pid}`)
 }
 
+interface CreatePostData{
+	title: string
+	cover: string
+	content: string
+}
+
+export const CreatePostApi = async(data: CreatePostData, bearerToken: string) => {
+	return axios.post(`${API_HOST}/posts`, data,{
+		headers: {
+			'Authorization': bearerToken,
+		}
+	})
+}
+
 export const DeletePostApi = async(pid: string, bearerToken: string) => {
 	return axios.delete(`${API_HOST}/posts/${pid}`, {
 		headers: {

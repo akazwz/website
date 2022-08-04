@@ -1,8 +1,14 @@
 import { AspectRatio, Box, Image, Input, useToast, VStack } from '@chakra-ui/react'
 import { useRef, DragEvent, useState } from 'react'
-import { Add, UploadOne } from '@icon-park/react'
+import { Add } from '@icon-park/react'
+import axios from 'axios'
+import FormData from 'form-data'
 
-export const ImageUploader = () => {
+interface ImageUploaderProps{
+	handleUrl: (url: string) => void
+}
+
+export const ImageUploader = ({ handleUrl }: ImageUploaderProps) => {
 	const inputRef = useRef<HTMLInputElement>(null)
 	const [progress, setProgress] = useState(0)
 	const [url, setUrl] = useState<string>('')
@@ -48,12 +54,17 @@ export const ImageUploader = () => {
 			})
 			return
 		}
+		const form = new FormData()
+		form.append('file', file)
+		const res = await axios.post('https://media.onio.cc', form)
+		const { url } = res.data
+		setUrl(url)
+		handleUrl(url)
 	}
 
 	return (
 		<Box
-			m={3}
-			p={7}
+			p={3}
 			mx="auto"
 			onClick={handleSelectFile}
 			onDragOver={(e) => {
