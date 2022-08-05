@@ -1,5 +1,4 @@
-import { Heading, HStack, Text } from '@chakra-ui/react'
-import { Triangle } from '@icon-park/react'
+import { HStack, Text } from '@chakra-ui/react'
 
 interface LogoProps{
 	size: string
@@ -7,7 +6,7 @@ interface LogoProps{
 
 export const Logo = ({ size }: LogoProps) => {
 	return (
-		<HStack spacing={3} fontWeight="bold">
+		<HStack spacing={3} fontWeight="extrabold" fontSize={size}>
 			<Text>
 				AKAZWZ
 			</Text>

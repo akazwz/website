@@ -1,7 +1,6 @@
 import { Box, Stack, HStack, Text, ButtonGroup, IconButton, } from '@chakra-ui/react'
 import { Github, Weibo, Twitter } from '@icon-park/react'
 
-import { Logo } from '../Logo'
 import { LanguagesSwitch } from '../LanguagesSwitch'
 import { ColorModeToggle } from '../ColorModeToggle'
 
@@ -21,14 +20,15 @@ const Footer = () => {
 					direction={{ base: 'column-reverse', md: 'row' }}
 					spacing="4"
 					align="center"
+					justifyContent="center"
 					justify="space-between"
 				>
-					<HStack>
-						<Logo size="21px" />
-						<Text color={'gray.600'}>
+					{/*<HStack>
+						<Logo size="11px" />
+						<Text color={'gray.500'}>
 							Built with Next.js
 						</Text>
-					</HStack>
+					</HStack>*/}
 					<HStack>
 						<LanguagesSwitch />
 						<ColorModeToggle />
