@@ -1,13 +1,19 @@
+import { useRef } from 'react'
 import {
 	Box,
 	Button,
-	Drawer, DrawerBody, DrawerCloseButton,
-	DrawerContent, DrawerHeader,
-	DrawerOverlay, Heading,
+	DrawerBody,
+	DrawerCloseButton,
+	DrawerContent,
+	DrawerHeader,
 	HStack,
 	IconButton,
-	Spacer, useColorModeValue,
-	useDisclosure, VStack,
+	Spacer,
+	VStack,
+	useColorModeValue,
+	useDisclosure,
+	useOutsideClick,
+	Drawer,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { HamburgerButton } from '@icon-park/react'
@@ -17,13 +23,19 @@ import { Logo } from '../Logo'
 import { ColorModeToggle } from '../ColorModeToggle'
 
 const MobileLinks = () => {
+	const ref = useRef(null)
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const bgColor = useColorModeValue('white', 'black')
-	const router = useRouter()
+
+	useOutsideClick({
+		ref: ref,
+		handler: () => onClose()
+	})
 
 	return (
 		<Box display={{ base: 'block', md: 'none' }}>
 			<IconButton
+				ref={ref}
 				aria-label={'nav menu'}
 				icon={<HamburgerButton size="21px" />} variant="ghost"
 				onClick={onOpen}
