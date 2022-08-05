@@ -6,7 +6,7 @@ const Posts = () => {
 	return (
 		<>
 			{
-				posts.length > 0 && posts.map((post) => <PostCardAdmin key={post.uuid} post={post} />)
+				posts && posts.length > 0 && posts.map((post) => <PostCardAdmin key={post.uuid} post={post} />)
 			}
 		</>
 	)

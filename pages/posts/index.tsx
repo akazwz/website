@@ -27,7 +27,7 @@ const Posts = ({ posts }: { posts: Post[] }) => {
 	return (
 		<>
 			{
-				posts.length > 0 && posts.map((post) => <PostCard key={post.uuid} post={post} />)
+				posts && posts.length > 0 && posts.map((post) => <PostCard key={post.uuid} post={post} />)
 			}
 		</>
 	)
