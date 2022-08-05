@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_HOST = process.env.API_HOST || 'http://localhost:8080'
+const API_HOST = process.env.API_HOST || 'https://api.onio.cc'
 
 export const GetPostsApi = async() => {
 	return axios.get(`${API_HOST}/posts`)
@@ -17,7 +17,7 @@ interface CreatePostData{
 }
 
 export const CreatePostApi = async(data: CreatePostData, bearerToken: string) => {
-	return axios.post(`${API_HOST}/posts`, data,{
+	return axios.post(`${API_HOST}/posts`, data, {
 		headers: {
 			'Authorization': bearerToken,
 		}

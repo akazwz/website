@@ -41,7 +41,7 @@ const PostDetail = ({ post }: { post: Post }) => {
 				src={post.cover}
 				mb={7}
 			/>
-			<Box dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
+			<pre dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
 		</Box>
 	)
 }
