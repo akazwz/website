@@ -6,7 +6,6 @@ import Header from './Header'
 import Footer from './Footer'
 import { DashboardLayout } from '../dashboard/layout'
 import { useAuth } from '../../src/hooks/useAuth'
-import { Spanner } from '@icon-park/react'
 
 interface LayoutProps{
 	children: ReactNode

@@ -58,7 +58,7 @@ const Login = () => {
 			>
 				<HStack>
 					<NextChakraLink href={'/'}>
-						<Logo size={'50px'} />
+						<Logo size={'21px'} />
 					</NextChakraLink>
 					<Spacer />
 				</HStack>
