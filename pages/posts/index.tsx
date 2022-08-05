@@ -1,8 +1,29 @@
-import { PostCard } from '../../components/PostCard'
-import { usePost } from '../../src/hooks/usePost'
+import { GetServerSideProps } from 'next'
 
-const Projects = () => {
-	const { posts } = usePost()
+import { PostCard } from '../../components/PostCard'
+import { GetPostsApi } from '../../src/api'
+import { Post } from '../../src/types'
+
+export const getServerSideProps: GetServerSideProps = async() => {
+	try {
+		const response = await GetPostsApi()
+		const json = response.data
+		const { data: posts } = json
+		return {
+			props: {
+				posts,
+			}
+		}
+	} catch (e) {
+		return {
+			props: {
+				posts: [],
+			}
+		}
+	}
+}
+
+const Posts = ({ posts }: { posts: Post[] }) => {
 	return (
 		<>
 			{
@@ -12,4 +33,4 @@ const Projects = () => {
 	)
 }
 
-export default Projects
+export default Posts
