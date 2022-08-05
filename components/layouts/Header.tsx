@@ -89,7 +89,7 @@ const Header = () => {
 			>
 				<NextChakraLink href={'/'} color={router.pathname === '/' ? 'purple.500' : ''}>
 					<Box aria-label={'home'}>
-						<Logo size="30px" />
+						<Logo size="21px" />
 					</Box>
 				</NextChakraLink>
 				<Spacer />
