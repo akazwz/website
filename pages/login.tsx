@@ -18,15 +18,14 @@ const Login = () => {
 
 	const router = useRouter()
 
-	const handleLogin = async(event: MouseEvent<HTMLButtonElement>) => {
+	const handleLogin = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault()
 		setLoading(true)
 		LoginApi({ username, password })
-			.then(async(res) => {
+			.then((res) => {
 				const { data: serverData } = res.data
 				const { token } = serverData
 				setLogin(token)
-				console.log('login success')
 				router.push('/dashboard').then()
 			})
 			.catch((e) => {

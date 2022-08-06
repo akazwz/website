@@ -1,5 +1,6 @@
 import { Box, Button, Heading, HStack, Image, Spacer, Text } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 import { marked } from 'marked'
 import dayjs from 'dayjs'
 
@@ -7,7 +8,6 @@ import { DeletePostApi, GetPostApi } from '../../../src/api'
 import { Post } from '../../../src/types'
 import { useSWRConfig } from 'swr'
 import { useAuth } from '../../../src/hooks/useAuth'
-import { useRouter } from 'next/router'
 
 export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	const pid = params!.pid
