@@ -28,6 +28,8 @@ const MobileLinks = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const bgColor = useColorModeValue('white', 'black')
 
+	const { t } = useTranslation('common')
+
 	useOutsideClick({
 		ref: ref,
 		handler: () => onClose()
@@ -54,13 +56,13 @@ const MobileLinks = () => {
 					<DrawerBody>
 						<VStack spacing={24} fontSize="lg" fontWeight="bold" justifyContent="center" height="50vh">
 							<NextChakraLink href={'/about'}>
-								About
+								{t('header.about')}
 							</NextChakraLink>
 							<NextChakraLink href={'/projects'}>
-								Projects
+								{t('header.projects')}
 							</NextChakraLink>
 							<NextChakraLink href={'/posts'}>
-								Posts
+								{t('header.posts')}
 							</NextChakraLink>
 						</VStack>
 					</DrawerBody>
@@ -106,6 +108,7 @@ const Links = () => {
 	const router = useRouter()
 
 	const { t } = useTranslation('common')
+
 	return (
 		<HStack
 			as="nav"
