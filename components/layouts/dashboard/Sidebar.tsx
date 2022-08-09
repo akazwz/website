@@ -130,7 +130,7 @@ const DashboardSidebar = ({ onClose, mini, setMini, ...rest }: SidebarProps) => 
 		>
 			<Flex direction="column" h="full">
 				<HStack justifyContent="center" height={'6vh'} borderBottomWidth={1}>
-					<Logo size={'37px'} />
+					<Logo size={'21px'} />
 				</HStack>
 				<NavLinks mini={mini} />
 				<Spacer />

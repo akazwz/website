@@ -1,4 +1,4 @@
-import { Box, Button, Heading, HStack, Image, Spacer, Text } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, Image, Spacer, Text, VStack } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { marked } from 'marked'
@@ -8,6 +8,9 @@ import { DeleteProjectApi, GetProjectApi } from '../../../src/api'
 import { Post, Project } from '../../../src/types'
 import { useSWRConfig } from 'swr'
 import { useAuth } from '../../../src/hooks/useAuth'
+import { NextChakraLink } from '../../../components/NextChakraLink'
+import { Github, WebPage } from '@icon-park/react'
+import { ProjectPreview } from '../../../components/ProjectPreview'
 
 export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	const pid = params!.pid
@@ -41,13 +44,8 @@ const ProjectDetail = ({ project }: { project: Project }) => {
 		await router.push('/dashboard/projects')
 	}
 	return (
-		<Box maxW={{ base: 'xl', md: '3xl' }} mx="auto">
-			<Heading mb={3}>{project.name}</Heading>
-			<HStack mb={7} color="gray.500">
-				<Text>{dayjs(project.created_at).format('YYYY/MM/DD HH:mm')}</Text>
-			</HStack>
-
-			<Box dangerouslySetInnerHTML={{ __html: marked(project.readme || '') }} />
+		<Box maxW={{ base: 'xl', md: '3xl' }} mx="auto" p={{ base: 3, md: 7 }}>
+			<ProjectPreview project={project} />
 			<HStack mt={12}>
 				<Spacer />
 				<Button colorScheme="red" onClick={handleDeleteProject}>Delete</Button>
