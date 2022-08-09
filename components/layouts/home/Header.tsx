@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { HamburgerButton } from '@icon-park/react'
+import { useTranslation } from 'next-i18next'
 
 import { NextChakraLink } from '../../NextChakraLink'
 import { Logo } from '../../Logo'
@@ -103,6 +104,8 @@ const HomeHeader = () => {
 
 const Links = () => {
 	const router = useRouter()
+
+	const { t } = useTranslation('common')
 	return (
 		<HStack
 			as="nav"
@@ -111,17 +114,17 @@ const Links = () => {
 		>
 			<NextChakraLink href={'/about'}>
 				<Button variant={router.pathname.startsWith('/about') ? 'solid' : 'ghost'}>
-					About
+					{t('header.about')}
 				</Button>
 			</NextChakraLink>
 			<NextChakraLink href={'/projects'}>
 				<Button variant={router.pathname.startsWith('/projects') ? 'solid' : 'ghost'}>
-					Projects
+					{t('header.projects')}
 				</Button>
 			</NextChakraLink>
 			<NextChakraLink href={'/posts'}>
 				<Button variant={router.pathname.startsWith('/posts') ? 'solid' : 'ghost'}>
-					Posts
+					{t('header.posts')}
 				</Button>
 			</NextChakraLink>
 		</HStack>

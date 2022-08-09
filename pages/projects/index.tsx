@@ -1,10 +1,11 @@
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, GetStaticProps } from 'next'
 
 import { GetProjectsApi } from '../../src/api'
 import { Project } from '../../src/types'
 import { ProjectCard } from '../../components/ProjectCard'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-export const getServerSideProps: GetServerSideProps = async() => {
+export const getServerSideProps: GetServerSideProps = async({locale}) => {
 	try {
 		const response = await GetProjectsApi()
 		const json = response.data
@@ -12,12 +13,14 @@ export const getServerSideProps: GetServerSideProps = async() => {
 		return {
 			props: {
 				projects,
+				...(await serverSideTranslations(locale || 'en', ['common'])),
 			}
 		}
 	} catch (e) {
 		return {
 			props: {
 				projects: [],
+				...(await serverSideTranslations(locale || 'en', ['common'])),
 			}
 		}
 	}

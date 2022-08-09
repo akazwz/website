@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { RecoilRoot } from 'recoil'
 import { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
+import { appWithTranslation } from 'next-i18next'
 
 import theme from '../src/theme'
 import Layouts from '../components/layouts'
@@ -23,4 +24,4 @@ function MyApp({ Component, pageProps }: AppProps) {
 	)
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

@@ -1,12 +1,13 @@
 import { Box, Heading, HStack, Image, Text } from '@chakra-ui/react'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, GetStaticProps } from 'next'
 import { marked } from 'marked'
 import dayjs from 'dayjs'
 
 import { Post } from '../../src/types'
 import { GetPostApi } from '../../src/api'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-export const getServerSideProps: GetServerSideProps = async({ params }) => {
+export const getServerSideProps: GetServerSideProps = async({ params, locale }) => {
 	const pid = params!.pid
 	if (!pid || typeof pid !== 'string') {
 		return {
@@ -20,11 +21,15 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 		if (!post) {
 			return {
 				notFound: true,
+				props: {
+					...(await serverSideTranslations(locale || 'en', ['common'])),
+				}
 			}
 		}
 		return {
 			props: {
 				post,
+				...(await serverSideTranslations(locale || 'en', ['common'])),
 			}
 		}
 	} catch (e) {

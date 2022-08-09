@@ -4,12 +4,16 @@ import { GetServerSideProps } from 'next'
 import { Project } from '../../src/types'
 import { GetProjectApi } from '../../src/api'
 import { ProjectPreview } from '../../components/ProjectPreview'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-export const getServerSideProps: GetServerSideProps = async({ params }) => {
+export const getServerSideProps: GetServerSideProps = async({ params, locale }) => {
 	const pid = params!.pid
 	if (!pid || typeof pid !== 'string') {
 		return {
 			notFound: true,
+			props: {
+				...(await serverSideTranslations(locale || 'en', ['common'])),
+			},
 		}
 	}
 	try {
@@ -19,16 +23,23 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 		if (!project) {
 			return {
 				notFound: true,
+				props: {
+					...(await serverSideTranslations(locale || 'en', ['common'])),
+				},
 			}
 		}
 		return {
 			props: {
 				project,
+				...(await serverSideTranslations(locale || 'en', ['common'])),
 			}
 		}
 	} catch (e) {
 		return {
 			notFound: true,
+			props: {
+				...(await serverSideTranslations(locale || 'en', ['common'])),
+			},
 		}
 	}
 }

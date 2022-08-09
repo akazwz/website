@@ -3,8 +3,9 @@ import { GetServerSideProps } from 'next'
 import { PostCard } from '../../components/PostCard'
 import { GetPostsApi } from '../../src/api'
 import { Post } from '../../src/types'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-export const getServerSideProps: GetServerSideProps = async() => {
+export const getServerSideProps: GetServerSideProps = async({locale}) => {
 	try {
 		const response = await GetPostsApi()
 		const json = response.data
@@ -12,12 +13,14 @@ export const getServerSideProps: GetServerSideProps = async() => {
 		return {
 			props: {
 				posts,
+				...(await serverSideTranslations(locale || 'en', ['common'])),
 			}
 		}
 	} catch (e) {
 		return {
 			props: {
 				posts: [],
+				...(await serverSideTranslations(locale || 'en', ['common'])),
 			}
 		}
 	}

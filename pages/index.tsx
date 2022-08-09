@@ -1,4 +1,14 @@
 import { Heading, Image, VStack } from '@chakra-ui/react'
+import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export const getServerSideProps: GetServerSideProps = async({ locale }) => {
+	return {
+		props: {
+			...(await serverSideTranslations(locale || 'en', ['common'])),
+		},
+	}
+}
 
 const Index = () => {
 	return (
