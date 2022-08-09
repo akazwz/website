@@ -64,8 +64,9 @@ export const ImageUploader = ({ handleUrl }: ImageUploaderProps) => {
 
 	return (
 		<Box
+			w="100%"
+			h="100%"
 			p={3}
-			mx="auto"
 			onClick={handleSelectFile}
 			onDragOver={(e) => {
 				e.preventDefault()

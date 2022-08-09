@@ -4,8 +4,8 @@ import { useRouter } from 'next/router'
 import { marked } from 'marked'
 import dayjs from 'dayjs'
 
-import { DeletePostApi, GetPostApi } from '../../../src/api'
-import { Post } from '../../../src/types'
+import { DeleteProjectApi, GetProjectApi } from '../../../src/api'
+import { Post, Project } from '../../../src/types'
 import { useSWRConfig } from 'swr'
 import { useAuth } from '../../../src/hooks/useAuth'
 
@@ -16,48 +16,44 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 			notFound: true,
 		}
 	}
-	const response = await GetPostApi(pid)
+	const response = await GetProjectApi(pid)
 	const json = response.data
-	const { data: post } = json
-	if (!post) {
+	const { data: project } = json
+	if (!project) {
 		return {
 			notFound: true,
 		}
 	}
 	return {
 		props: {
-			post,
+			project,
 		}
 	}
 }
 
-const PostDetail = ({ post }: { post: Post }) => {
+const ProjectDetail = ({ project }: { project: Project }) => {
 	const { mutate } = useSWRConfig()
 	const { bearerToken } = useAuth()
 	const router = useRouter()
-	const handleDeletePost = async() => {
-		await DeletePostApi(post.uuid, bearerToken)
-		await mutate('get-posts')
-		await router.push('/dashboard/posts')
+	const handleDeleteProject = async() => {
+		await DeleteProjectApi(project.uuid, bearerToken)
+		await mutate('get-projects')
+		await router.push('/dashboard/projects')
 	}
 	return (
 		<Box maxW={{ base: 'xl', md: '3xl' }} mx="auto">
-			<Heading mb={3}>{post.title}</Heading>
+			<Heading mb={3}>{project.name}</Heading>
 			<HStack mb={7} color="gray.500">
-				<Text>{dayjs(post.created_at).format('YYYY/MM/DD HH:mm')}</Text>
+				<Text>{dayjs(project.created_at).format('YYYY/MM/DD HH:mm')}</Text>
 			</HStack>
-			<Image
-				alt={post.title}
-				src={post.cover}
-				mb={7}
-			/>
-			<Box dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
+
+			<Box dangerouslySetInnerHTML={{ __html: marked(project.readme || '') }} />
 			<HStack mt={12}>
 				<Spacer />
-				<Button colorScheme="red" onClick={handleDeletePost}>Delete</Button>
+				<Button colorScheme="red" onClick={handleDeleteProject}>Delete</Button>
 			</HStack>
 		</Box>
 	)
 }
 
-export default PostDetail
+export default ProjectDetail

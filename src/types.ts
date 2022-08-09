@@ -3,7 +3,18 @@ export interface Post{
 	title: string
 	cover: string
 	content: string
-	viewed: string
+	uid: string
+	created_at: string
+}
+
+export interface Project{
+	uuid: string
+	name: string
+	about: string
+	website?: string
+	repo?: string
+	preview?: string
+	readme?: string
 	uid: string
 	created_at: string
 }

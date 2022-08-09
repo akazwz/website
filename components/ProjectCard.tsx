@@ -1,61 +1,37 @@
-import { Stack, HStack, IconButton, Spacer, Text, VStack, Icon } from '@chakra-ui/react'
-import { Github, Link as LinkIcon } from '@icon-park/react'
-import { ReactNode } from 'react'
+import { Text, Box } from '@chakra-ui/react'
+
 import { NextChakraLink } from './NextChakraLink'
+import { Project } from '../src/types'
 
-interface ProjectProps{
-	icon: ReactNode,
-	name: string
-	description: string
-	link: string
-	github: string
-}
-
-const ProjectCard = ({ icon, name, description, link, github }: ProjectProps) => {
+export const ProjectCard = ({ project }: { project: Project }) => {
 	return (
-		<Stack
+		<Box
 			w={'100%'}
-			p={3}
+			p={7}
 			borderWidth={1}
 			rounded={'lg'}
-			direction={{ base: 'column', md: 'row' }}
+			mb={3}
 		>
-			<HStack spacing={3}>
-				{icon}
-				<VStack align={'start'}>
-					<Text>{name}</Text>
-					<Text
-						fontWeight={'light'}
-						fontSize={'sm'}
-						color={'gray.500'}
-					>
-						{description}
-					</Text>
-				</VStack>
-			</HStack>
-			<Spacer />
-			<HStack>
-				<NextChakraLink href={link} isExternal w={'full'}>
-					<IconButton
-						variant={'ghost'}
-						borderWidth={1}
-						aria-label={''}
-						icon={<LinkIcon />}
-						w={'full'}
-					/>
-				</NextChakraLink>
-				<NextChakraLink href={github} isExternal w={'full'}>
-					<IconButton
-						variant={'ghost'}
-						borderWidth={1}
-						aria-label={''}
-						icon={<Github />}
-						w={'full'}
-					/>
-				</NextChakraLink>
-			</HStack>
-		</Stack>
+			<NextChakraLink href={`/projects/${project.uid}`}>
+				<Text>{project.name}</Text>
+			</NextChakraLink>
+		</Box>
 	)
 }
 
-export default ProjectCard
+export const ProjectCardAdmin = ({ project }: { project: Project }) => {
+	return (
+		<Box
+			w={'100%'}
+			p={7}
+			borderWidth={1}
+			rounded={'lg'}
+			mb={3}
+		>
+			<NextChakraLink href={`/dashboard/projects/${project.uid}`}>
+				<Text>{project.name}</Text>
+			</NextChakraLink>
+		</Box>
+	)
+}
+

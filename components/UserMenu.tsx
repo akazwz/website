@@ -35,7 +35,7 @@ export const UserMenu = () => {
 							<Text>{account?.username}</Text>
 						</HStack>
 						<Divider />
-						<HStack>
+						<HStack fontSize="small">
 							<Text>{account?.uid}</Text>
 						</HStack>
 						<Divider />

@@ -1,4 +1,4 @@
-import { Box, Button, Center, Heading, HStack, Input, Textarea, useToast } from '@chakra-ui/react'
+import { Box, Button, Center, Heading, Input, Textarea, useToast } from '@chakra-ui/react'
 import { useState, MouseEvent } from 'react'
 import { marked } from 'marked'
 
@@ -10,6 +10,8 @@ const NewPost = () => {
 	const [title, setTitle] = useState('')
 	const [cover, setCover] = useState('')
 	const [content, setContent] = useState('')
+	const [loading, setLoading] = useState(false)
+
 	const markedValue = marked(content)
 
 	const handleUrl = (url: string) => {
@@ -20,8 +22,10 @@ const NewPost = () => {
 	const toast = useToast()
 
 	const handleCreatePost = (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault()
 		CreatePostApi({ title, cover, content }, bearerToken)
 			.then((res) => {
+				setLoading(true)
 				toast({
 					title: 'Create Post Success',
 					status: 'success',
@@ -38,6 +42,9 @@ const NewPost = () => {
 					position: 'top',
 					duration: 3000,
 				})
+			})
+			.finally(() => {
+				setLoading(false)
 			})
 	}
 
@@ -64,6 +71,7 @@ const NewPost = () => {
 					mt={3}
 					colorScheme="green"
 					type="submit"
+					isLoading={loading}
 					onClick={handleCreatePost}
 				>
 					Submit

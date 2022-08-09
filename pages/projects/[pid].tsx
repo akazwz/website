@@ -3,8 +3,8 @@ import { GetServerSideProps } from 'next'
 import { marked } from 'marked'
 import dayjs from 'dayjs'
 
-import { Post } from '../../src/types'
-import { GetPostApi } from '../../src/api'
+import { Project } from '../../src/types'
+import { GetProjectApi } from '../../src/api'
 
 export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	const pid = params!.pid
@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 		}
 	}
 	try {
-		const response = await GetPostApi(pid)
+		const response = await GetProjectApi(pid)
 		const json = response.data
 		const { data: post } = json
 		if (!post) {
@@ -34,21 +34,19 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	}
 }
 
-const PostDetail = ({ post }: { post: Post }) => {
+const ProjectDetail = ({ project }: { project: Project }) => {
 	return (
 		<Box>
-			<Heading mb={3}>{post.title}</Heading>
+			<Heading mb={3}>{project.name}</Heading>
 			<HStack mb={7} color="gray.500">
-				<Text>{dayjs(post.created_at).format('YYYY/MM/DD HH:mm')}</Text>
+				<Text>{dayjs(project.created_at).format('YYYY/MM/DD HH:mm')}</Text>
 			</HStack>
-			<Image
-				alt={post.title}
-				src={post.cover}
-				mb={7}
-			/>
-			<Box dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
+			{
+				project.preview && project.preview?.length > 0 && <Image alt={project.name} src={project.preview} mb={7} />
+			}
+			<Box dangerouslySetInnerHTML={{ __html: marked(project.readme || '') }} />
 		</Box>
 	)
 }
 
-export default PostDetail
+export default ProjectDetail

@@ -45,7 +45,9 @@ export const NavLinks = ({ mini }: NavLinksProps) => {
 	const LinkList: LinkProps[] = [
 		{ name: 'Dashboard', route: '/dashboard', icon: 'Dashboard' },
 		{ name: 'Posts', route: '/dashboard/posts', icon: 'Notes' },
-		{ name: 'Write Post', route: '/dashboard/posts/new', icon: 'Write' },
+		{ name: 'New Post', route: '/dashboard/posts/new', icon: 'Write' },
+		{ name: 'Projects', route: '/dashboard/projects', icon: 'Projector' },
+		{ name: 'New Project', route: '/dashboard/projects/new', icon: 'Projector' },
 	]
 
 	return (
