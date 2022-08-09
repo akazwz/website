@@ -1,4 +1,4 @@
-import { StyleConfig } from '@chakra-ui/theme-tools'
+import { StyleConfig } from '@chakra-ui/react'
 
 const Button: StyleConfig = {
 	baseStyle: {
