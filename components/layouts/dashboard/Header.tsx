@@ -1,7 +1,6 @@
-import { Flex, HStack, IconButton } from '@chakra-ui/react'
+import { Flex, HStack, IconButton, FlexProps } from '@chakra-ui/react'
 import { HamburgerButton } from '@icon-park/react'
 
-import type { FlexProps } from '@chakra-ui/react'
 import { UserMenu } from '../../UserMenu'
 
 interface IProps extends FlexProps{
@@ -9,7 +8,7 @@ interface IProps extends FlexProps{
 	mini: boolean
 }
 
-export const DashboardHeader = ({ onOpen, mini, ...rest }: IProps) => {
+const DashboardHeader = ({ onOpen, mini, ...rest }: IProps) => {
 	return (
 		<Flex
 			ml={{ base: 0, md: mini ? 20 : 60 }}
@@ -32,3 +31,5 @@ export const DashboardHeader = ({ onOpen, mini, ...rest }: IProps) => {
 		</Flex>
 	)
 }
+
+export default DashboardHeader

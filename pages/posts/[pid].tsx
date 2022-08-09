@@ -36,21 +36,20 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 
 const PostDetail = ({ post }: { post: Post }) => {
 	return (
-		<>
-			<Box>
-				<Heading mb={3}>{post.title}</Heading>
-				<HStack mb={7} color="gray.500">
-					<Text>{dayjs(post.created_at).format('YYYY/MM/DD HH:mm')}</Text>
-					<Text>• {post.viewed} views</Text>
-				</HStack>
-				<Image
-					alt={post.title}
-					src={post.cover}
-					mb={7}
-				/>
-				<pre dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
-			</Box>
-		</>
+		<Box>
+			<Heading mb={3}>{post.title}</Heading>
+			<HStack mb={7} color="gray.500">
+				<Text>{dayjs(post.created_at).format('YYYY/MM/DD HH:mm')}</Text>
+				<Text>• {post.viewed} views</Text>
+			</HStack>
+			<Image
+				alt={post.title}
+				src={post.cover}
+				mb={7}
+			/>
+			<h2>SOme</h2>
+			<div dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
+		</Box>
 	)
 }
 

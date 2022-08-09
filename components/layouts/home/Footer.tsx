@@ -1,12 +1,12 @@
 import { Box, Stack, HStack, Text, ButtonGroup, IconButton, } from '@chakra-ui/react'
 import { Github, Weibo, Twitter } from '@icon-park/react'
 
-import { LanguagesSwitch } from '../LanguagesSwitch'
-import { ColorModeToggle } from '../ColorModeToggle'
+import { LanguagesSwitch } from '../../LanguagesSwitch'
+import { ColorModeToggle } from '../../ColorModeToggle'
 
 import type { TextProps, ButtonGroupProps, } from '@chakra-ui/react'
 
-const Footer = () => {
+const HomeFooter = () => {
 	return (
 		<Box
 			as="footer"
@@ -76,4 +76,4 @@ const SocialMediaLinks = (props: ButtonGroupProps) => (
 	</ButtonGroup>
 )
 
-export default Footer
+export default HomeFooter

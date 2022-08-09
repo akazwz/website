@@ -18,9 +18,9 @@ import {
 import { useRouter } from 'next/router'
 import { HamburgerButton } from '@icon-park/react'
 
-import { NextChakraLink } from '../NextChakraLink'
-import { Logo } from '../Logo'
-import { ColorModeToggle } from '../ColorModeToggle'
+import { NextChakraLink } from '../../NextChakraLink'
+import { Logo } from '../../Logo'
+import { ColorModeToggle } from '../../ColorModeToggle'
 
 const MobileLinks = () => {
 	const ref = useRef(null)
@@ -69,7 +69,7 @@ const MobileLinks = () => {
 	)
 }
 
-const Header = () => {
+const HomeHeader = () => {
 	// const bg = useColorModeValue('whiteAlpha.900', 'blackAlpha.900')
 	const router = useRouter()
 
@@ -128,4 +128,4 @@ const Links = () => {
 	)
 }
 
-export default Header
+export default HomeHeader

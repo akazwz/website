@@ -1,5 +1,12 @@
 import { useState, MouseEvent } from 'react'
-import { Button, VStack, Input, Center, Heading, useToast, HStack, Spacer } from '@chakra-ui/react'
+import {
+	Button,
+	VStack,
+	Input,
+	Heading,
+	HStack,
+	useToast,
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 import { NextChakraLink } from '../components/NextChakraLink'
@@ -43,10 +50,17 @@ const Login = () => {
 	}
 
 	return (
-		<Center
+		<VStack
 			p={3}
+			spacing={7}
 			h="100vh"
+			justifyContent="center"
 		>
+			<HStack>
+				<NextChakraLink href={'/'} color={'purple.500'}>
+					<Logo size={'21px'} />
+				</NextChakraLink>
+			</HStack>
 			<VStack
 				borderWidth={1}
 				spacing={7}
@@ -55,12 +69,6 @@ const Login = () => {
 				rounded="lg"
 				as="form"
 			>
-				<HStack>
-					<NextChakraLink href={'/'}>
-						<Logo size={'21px'} />
-					</NextChakraLink>
-					<Spacer />
-				</HStack>
 				<Heading>Login</Heading>
 				<Input
 					placeholder={'username'}
@@ -77,9 +85,8 @@ const Login = () => {
 				>
 					Login
 				</Button>
-
 			</VStack>
-		</Center>
+		</VStack>
 	)
 }
 

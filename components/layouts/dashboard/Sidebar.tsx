@@ -117,7 +117,7 @@ export const SidebarFooter = ({ mini, setMini }: SidebarFooterProps) => {
 	)
 }
 
-export const Sidebar = ({ onClose, mini, setMini, ...rest }: SidebarProps) => {
+const DashboardSidebar = ({ onClose, mini, setMini, ...rest }: SidebarProps) => {
 	return (
 		<Box
 			w={{ base: 'full', md: mini ? 20 : 60 }}
@@ -138,3 +138,5 @@ export const Sidebar = ({ onClose, mini, setMini, ...rest }: SidebarProps) => {
 		</Box>
 	)
 }
+
+export default DashboardSidebar

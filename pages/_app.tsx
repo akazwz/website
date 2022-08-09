@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 
 import theme from '../src/theme'
 import Layouts from '../components/layouts'
+import '../src/global.css'
 
 // nProgress
 const ProgressBar = dynamic(() => import('../components/ProgressBar'), { ssr: false })
