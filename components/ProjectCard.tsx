@@ -12,7 +12,7 @@ export const ProjectCard = ({ project }: { project: Project }) => {
 			rounded={'lg'}
 			mb={3}
 		>
-			<NextChakraLink href={`/projects/${project.uid}`}>
+			<NextChakraLink href={`/projects/${project.uuid}`}>
 				<Text>{project.name}</Text>
 			</NextChakraLink>
 		</Box>
@@ -28,7 +28,7 @@ export const ProjectCardAdmin = ({ project }: { project: Project }) => {
 			rounded={'lg'}
 			mb={3}
 		>
-			<NextChakraLink href={`/dashboard/projects/${project.uid}`}>
+			<NextChakraLink href={`/dashboard/projects/${project.uuid}`}>
 				<Text>{project.name}</Text>
 			</NextChakraLink>
 		</Box>

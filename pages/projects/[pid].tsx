@@ -16,15 +16,15 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	try {
 		const response = await GetProjectApi(pid)
 		const json = response.data
-		const { data: post } = json
-		if (!post) {
+		const { data: project } = json
+		if (!project) {
 			return {
 				notFound: true,
 			}
 		}
 		return {
 			props: {
-				post,
+				project,
 			}
 		}
 	} catch (e) {
