@@ -21,3 +21,11 @@ h5 {
 h6 {
     font-size: 12px !important;
 }
+
+pre {
+    margin: 5px;
+    padding: 10px;
+    border-width: 3px;
+    border-radius: 5px;
+    overflow: scroll;
+}
