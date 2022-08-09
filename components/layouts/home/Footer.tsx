@@ -1,5 +1,5 @@
 import { Box, Stack, HStack, Text, ButtonGroup, IconButton, } from '@chakra-ui/react'
-import { Github, Weibo, Twitter } from '@icon-park/react'
+import { Github, Weibo, Dashboard } from '@icon-park/react'
 
 import { LanguagesSwitch } from '../../LanguagesSwitch'
 import { ColorModeToggle } from '../../ColorModeToggle'
@@ -68,10 +68,10 @@ const SocialMediaLinks = (props: ButtonGroupProps) => (
 		/>
 		<IconButton
 			as="a"
-			href="#"
+			href="/dashboard"
 			aria-label="Twitter"
 			target="_blank"
-			icon={<Twitter size="20px" />}
+			icon={<Dashboard size="20px" />}
 		/>
 	</ButtonGroup>
 )

@@ -19,9 +19,6 @@ const Index = () => {
 				<Heading>
 					AKAZWZ
 				</Heading>
-				<Heading>
-					A developer
-				</Heading>
 			</VStack>
 		</VStack>
 	)
