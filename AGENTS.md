@@ -86,3 +86,11 @@ For GitHub Actions, consider using [`voidzero-dev/setup-vp`](https://github.com/
 - [ ] Run `vp install` after pulling remote changes and before getting started.
 - [ ] Run `vp check` and `vp test` to validate changes.
 <!--VITE PLUS END-->
+
+## Project Style & Guidelines (Sera)
+
+- **Strict CSS Policy**: Do not modify global CSS (`app/app.css`) or write custom CSS classes.
+- **Design System**: All pages must strictly follow the "sera" style (base-sera/shadcn visual language).
+- **UI Components**:
+  - Always use `shadcn` components from `app/components/ui/` whenever possible instead of writing custom elements from scratch.
+  - When importing and using components from `components/ui`, do not alter or override their built-in design styles. Preserve the original design system.
