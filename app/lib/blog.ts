@@ -1,4 +1,7 @@
+import { defaultLocale, getLocaleLanguageTag, isLocale, type Locale } from "~/lib/i18n";
+
 export interface BlogPost {
+  locale: Locale;
   slug: string;
   title: string;
   date: string;
@@ -9,15 +12,28 @@ export interface BlogPost {
   readingTime: number;
 }
 
-// Load all markdown files from content/posts/ at build time
-const rawFiles = import.meta.glob("../../content/posts/*.md", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-}) as Record<string, string>;
+const rawFiles = {
+  ...(import.meta.glob("../../content/posts/*.md", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>),
+  ...(import.meta.glob("../../content/posts/*/*.md", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>),
+};
 
-function slugFromPath(path: string): string {
-  return path.split("/").pop()!.replace(/\.md$/, "");
+function parsePostPath(path: string): { locale: Locale; slug: string } {
+  const segments = path.split("/").filter(Boolean);
+  const fileName = segments.at(-1) ?? "";
+  const parentDirectory = segments.at(-2);
+
+  return {
+    locale: isLocale(parentDirectory) ? parentDirectory : defaultLocale,
+    slug: fileName.replace(/\.md$/, ""),
+  };
 }
 
 function parseFrontmatter(raw: string): { data: Record<string, string>; content: string } {
@@ -48,11 +64,14 @@ function parseFrontmatter(raw: string): { data: Record<string, string>; content:
   };
 }
 
-export const blogPosts: BlogPost[] = Object.entries(rawFiles)
+const postVariantsBySlug = Object.entries(rawFiles)
   .map(([path, raw]) => {
     const { data, content } = parseFrontmatter(raw);
+    const { locale, slug } = parsePostPath(path);
+
     return {
-      slug: slugFromPath(path),
+      locale,
+      slug,
       title: data.title,
       date: data.date.slice(0, 10),
       author: data.author,
@@ -62,14 +81,29 @@ export const blogPosts: BlogPost[] = Object.entries(rawFiles)
       content,
     };
   })
-  .sort((a, b) => b.date.localeCompare(a.date));
+  .reduce<Map<string, Partial<Record<Locale, BlogPost>>>>((variants, post) => {
+    const currentVariants = variants.get(post.slug) ?? {};
+    currentVariants[post.locale] = post;
+    variants.set(post.slug, currentVariants);
+    return variants;
+  }, new Map());
 
-export function getPostBySlug(slug: string): BlogPost | undefined {
-  return blogPosts.find((p) => p.slug === slug);
+export function getBlogPosts(locale: Locale): BlogPost[] {
+  return [...postVariantsBySlug.values()]
+    .map((variants) => variants[locale] ?? variants[defaultLocale])
+    .filter((post): post is BlogPost => post !== undefined)
+    .sort((left, right) => right.date.localeCompare(left.date));
 }
 
-export function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-GB", {
+export const blogPosts = getBlogPosts(defaultLocale);
+
+export function getPostBySlug(slug: string, locale: Locale = defaultLocale): BlogPost | undefined {
+  const variants = postVariantsBySlug.get(slug);
+  return variants?.[locale] ?? variants?.[defaultLocale];
+}
+
+export function formatDate(dateStr: string, locale: Locale = defaultLocale): string {
+  return new Date(dateStr).toLocaleDateString(getLocaleLanguageTag(locale), {
     day: "numeric",
     month: "long",
     year: "numeric",

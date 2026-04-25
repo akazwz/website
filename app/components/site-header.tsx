@@ -1,30 +1,94 @@
-import { NavLink } from "react-router";
+import { ChevronDownIcon, LanguagesIcon } from "lucide-react";
+import { NavLink, useLocation, useNavigate } from "react-router";
 
 import { GithubIcon, TwitterIcon } from "~/components/icons";
 import { buttonVariants } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { Separator } from "~/components/ui/separator";
+import {
+  defaultLocale,
+  getLocaleFromPathname,
+  localeMetadata,
+  localizePath,
+  secondaryLocales,
+  type Locale,
+} from "~/lib/i18n";
 import { cn } from "~/lib/utils";
 
-const navItems = [
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
-  { to: "/blog", label: "Journal" },
-];
+const headerCopy = {
+  en: {
+    about: "About",
+    projects: "Projects",
+    journal: "Journal",
+    language: "Language",
+    tagline: "Full-stack developer & open-source creator.",
+  },
+  zh: {
+    about: "关于",
+    projects: "项目",
+    journal: "博客",
+    language: "语言",
+    tagline: "全栈开发者与开源创作者。",
+  },
+  ja: {
+    about: "概要",
+    projects: "プロジェクト",
+    journal: "ブログ",
+    language: "言語",
+    tagline: "フルスタック開発者兼オープンソース制作者。",
+  },
+  es: {
+    about: "Sobre mí",
+    projects: "Proyectos",
+    journal: "Blog",
+    language: "Idioma",
+    tagline: "Desarrollador full-stack y creador open source.",
+  },
+  fr: {
+    about: "À propos",
+    projects: "Projets",
+    journal: "Journal",
+    language: "Langue",
+    tagline: "Développeur full-stack et créateur open source.",
+  },
+} as const satisfies Record<
+  Locale,
+  { about: string; projects: string; journal: string; language: string; tagline: string }
+>;
 
 export function SiteHeader() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const locale = getLocaleFromPathname(pathname);
+  const copy = headerCopy[locale];
+  const navItems = [
+    { to: localizePath(locale, "/about"), label: copy.about },
+    { to: localizePath(locale, "/projects"), label: copy.projects },
+    { to: localizePath(locale, "/blog"), label: copy.journal },
+  ];
+  const localeOptions = [defaultLocale, ...secondaryLocales];
+
   return (
     <header className="border-b border-border">
       <div className="mx-auto flex max-w-5xl flex-col gap-5 px-6 py-8 sm:flex-row sm:items-end sm:justify-between">
-        <NavLink to="/" className="block group">
+        <NavLink to={localizePath(locale, "/")} className="block group">
           <span className="block font-heading text-3xl leading-none tracking-tight transition-colors group-hover:text-muted-foreground">
             akazwz
           </span>
-          <span className="mt-2 block max-w-md text-sm text-muted-foreground">
-            Full-stack developer & open-source creator.
-          </span>
+          <span className="mt-2 block max-w-md text-sm text-muted-foreground">{copy.tagline}</span>
         </NavLink>
 
-        <nav className="flex items-center gap-2">
+        <nav className="flex flex-wrap items-center gap-2 sm:justify-end">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -42,7 +106,46 @@ export function SiteHeader() {
               {item.label}
             </NavLink>
           ))}
-          <Separator orientation="vertical" className="mx-1 h-5 w-px !self-center" />
+          <Separator orientation="vertical" className="mx-1 h-5 w-px self-center!" />
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={cn(
+                buttonVariants({ variant: "outline", size: "sm" }),
+                "rounded-none px-2 text-[11px]",
+              )}
+              aria-label={copy.language}
+            >
+              <LanguagesIcon className="h-3.5 w-3.5" />
+              <span>{localeMetadata[locale].label}</span>
+              <ChevronDownIcon className="h-3.5 w-3.5 opacity-70" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="min-w-44 w-auto rounded-none">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel className="normal-case tracking-normal">
+                  {copy.language}
+                </DropdownMenuLabel>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={locale}
+                onValueChange={(value) => navigate(localizePath(value as Locale, pathname))}
+              >
+                {localeOptions.map((targetLocale) => (
+                  <DropdownMenuRadioItem
+                    key={targetLocale}
+                    value={targetLocale}
+                    className="normal-case tracking-normal"
+                  >
+                    {localeMetadata[targetLocale].nativeName}
+                    <DropdownMenuShortcut>
+                      {localeMetadata[targetLocale].label}
+                    </DropdownMenuShortcut>
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Separator orientation="vertical" className="mx-1 h-5 w-px self-center!" />
           <a
             href="https://github.com/akazwz"
             target="_blank"
