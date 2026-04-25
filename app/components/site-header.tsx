@@ -2,6 +2,7 @@ import { NavLink } from "react-router";
 
 import { GithubIcon, TwitterIcon } from "~/components/icons";
 import { buttonVariants } from "~/components/ui/button";
+import { Separator } from "~/components/ui/separator";
 import { cn } from "~/lib/utils";
 
 const navItems = [
@@ -41,7 +42,7 @@ export function SiteHeader() {
               {item.label}
             </NavLink>
           ))}
-          <div className="mx-1 h-5 w-px bg-border" />
+          <Separator orientation="vertical" className="mx-1 h-5 w-px !self-center" />
           <a
             href="https://github.com/akazwz"
             target="_blank"

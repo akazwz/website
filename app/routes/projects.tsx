@@ -84,6 +84,12 @@ export default function Projects() {
 
       <section className="mx-auto max-w-5xl px-6 pb-20">
         <Separator className="mb-12" />
+        <div className="mb-8 max-w-2xl">
+          <Badge variant="outline" className="mb-4">
+            Projects
+          </Badge>
+          <h2 className="font-heading text-4xl tracking-tight">An archive of my creations.</h2>
+        </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <a
@@ -96,9 +102,9 @@ export default function Projects() {
               <Card className="h-full border border-border py-0 transition-colors hover:border-ring">
                 <CardHeader className="pb-4 pt-6">
                   <div className="flex items-center justify-between">
-                    <h2 className="font-heading text-2xl tracking-tight transition-colors group-hover:text-primary">
+                    <h3 className="font-heading text-2xl tracking-tight transition-colors group-hover:text-primary">
                       {project.name}
-                    </h2>
+                    </h3>
                     <span className="text-xs font-semibold tracking-widest text-muted-foreground">
                       {project.year}
                     </span>

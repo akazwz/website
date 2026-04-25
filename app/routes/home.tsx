@@ -56,7 +56,10 @@ export default function Home() {
           >
             Read the Journal
           </Link>
-          <div className="mx-2 hidden h-5 w-px bg-border sm:block" />
+          <Separator
+            orientation="vertical"
+            className="mx-2 hidden h-5 w-px !self-center sm:block"
+          />
           <a
             href="https://github.com/akazwz"
             target="_blank"

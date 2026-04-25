@@ -67,7 +67,10 @@ export default function About() {
           >
             Back Home
           </Link>
-          <div className="mx-2 hidden h-5 w-px bg-border sm:block" />
+          <Separator
+            orientation="vertical"
+            className="mx-2 hidden h-5 w-px !self-center sm:block"
+          />
           <a
             href="https://github.com/akazwz"
             target="_blank"
@@ -94,7 +97,7 @@ export default function About() {
           {sections.map((section) => (
             <Card key={section.title} className="border border-border py-0">
               <CardHeader className="py-6">
-                <h2 className="font-heading text-3xl tracking-tight">{section.title}</h2>
+                <h3 className="font-heading text-2xl tracking-tight">{section.title}</h3>
               </CardHeader>
               <CardContent className="py-6">
                 <p className="text-sm leading-7 text-muted-foreground">{section.description}</p>

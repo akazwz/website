@@ -1,5 +1,7 @@
 import { data, Link } from "react-router";
 import { marked } from "marked";
+import { SiteHeader } from "~/components/site-header";
+import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
 import { formatDate, getPostBySlug } from "~/lib/blog";
@@ -64,22 +66,18 @@ export default function BlogPost({ loaderData }: Route.ComponentProps) {
   const { post, html } = loaderData;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="container mx-auto max-w-4xl px-6 py-8 flex items-center justify-between">
-          <Link
-            to="/blog"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            ← Back to Journal
-          </Link>
-          <span className="text-xs tracking-widest uppercase text-muted-foreground">Journal</span>
-        </div>
-      </header>
+    <main className="min-h-screen bg-background text-foreground">
+      <SiteHeader />
 
       {/* Article */}
-      <article className="container mx-auto max-w-2xl px-6 py-16">
+      <article className="mx-auto max-w-3xl px-6 py-16">
+        <Link
+          to="/blog"
+          className="inline-block mb-10 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          ← Back to Journal
+        </Link>
+
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-3 mb-8">
           <Badge variant="secondary">{post.category}</Badge>
@@ -102,9 +100,11 @@ export default function BlogPost({ loaderData }: Route.ComponentProps) {
 
         {/* Author */}
         <div className="flex items-center gap-3 mb-12">
-          <div className="size-9 rounded-full bg-secondary flex items-center justify-center text-sm font-semibold text-secondary-foreground">
-            {post.author.charAt(0)}
-          </div>
+          <Avatar className="size-9">
+            <AvatarFallback className="bg-secondary font-semibold text-secondary-foreground">
+              {post.author.charAt(0)}
+            </AvatarFallback>
+          </Avatar>
           <span className="text-sm font-medium">{post.author}</span>
         </div>
 
@@ -124,6 +124,6 @@ export default function BlogPost({ loaderData }: Route.ComponentProps) {
           </Link>
         </div>
       </article>
-    </div>
+    </main>
   );
 }

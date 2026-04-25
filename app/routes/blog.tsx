@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { SiteHeader } from "~/components/site-header";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
@@ -16,38 +17,35 @@ export default function Blog() {
   const rest = blogPosts.slice(1);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="container mx-auto max-w-4xl px-6 py-8 flex items-center justify-between">
-          <Link
-            to="/"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            ← Home
-          </Link>
-          <span className="text-xs tracking-widest uppercase text-muted-foreground">Journal</span>
-        </div>
-      </header>
+    <main className="min-h-screen bg-background text-foreground">
+      <SiteHeader />
 
       {/* Hero */}
-      <section className="container mx-auto max-w-4xl px-6 py-16 text-center">
-        <h1 className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-4">
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <Badge variant="secondary" className="mb-6">
+          Journal
+        </Badge>
+        <h1 className="max-w-4xl font-heading text-5xl leading-tight tracking-tight sm:text-6xl">
           The Journal
         </h1>
-        <p className="text-muted-foreground text-lg max-w-md mx-auto">
+        <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
           Thoughts on design, writing, and the slow life.
         </p>
       </section>
 
-      <Separator className="max-w-4xl mx-auto" />
-
       {/* Featured Post */}
-      <section className="container mx-auto max-w-4xl px-6 py-12">
-        <p className="text-xs tracking-widest uppercase text-muted-foreground mb-6">Latest</p>
+      <section className="mx-auto max-w-5xl px-6 pb-16">
+        <Separator className="mb-12" />
+        <div className="mb-8 max-w-2xl">
+          <Badge variant="outline" className="mb-4">
+            Latest
+          </Badge>
+          <h2 className="font-heading text-4xl tracking-tight">Featured post</h2>
+        </div>
+
         <Link to={`/blog/${featured.slug}`} className="group block">
-          <Card className="border-0 shadow-none bg-secondary/30 hover:bg-secondary/60 transition-colors rounded-2xl p-2">
-            <CardHeader className="pb-3">
+          <Card className="border border-border py-0 transition-colors hover:border-ring">
+            <CardHeader className="py-6">
               <div className="flex items-center gap-3 mb-4">
                 <Badge variant="secondary">{featured.category}</Badge>
                 <span className="text-xs text-muted-foreground">{formatDate(featured.date)}</span>
@@ -60,43 +58,48 @@ export default function Blog() {
                 {featured.title}
               </h2>
             </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground text-base leading-relaxed max-w-2xl">
-                {featured.excerpt}
-              </p>
+            <CardContent className="space-y-4 py-6 pt-0">
+              <p className="text-sm leading-7 text-muted-foreground">{featured.excerpt}</p>
             </CardContent>
-            <CardFooter>
-              <span className="text-sm font-medium text-foreground/70">By {featured.author}</span>
+            <CardFooter className="py-6 pt-0 border-t border-border/50">
+              <span className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
+                By {featured.author}
+              </span>
             </CardFooter>
           </Card>
         </Link>
       </section>
 
-      <Separator className="max-w-4xl mx-auto" />
-
       {/* Post Grid */}
-      <section className="container mx-auto max-w-4xl px-6 py-12">
-        <p className="text-xs tracking-widest uppercase text-muted-foreground mb-8">More</p>
+      <section className="mx-auto max-w-5xl px-6 pb-20">
+        <Separator className="mb-12" />
+        <div className="mb-8 max-w-2xl">
+          <Badge variant="outline" className="mb-4">
+            More
+          </Badge>
+          <h2 className="font-heading text-4xl tracking-tight">Previous entries</h2>
+        </div>
+
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {rest.map((post) => (
             <Link key={post.slug} to={`/blog/${post.slug}`} className="group">
-              <Card className="h-full border border-border hover:border-ring transition-colors rounded-xl flex flex-col">
-                <CardHeader className="flex-1 pb-2">
+              <Card className="h-full border border-border py-0 transition-colors hover:border-ring">
+                <CardHeader className="py-6 pb-2 flex-1">
                   <div className="flex items-center gap-2 mb-3">
-                    <Badge variant="outline" className="text-xs">
+                    <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
                       {post.category}
-                    </Badge>
+                    </p>
                   </div>
                   <h3 className="font-heading text-xl font-semibold leading-snug group-hover:text-primary transition-colors">
                     {post.title}
                   </h3>
                 </CardHeader>
-                <CardContent className="flex-1">
+                <CardContent className="flex-1 py-6 pt-2">
                   <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                     {post.excerpt}
                   </p>
                 </CardContent>
-                <CardFooter className="flex items-center justify-between pt-4 border-t border-border/50">
+                <CardFooter className="flex items-center justify-between pt-4 pb-6 border-t border-border/50">
                   <span className="text-xs text-muted-foreground">{formatDate(post.date)}</span>
                   <span className="text-xs text-muted-foreground">{post.readingTime} min</span>
                 </CardFooter>
@@ -107,10 +110,10 @@ export default function Blog() {
       </section>
 
       {/* Footer */}
-      <footer className="container mx-auto max-w-4xl px-6 py-12 text-center">
+      <footer className="mx-auto max-w-5xl px-6 pb-12 text-center">
         <Separator className="mb-8" />
         <p className="text-xs text-muted-foreground tracking-wide">Written slowly, with care.</p>
       </footer>
-    </div>
+    </main>
   );
 }

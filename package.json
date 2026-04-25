@@ -36,7 +36,6 @@
     "shadcn": "^4.5.0",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.9.3",
-    "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "packageManager": "pnpm@10.33.2"

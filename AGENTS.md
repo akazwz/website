@@ -85,6 +85,7 @@ For GitHub Actions, consider using [`voidzero-dev/setup-vp`](https://github.com/
 
 - [ ] Run `vp install` after pulling remote changes and before getting started.
 - [ ] Run `vp check` and `vp test` to validate changes.
+- [ ] **Validation:** ALWAYS run type checking (`vp check`) and compilation (`vp build`) after modifying code to verify that no TypeScript, linting, or build-time errors were introduced.
 <!--VITE PLUS END-->
 
 ## Project Style & Guidelines (Sera)
