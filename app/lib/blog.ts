@@ -149,9 +149,13 @@ export function getBlogPostPath(post: Pick<BlogPost, "locale" | "slug">): string
 }
 
 export function formatDate(dateStr: string, locale: Locale = defaultLocale): string {
-  return new Date(dateStr).toLocaleDateString(getLocaleLanguageTag(locale), {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  return date.toLocaleDateString(getLocaleLanguageTag(locale), {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "UTC",
   });
 }
