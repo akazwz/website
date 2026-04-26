@@ -11,14 +11,14 @@ const messages = {
   home: {
     heroTitle: "フルスタック開発者として、作り続け、良いものはオープンソースにしています。",
     heroDescription:
-      "akazwz の個人サイトへようこそ。smail や hostc のようなオープンソースプロジェクト、AI の実験、継続的な開発ジャーナルをまとめています。",
+      "akazwz の個人サイトへようこそ。smail や hostc のようなオープンソースプロジェクト、AI の実験、継続的な開発ブログをまとめています。",
     aboutCta: "概要",
-    journalCta: "ジャーナルを読む",
+    journalCta: "ブログを読む",
     focusBadge: "注力領域",
     focusTitle: "エンジニアリング、オープンソース、そしてエッジの探究。",
     latestBadge: "最近の文章",
     latestTitle: "ソフトウェア、デザイン、そして丁寧なものづくりについての最近の記録。",
-    allPostsLabel: "すべての記事を見る",
+    allPostsLabel: "ブログを見る",
     minuteReadLabel: "分で読めます",
     sections: [
       {
@@ -44,7 +44,7 @@ const messages = {
       "開発者向けツール、エッジネイティブなプロダクト、そして長く役に立つ実用的なソフトウェアを作っています。",
     description:
       "仕事の多くは、オープンソースのツール、モダンな Web インフラ、そして実際のワークフローの問題を解く小さなプロダクトの間にあります。このサイトは、そのプロジェクトや文章、考え方をまとめる場所です。",
-    journalCta: "ジャーナルを読む",
+    journalCta: "ブログを読む",
     homeCta: "ホームに戻る",
     highlightBadge: "仕事の文脈",
     highlightTitle:
@@ -64,7 +64,7 @@ const messages = {
       {
         title: "発信のしかた",
         description:
-          "コードの大半は GitHub に置き、少し長い考えはジャーナルに書いています。プロダクト、ツール、エッジシステムの話なら X がいちばん早いです。",
+          "コードの大半は GitHub に置き、少し長い考えはブログに書いています。プロダクト、ツール、エッジシステムの話なら X がいちばん早いです。",
       },
     ],
     points: [
@@ -132,7 +132,7 @@ const messages = {
     ],
   },
   blogIndex: {
-    badge: "ジャーナル",
+    badge: "ブログ",
     title: "記録と文章",
     description: "ソフトウェア、デザイン、そして節度あるものづくりについてのメモ。",
     latestBadge: "最新",
@@ -147,9 +147,8 @@ const messages = {
     emptyDescription: "これから少しずつ増やしていきます。",
   },
   blogPost: {
-    backToJournal: "← ジャーナルに戻る",
+    backToJournal: "← ブログに戻る",
     minuteReadLabel: "分で読めます",
-    returnToPosts: "← すべての記事に戻る",
   },
   error: {
     message: "問題が発生しました",

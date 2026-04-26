@@ -18,7 +18,7 @@ const messages = {
     focusTitle: "工程、开源，以及对边缘计算的持续探索。",
     latestBadge: "最近写作",
     latestTitle: "一些关于软件、设计与克制构建的最近记录。",
-    allPostsLabel: "查看全部文章",
+    allPostsLabel: "查看博客",
     minuteReadLabel: "分钟阅读",
     sections: [
       {
@@ -144,7 +144,6 @@ const messages = {
   blogPost: {
     backToJournal: "← 返回博客列表",
     minuteReadLabel: "分钟阅读",
-    returnToPosts: "← 返回全部文章",
   },
   error: {
     message: "出了点问题",

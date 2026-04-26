@@ -19,7 +19,7 @@ const messages = {
     focusTitle: "Ingénierie, open source et exploration de l’edge.",
     latestBadge: "Derniers écrits",
     latestTitle: "Notes récentes sur le logiciel, le design et une construction plus attentive.",
-    allPostsLabel: "Voir tous les articles",
+    allPostsLabel: "Parcourir le journal",
     minuteReadLabel: "min de lecture",
     sections: [
       {
@@ -151,7 +151,6 @@ const messages = {
   blogPost: {
     backToJournal: "← Retour au journal",
     minuteReadLabel: "min de lecture",
-    returnToPosts: "← Retour à tous les articles",
   },
   error: {
     message: "Oups",

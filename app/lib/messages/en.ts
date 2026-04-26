@@ -18,7 +18,7 @@ const messages = {
     focusTitle: "Engineering, open-source, and exploring the edge.",
     latestBadge: "Latest writing",
     latestTitle: "Recent notes on software, design, and careful building.",
-    allPostsLabel: "Visit all posts",
+    allPostsLabel: "Browse the Journal",
     minuteReadLabel: "min read",
     sections: [
       {
@@ -150,7 +150,6 @@ const messages = {
   blogPost: {
     backToJournal: "← Back to Journal",
     minuteReadLabel: "min read",
-    returnToPosts: "← Return to all posts",
   },
   error: {
     message: "Oops!",

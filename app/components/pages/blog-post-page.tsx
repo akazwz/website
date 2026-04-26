@@ -66,7 +66,7 @@ export function BlogPostPage({
             to={localizePath(locale, "/blog")}
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            {copy.returnToPosts}
+            {copy.backToJournal}
           </Link>
         </div>
       </article>

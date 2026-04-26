@@ -75,7 +75,6 @@ export type BlogIndexMessages = {
 export type BlogPostMessages = {
   backToJournal: string;
   minuteReadLabel: string;
-  returnToPosts: string;
 };
 
 export type ErrorMessages = {

@@ -101,9 +101,20 @@ const postVariantsBySlug = Object.entries(rawFiles)
     return variants;
   }, new Map());
 
+function getPostVariantForListing(
+  variants: Partial<Record<Locale, BlogPost>>,
+  locale: Locale,
+): BlogPost | undefined {
+  if (locale === defaultLocale) {
+    return variants[defaultLocale];
+  }
+
+  return variants[locale];
+}
+
 export function getBlogPosts(locale: Locale): BlogPost[] {
   return [...postVariantsBySlug.values()]
-    .map((variants) => variants[locale] ?? variants[defaultLocale])
+    .map((variants) => getPostVariantForListing(variants, locale))
     .filter((post): post is BlogPost => post !== undefined)
     .sort((left, right) => right.date.localeCompare(left.date));
 }
