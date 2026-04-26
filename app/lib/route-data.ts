@@ -5,6 +5,7 @@ import {
   getBlogPosts,
   getPostLocalesBySlug,
   getPostVariantBySlug,
+  getBlogPostContent,
 } from "~/lib/blog";
 import { renderMarkdown } from "~/lib/blog-renderer";
 import { defaultLocale, type Locale } from "~/lib/i18n";
@@ -79,11 +80,13 @@ export async function getBlogPostRouteData(locale: Locale, slug: string | undefi
     throw data("Not Found", { status: 404 });
   }
 
+  const content = await getBlogPostContent(post.path);
+
   return {
     locale,
     copy: messages.blogPost,
     post,
-    html: renderMarkdown(post.content),
+    html: renderMarkdown(content),
     seo: getRouteSeo(getBlogPostPath(post), locale, getPostLocalesBySlug(post.slug)),
   };
 }

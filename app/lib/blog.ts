@@ -10,12 +10,12 @@ import {
 export interface BlogPost {
   locale: Locale;
   slug: string;
+  path: string;
   title: string;
   date: string;
   author: string;
   category: string;
   excerpt: string;
-  content: string;
   readingTime: number;
 }
 
@@ -25,17 +25,30 @@ export interface BlogPostSitemapEntry {
   locales: Locale[];
 }
 
-const rawFiles = {
+const metaFiles = {
+  ...(import.meta.glob("../../content/posts/*.md", {
+    query: "?frontmatter",
+    import: "default",
+    eager: true,
+  }) as Record<string, Record<string, string>>),
+  ...(import.meta.glob("../../content/posts/*/*.md", {
+    query: "?frontmatter",
+    import: "default",
+    eager: true,
+  }) as Record<string, Record<string, string>>),
+};
+
+const contentLoaders = {
   ...(import.meta.glob("../../content/posts/*.md", {
     query: "?raw",
     import: "default",
-    eager: true,
-  }) as Record<string, string>),
+    eager: false,
+  }) as Record<string, () => Promise<string>>),
   ...(import.meta.glob("../../content/posts/*/*.md", {
     query: "?raw",
     import: "default",
-    eager: true,
-  }) as Record<string, string>),
+    eager: false,
+  }) as Record<string, () => Promise<string>>),
 };
 
 function parsePostPath(path: string): { locale: Locale; slug: string } {
@@ -49,49 +62,20 @@ function parsePostPath(path: string): { locale: Locale; slug: string } {
   };
 }
 
-function parseFrontmatter(raw: string): { data: Record<string, string>; content: string } {
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
-
-  if (!match) {
-    return { data: {}, content: raw };
-  }
-
-  const data = Object.fromEntries(
-    match[1]
-      .split(/\r?\n/)
-      .filter(Boolean)
-      .map((line) => {
-        const separatorIndex = line.indexOf(":");
-        const key = line.slice(0, separatorIndex).trim();
-        const value = line
-          .slice(separatorIndex + 1)
-          .trim()
-          .replace(/^(["'])(.*)\1$/, "$2");
-        return [key, value];
-      }),
-  );
-
-  return {
-    data,
-    content: raw.slice(match[0].length),
-  };
-}
-
-const postVariantsBySlug = Object.entries(rawFiles)
-  .map(([path, raw]) => {
-    const { data, content } = parseFrontmatter(raw);
+const postVariantsBySlug = Object.entries(metaFiles)
+  .map(([path, data]) => {
     const { locale, slug } = parsePostPath(path);
 
     return {
       locale,
       slug,
+      path,
       title: data.title,
-      date: data.date.slice(0, 10),
+      date: data.date?.slice(0, 10) ?? "",
       author: data.author,
       category: data.category,
       excerpt: data.excerpt,
       readingTime: Number(data.readingTime),
-      content,
     };
   })
   .reduce<Map<string, Partial<Record<Locale, BlogPost>>>>((variants, post) => {
@@ -121,6 +105,21 @@ export function getBlogPosts(locale: Locale): BlogPost[] {
 
 export function getPostVariantBySlug(slug: string, locale: Locale): BlogPost | undefined {
   return postVariantsBySlug.get(slug)?.[locale];
+}
+
+export async function getBlogPostContent(path: string): Promise<string> {
+  const loader = contentLoaders[path];
+  if (!loader) {
+    return "";
+  }
+
+  const raw = await loader();
+  // Strip the frontmatter from the raw content before returning
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+  if (match) {
+    return raw.slice(match[0].length);
+  }
+  return raw;
 }
 
 export function getPostLocalesBySlug(slug: string): Locale[] {
