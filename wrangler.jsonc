@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "akazwz",
+  "compatibility_date": "2026-04-26",
+  "observability": {
+    "enabled": true,
+  },
+  "main": "./workers/app.ts",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    {
+      "pattern": "akazwz.com/*",
+      "zone_name": "akazwz.com",
+    },
+  ],
+  "assets": {
+    "directory": "build/client",
+    "html_handling": "drop-trailing-slash",
+  },
+}

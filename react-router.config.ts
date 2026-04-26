@@ -55,6 +55,7 @@ function getLocalizedBlogPaths(slugsByLocale: Record<Locale, string[]>) {
 
 export default {
   ssr: true,
+
   prerender: (() => {
     const blogSlugsByLocale = getBlogSlugsByLocale();
     const blogSlugs = blogSlugsByLocale[defaultLocale];
@@ -69,4 +70,8 @@ export default {
       ...getLocalizedBlogPaths(blogSlugsByLocale),
     ];
   })(),
+
+  future: {
+    v8_viteEnvironmentApi: true,
+  },
 } satisfies Config;
