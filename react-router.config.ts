@@ -61,6 +61,8 @@ export default {
     const blogSlugs = blogSlugsByLocale[defaultLocale];
 
     return [
+      "/robots.txt",
+      "/sitemap.xml",
       "/",
       "/about",
       "/projects",

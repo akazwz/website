@@ -3,19 +3,17 @@ import type { Route } from "./+types/home";
 import { HomePage } from "~/components/pages/home-page";
 import { requireRouteLocale } from "~/lib/route-locale";
 import { getHomeRouteData } from "~/lib/route-data";
+import { buildSocialMeta } from "~/lib/seo";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   if (!loaderData) {
     return [];
   }
 
-  return [
-    { title: loaderData.pageMeta.title },
-    {
-      name: "description",
-      content: loaderData.pageMeta.description,
-    },
-  ];
+  return buildSocialMeta({
+    title: loaderData.pageMeta.title,
+    description: loaderData.pageMeta.description,
+  });
 }
 
 export async function loader({ params, request }: Route.LoaderArgs) {

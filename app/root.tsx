@@ -18,7 +18,7 @@ import { SiteHeader } from "./components/site-header";
 import { getLocaleFromPathname } from "./lib/i18n";
 import type { ErrorMessages } from "./lib/messages";
 import { getRootRouteData } from "./lib/route-data";
-import { getRouteSeo, type RouteSeo } from "./lib/seo";
+import { getOpenGraphLocale, getRouteSeo, twitterHandle, type RouteSeo } from "./lib/seo";
 
 const defaultErrorCopy: ErrorMessages = {
   message: "Oops!",
@@ -68,6 +68,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
   const locale = rootData?.locale ?? getLocaleFromPathname(pathname);
   const seo = getCurrentRouteSeo(matches) ?? getRouteSeo(pathname, locale);
+  const openGraphLocale = getOpenGraphLocale(locale);
+  const alternateOpenGraphLocales = seo.alternates
+    .filter((alternate) => alternate.hrefLang !== "x-default")
+    .map((alternate) => alternate.hrefLang.replace(/-/g, "_"))
+    .filter((alternate) => alternate !== openGraphLocale);
 
   return (
     <html lang={locale}>
@@ -83,6 +88,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
             href={alternate.href}
           />
         ))}
+        <meta property="og:url" content={seo.canonicalPath} />
+        <meta property="og:locale" content={openGraphLocale} />
+        {alternateOpenGraphLocales.map((alternate) => (
+          <meta key={alternate} property="og:locale:alternate" content={alternate} />
+        ))}
+        <meta name="twitter:site" content={twitterHandle} />
+        <meta name="twitter:creator" content={twitterHandle} />
         <Meta />
         <Links />
       </head>

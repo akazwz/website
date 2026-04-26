@@ -19,6 +19,12 @@ export interface BlogPost {
   readingTime: number;
 }
 
+export interface BlogPostSitemapEntry {
+  slug: string;
+  date: string;
+  locales: Locale[];
+}
+
 const rawFiles = {
   ...(import.meta.glob("../../content/posts/*.md", {
     query: "?raw",
@@ -114,6 +120,28 @@ export function getPostLocalesBySlug(slug: string): Locale[] {
   }
 
   return locales.filter((locale) => variants[locale] !== undefined);
+}
+
+export function getBlogPostSitemapEntries(): BlogPostSitemapEntry[] {
+  return [...postVariantsBySlug.entries()]
+    .map(([slug, variants]) => {
+      const availableLocales = locales.filter((locale) => variants[locale] !== undefined);
+      const fallbackLocale = availableLocales[0];
+      const referencePost =
+        variants[defaultLocale] ?? (fallbackLocale ? variants[fallbackLocale] : undefined);
+
+      if (!referencePost) {
+        return undefined;
+      }
+
+      return {
+        slug,
+        date: referencePost.date,
+        locales: availableLocales,
+      };
+    })
+    .filter((entry): entry is BlogPostSitemapEntry => entry !== undefined)
+    .sort((left, right) => right.date.localeCompare(left.date));
 }
 
 export function getBlogPostPath(post: Pick<BlogPost, "locale" | "slug">): string {
