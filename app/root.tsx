@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLocation,
+  useMatches,
   useRouteLoaderData,
 } from "react-router";
 
@@ -17,6 +18,7 @@ import { SiteHeader } from "./components/site-header";
 import { getLocaleFromPathname } from "./lib/i18n";
 import type { ErrorMessages } from "./lib/messages";
 import { getRootRouteData } from "./lib/route-data";
+import { getRouteSeo, type RouteSeo } from "./lib/seo";
 
 const defaultErrorCopy: ErrorMessages = {
   message: "Oops!",
@@ -48,15 +50,39 @@ export async function loader({ request }: Route.LoaderArgs) {
   return getRootRouteData(getLocaleFromPathname(new URL(request.url).pathname));
 }
 
+function getCurrentRouteSeo(matches: ReturnType<typeof useMatches>): RouteSeo | undefined {
+  for (const match of [...matches].reverse()) {
+    const data = match.data as { seo?: RouteSeo } | undefined;
+
+    if (data?.seo) {
+      return data.seo;
+    }
+  }
+
+  return undefined;
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const rootData = useRouteLoaderData<typeof loader>("root");
-  const locale = rootData?.locale ?? getLocaleFromPathname(useLocation().pathname);
+  const { pathname } = useLocation();
+  const matches = useMatches();
+  const locale = rootData?.locale ?? getLocaleFromPathname(pathname);
+  const seo = getCurrentRouteSeo(matches) ?? getRouteSeo(pathname, locale);
 
   return (
     <html lang={locale}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href={seo.canonicalPath} />
+        {seo.alternates.map((alternate) => (
+          <link
+            key={`${alternate.hrefLang}:${alternate.href}`}
+            rel="alternate"
+            hrefLang={alternate.hrefLang}
+            href={alternate.href}
+          />
+        ))}
         <Meta />
         <Links />
       </head>

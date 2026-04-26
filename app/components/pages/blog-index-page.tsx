@@ -3,8 +3,8 @@ import { Link } from "react-router";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import { formatDate, type BlogPost } from "~/lib/blog";
-import { localizePath, type Locale } from "~/lib/i18n";
+import { formatDate, getBlogPostPath, type BlogPost } from "~/lib/blog";
+import type { Locale } from "~/lib/i18n";
 import type { BlogIndexMessages } from "~/lib/messages";
 
 export function BlogIndexPage({
@@ -43,7 +43,7 @@ export function BlogIndexPage({
         </div>
 
         {featured ? (
-          <Link to={localizePath(locale, `/blog/${featured.slug}`)} className="group block">
+          <Link to={getBlogPostPath(featured)} className="group block">
             <Card className="border border-border py-0 transition-colors hover:border-ring">
               <CardHeader className="py-6">
                 <div className="mb-4 flex items-center gap-3">
@@ -91,7 +91,7 @@ export function BlogIndexPage({
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {rest.map((post) => (
-            <Link key={post.slug} to={localizePath(locale, `/blog/${post.slug}`)} className="group">
+            <Link key={post.slug} to={getBlogPostPath(post)} className="group">
               <Card className="h-full border border-border py-0 transition-colors hover:border-ring">
                 <CardHeader className="flex-1 py-6 pb-2">
                   <div className="mb-3 flex items-center gap-2">

@@ -1,4 +1,11 @@
-import { defaultLocale, getLocaleLanguageTag, isLocale, type Locale } from "~/lib/i18n";
+import {
+  defaultLocale,
+  getLocaleLanguageTag,
+  isLocale,
+  locales,
+  localizePath,
+  type Locale,
+} from "~/lib/i18n";
 
 export interface BlogPost {
   locale: Locale;
@@ -95,11 +102,22 @@ export function getBlogPosts(locale: Locale): BlogPost[] {
     .sort((left, right) => right.date.localeCompare(left.date));
 }
 
-export const blogPosts = getBlogPosts(defaultLocale);
+export function getPostVariantBySlug(slug: string, locale: Locale): BlogPost | undefined {
+  return postVariantsBySlug.get(slug)?.[locale];
+}
 
-export function getPostBySlug(slug: string, locale: Locale = defaultLocale): BlogPost | undefined {
+export function getPostLocalesBySlug(slug: string): Locale[] {
   const variants = postVariantsBySlug.get(slug);
-  return variants?.[locale] ?? variants?.[defaultLocale];
+
+  if (!variants) {
+    return [];
+  }
+
+  return locales.filter((locale) => variants[locale] !== undefined);
+}
+
+export function getBlogPostPath(post: Pick<BlogPost, "locale" | "slug">): string {
+  return localizePath(post.locale, `/blog/${post.slug}`);
 }
 
 export function formatDate(dateStr: string, locale: Locale = defaultLocale): string {

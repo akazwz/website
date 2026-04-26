@@ -18,8 +18,8 @@ export function meta({ loaderData }: Route.MetaArgs) {
   ];
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  return getBlogIndexRouteData(requireRouteLocale(params.locale));
+export async function loader({ params, request }: Route.LoaderArgs) {
+  return getBlogIndexRouteData(requireRouteLocale(params.locale, request));
 }
 
 export default function Blog({ loaderData }: Route.ComponentProps) {

@@ -5,7 +5,7 @@ import { Badge } from "~/components/ui/badge";
 import { buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import { formatDate, type BlogPost } from "~/lib/blog";
+import { formatDate, getBlogPostPath, type BlogPost } from "~/lib/blog";
 import { localizePath, type Locale } from "~/lib/i18n";
 import type { HomeMessages } from "~/lib/messages";
 import { cn } from "~/lib/utils";
@@ -112,11 +112,7 @@ export function HomePage({
 
         <div className="grid gap-5 md:grid-cols-3">
           {latestPosts.map((post) => (
-            <Link
-              key={post.slug}
-              to={localizePath(locale, `/blog/${post.slug}`)}
-              className="group block"
-            >
+            <Link key={post.slug} to={getBlogPostPath(post)} className="group block">
               <Card className="h-full border border-border py-0 transition-colors hover:border-ring">
                 <CardHeader className="py-6">
                   <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">

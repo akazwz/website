@@ -3,16 +3,18 @@ import { join } from "node:path";
 
 import type { Config } from "@react-router/dev/config";
 
-import { locales, secondaryLocales } from "./app/lib/i18n";
+import { defaultLocale, locales, secondaryLocales, type Locale } from "./app/lib/i18n";
 
-function getBlogSlugs() {
+function getBlogSlugsByLocale() {
   const postsDirectory = join(process.cwd(), "content/posts");
   const entries = readdirSync(postsDirectory, { withFileTypes: true });
-  const slugs = new Set<string>();
+  const slugsByLocale = Object.fromEntries(
+    locales.map((locale) => [locale, new Set<string>()]),
+  ) as Record<Locale, Set<string>>;
 
   for (const entry of entries) {
     if (entry.isFile() && entry.name.endsWith(".md")) {
-      slugs.add(entry.name.replace(/\.md$/, ""));
+      slugsByLocale[defaultLocale].add(entry.name.replace(/\.md$/, ""));
       continue;
     }
 
@@ -26,12 +28,14 @@ function getBlogSlugs() {
 
     for (const localizedEntry of localizedEntries) {
       if (localizedEntry.isFile() && localizedEntry.name.endsWith(".md")) {
-        slugs.add(localizedEntry.name.replace(/\.md$/, ""));
+        slugsByLocale[entry.name as Locale].add(localizedEntry.name.replace(/\.md$/, ""));
       }
     }
   }
 
-  return [...slugs];
+  return Object.fromEntries(
+    locales.map((locale) => [locale, [...slugsByLocale[locale]]]),
+  ) as Record<Locale, string[]>;
 }
 
 function getLocalizedStaticPaths() {
@@ -43,14 +47,17 @@ function getLocalizedStaticPaths() {
   ]);
 }
 
-function getLocalizedBlogPaths(slugs: string[]) {
-  return secondaryLocales.flatMap((locale) => slugs.map((slug) => `/${locale}/blog/${slug}`));
+function getLocalizedBlogPaths(slugsByLocale: Record<Locale, string[]>) {
+  return secondaryLocales.flatMap((locale) =>
+    slugsByLocale[locale].map((slug) => `/${locale}/blog/${slug}`),
+  );
 }
 
 export default {
   ssr: true,
   prerender: (() => {
-    const blogSlugs = getBlogSlugs();
+    const blogSlugsByLocale = getBlogSlugsByLocale();
+    const blogSlugs = blogSlugsByLocale[defaultLocale];
 
     return [
       "/",
@@ -59,7 +66,7 @@ export default {
       "/blog",
       ...blogSlugs.map((slug) => `/blog/${slug}`),
       ...getLocalizedStaticPaths(),
-      ...getLocalizedBlogPaths(blogSlugs),
+      ...getLocalizedBlogPaths(blogSlugsByLocale),
     ];
   })(),
 } satisfies Config;

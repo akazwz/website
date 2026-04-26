@@ -1,9 +1,15 @@
-import { data } from "react-router";
+import { data, redirect } from "react-router";
 
-import { getBlogPosts, getPostBySlug } from "~/lib/blog";
+import {
+  getBlogPostPath,
+  getBlogPosts,
+  getPostLocalesBySlug,
+  getPostVariantBySlug,
+} from "~/lib/blog";
 import { renderMarkdown } from "~/lib/blog-renderer";
-import { type Locale } from "~/lib/i18n";
+import { defaultLocale, type Locale } from "~/lib/i18n";
 import { loadMessages } from "~/lib/messages";
+import { getRouteSeo } from "~/lib/seo";
 
 export async function getRootRouteData(locale: Locale) {
   const messages = await loadMessages(locale);
@@ -60,9 +66,16 @@ export async function getBlogIndexRouteData(locale: Locale) {
 
 export async function getBlogPostRouteData(locale: Locale, slug: string | undefined) {
   const messages = await loadMessages(locale);
-  const post = getPostBySlug(slug ?? "", locale);
+  const postSlug = slug ?? "";
+  const post = getPostVariantBySlug(postSlug, locale);
 
   if (!post) {
+    const defaultPost = getPostVariantBySlug(postSlug, defaultLocale);
+
+    if (locale !== defaultLocale && defaultPost) {
+      throw redirect(getBlogPostPath(defaultPost));
+    }
+
     throw data("Not Found", { status: 404 });
   }
 
@@ -71,5 +84,6 @@ export async function getBlogPostRouteData(locale: Locale, slug: string | undefi
     copy: messages.blogPost,
     post,
     html: renderMarkdown(post.content),
+    seo: getRouteSeo(getBlogPostPath(post), locale, getPostLocalesBySlug(post.slug)),
   };
 }

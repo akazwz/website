@@ -15,8 +15,8 @@ export function meta({ loaderData }: Route.MetaArgs) {
   ];
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  return getBlogPostRouteData(requireRouteLocale(params.locale), params.slug);
+export async function loader({ params, request }: Route.LoaderArgs) {
+  return getBlogPostRouteData(requireRouteLocale(params.locale, request), params.slug);
 }
 
 export default function BlogPost({ loaderData }: Route.ComponentProps) {
