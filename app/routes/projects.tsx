@@ -1,16 +1,27 @@
-import { ProjectsPage } from "~/components/pages/projects-page";
+import type { Route } from "./+types/projects";
 
-export function meta() {
+import { ProjectsPage } from "~/components/pages/projects-page";
+import { requireRouteLocale } from "~/lib/route-locale";
+import { getProjectsRouteData } from "~/lib/route-data";
+
+export function meta({ loaderData }: Route.MetaArgs) {
+  if (!loaderData) {
+    return [];
+  }
+
   return [
-    { title: "Projects | akazwz" },
+    { title: loaderData.pageMeta.title },
     {
       name: "description",
-      content:
-        "A collection of products, tools, experiments, and open-source work built by akazwz.",
+      content: loaderData.pageMeta.description,
     },
   ];
 }
 
-export default function Projects() {
-  return <ProjectsPage locale="en" />;
+export async function loader({ params }: Route.LoaderArgs) {
+  return getProjectsRouteData(requireRouteLocale(params.locale));
+}
+
+export default function Projects({ loaderData }: Route.ComponentProps) {
+  return <ProjectsPage copy={loaderData.copy} entries={loaderData.entries} />;
 }

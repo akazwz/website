@@ -1,15 +1,29 @@
-import { BlogIndexPage } from "~/components/pages/blog-index-page";
+import type { Route } from "./+types/blog";
 
-export function meta() {
+import { BlogIndexPage } from "~/components/pages/blog-index-page";
+import { requireRouteLocale } from "~/lib/route-locale";
+import { getBlogIndexRouteData } from "~/lib/route-data";
+
+export function meta({ loaderData }: Route.MetaArgs) {
+  if (!loaderData) {
+    return [];
+  }
+
   return [
-    { title: "Journal | akazwz" },
+    { title: loaderData.pageMeta.title },
     {
       name: "description",
-      content: "Notes on software, design, and building with restraint.",
+      content: loaderData.pageMeta.description,
     },
   ];
 }
 
-export default function Blog() {
-  return <BlogIndexPage locale="en" />;
+export async function loader({ params }: Route.LoaderArgs) {
+  return getBlogIndexRouteData(requireRouteLocale(params.locale));
+}
+
+export default function Blog({ loaderData }: Route.ComponentProps) {
+  return (
+    <BlogIndexPage copy={loaderData.copy} locale={loaderData.locale} posts={loaderData.posts} />
+  );
 }

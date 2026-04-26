@@ -1,100 +1,26 @@
 import { Link } from "react-router";
 
-import { SiteHeader } from "~/components/site-header";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import { formatDate, getBlogPosts } from "~/lib/blog";
+import { formatDate, type BlogPost } from "~/lib/blog";
 import { localizePath, type Locale } from "~/lib/i18n";
+import type { BlogIndexMessages } from "~/lib/messages";
 
-const blogIndexCopy = {
-  en: {
-    badge: "Journal",
-    title: "The Journal",
-    description: "Notes on software, design, and building with restraint.",
-    latestBadge: "Latest",
-    featuredTitle: "Featured post",
-    moreBadge: "More",
-    previousEntriesTitle: "Previous entries",
-    writtenBy: "By",
-    minuteReadLabel: "min read",
-    minuteShortLabel: "min",
-    footer: "Written slowly, with care.",
-    emptyTitle: "No posts yet",
-    emptyDescription: "Writing is on the way.",
-  },
-  zh: {
-    badge: "博客",
-    title: "写作与记录",
-    description: "关于软件、设计，以及尽量克制地做东西的一些笔记。",
-    latestBadge: "最新",
-    featuredTitle: "精选文章",
-    moreBadge: "更多",
-    previousEntriesTitle: "更多记录",
-    writtenBy: "作者",
-    minuteReadLabel: "分钟阅读",
-    minuteShortLabel: "分钟",
-    footer: "慢慢写，认真写。",
-    emptyTitle: "还没有文章",
-    emptyDescription: "写作内容会慢慢补上。",
-  },
-  ja: {
-    badge: "ジャーナル",
-    title: "記録と文章",
-    description: "ソフトウェア、デザイン、そして節度あるものづくりについてのメモ。",
-    latestBadge: "最新",
-    featuredTitle: "注目の記事",
-    moreBadge: "さらに読む",
-    previousEntriesTitle: "これまでの記録",
-    writtenBy: "著者",
-    minuteReadLabel: "分で読めます",
-    minuteShortLabel: "分",
-    footer: "時間をかけて、丁寧に書いています。",
-    emptyTitle: "まだ記事がありません",
-    emptyDescription: "これから少しずつ増やしていきます。",
-  },
-  es: {
-    badge: "Blog",
-    title: "Notas y registro",
-    description: "Notas sobre software, diseño y la idea de construir con más criterio.",
-    latestBadge: "Último",
-    featuredTitle: "Artículo destacado",
-    moreBadge: "Más",
-    previousEntriesTitle: "Entradas anteriores",
-    writtenBy: "Por",
-    minuteReadLabel: "min de lectura",
-    minuteShortLabel: "min",
-    footer: "Escrito despacio y con cuidado.",
-    emptyTitle: "Todavía no hay artículos",
-    emptyDescription: "La escritura llegará poco a poco.",
-  },
-  fr: {
-    badge: "Journal",
-    title: "Notes et écrits",
-    description: "Des notes sur le logiciel, le design et une manière plus mesurée de construire.",
-    latestBadge: "Dernier",
-    featuredTitle: "Article mis en avant",
-    moreBadge: "Plus",
-    previousEntriesTitle: "Entrées précédentes",
-    writtenBy: "Par",
-    minuteReadLabel: "min de lecture",
-    minuteShortLabel: "min",
-    footer: "Écrit lentement, avec soin.",
-    emptyTitle: "Pas encore d’article",
-    emptyDescription: "Les textes viendront progressivement.",
-  },
-} as const;
-
-export function BlogIndexPage({ locale }: { locale: Locale }) {
-  const copy = blogIndexCopy[locale];
-  const posts = getBlogPosts(locale);
+export function BlogIndexPage({
+  copy,
+  locale,
+  posts,
+}: {
+  copy: BlogIndexMessages;
+  locale: Locale;
+  posts: BlogPost[];
+}) {
   const featured = posts[0];
   const rest = posts.slice(1);
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <SiteHeader />
-
+    <main>
       <section className="mx-auto max-w-5xl px-6 py-16">
         <Badge variant="secondary" className="mb-6">
           {copy.badge}

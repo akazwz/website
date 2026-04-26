@@ -1,16 +1,27 @@
-import { AboutPage } from "~/components/pages/about-page";
+import type { Route } from "./+types/about";
 
-export function meta() {
+import { AboutPage } from "~/components/pages/about-page";
+import { requireRouteLocale } from "~/lib/route-locale";
+import { getAboutRouteData } from "~/lib/route-data";
+
+export function meta({ loaderData }: Route.MetaArgs) {
+  if (!loaderData) {
+    return [];
+  }
+
   return [
-    { title: "About | akazwz" },
+    { title: loaderData.pageMeta.title },
     {
       name: "description",
-      content:
-        "About akazwz, the focus areas behind the site, and the kind of work collected here.",
+      content: loaderData.pageMeta.description,
     },
   ];
 }
 
-export default function About() {
-  return <AboutPage locale="en" />;
+export async function loader({ params }: Route.LoaderArgs) {
+  return getAboutRouteData(requireRouteLocale(params.locale));
+}
+
+export default function About({ loaderData }: Route.ComponentProps) {
+  return <AboutPage copy={loaderData.copy} locale={loaderData.locale} />;
 }

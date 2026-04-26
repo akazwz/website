@@ -1,55 +1,25 @@
 import { Link } from "react-router";
 
-import { SiteHeader } from "~/components/site-header";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
 import { formatDate, type BlogPost } from "~/lib/blog";
 import { localizePath, type Locale } from "~/lib/i18n";
-
-const blogPostCopy = {
-  en: {
-    backToJournal: "← Back to Journal",
-    minuteReadLabel: "min read",
-    returnToPosts: "← Return to all posts",
-  },
-  zh: {
-    backToJournal: "← 返回博客列表",
-    minuteReadLabel: "分钟阅读",
-    returnToPosts: "← 返回全部文章",
-  },
-  ja: {
-    backToJournal: "← ジャーナルに戻る",
-    minuteReadLabel: "分で読めます",
-    returnToPosts: "← すべての記事に戻る",
-  },
-  es: {
-    backToJournal: "← Volver al blog",
-    minuteReadLabel: "min de lectura",
-    returnToPosts: "← Volver a todos los artículos",
-  },
-  fr: {
-    backToJournal: "← Retour au journal",
-    minuteReadLabel: "min de lecture",
-    returnToPosts: "← Retour à tous les articles",
-  },
-} as const;
+import type { BlogPostMessages } from "~/lib/messages";
 
 export function BlogPostPage({
+  copy,
   html,
   locale,
   post,
 }: {
+  copy: BlogPostMessages;
   html: string;
   locale: Locale;
   post: BlogPost;
 }) {
-  const copy = blogPostCopy[locale];
-
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <SiteHeader />
-
+    <main>
       <article className="mx-auto max-w-3xl px-6 py-16">
         <Link
           to={localizePath(locale, "/blog")}

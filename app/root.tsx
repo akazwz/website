@@ -6,55 +6,51 @@ import {
   Scripts,
   ScrollRestoration,
   useLocation,
+  useRouteLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import { getLocaleFromPathname, type Locale } from "./lib/i18n";
+import notoSansLatinWoff2 from "@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2";
+import playfairLatinWoff2 from "@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2";
+import { SiteHeader } from "./components/site-header";
+import { getLocaleFromPathname } from "./lib/i18n";
+import type { ErrorMessages } from "./lib/messages";
+import { getRootRouteData } from "./lib/route-data";
 
-const errorCopy = {
-  en: {
-    message: "Oops!",
-    unexpected: "An unexpected error occurred.",
-    errorLabel: "Error",
-    notFoundDetails: "The requested page could not be found.",
-  },
-  zh: {
-    message: "出了点问题",
-    unexpected: "发生了一个未预期的错误。",
-    errorLabel: "错误",
-    notFoundDetails: "你访问的页面不存在。",
-  },
-  ja: {
-    message: "問題が発生しました",
-    unexpected: "予期しないエラーが発生しました。",
-    errorLabel: "エラー",
-    notFoundDetails: "お探しのページは見つかりませんでした。",
-  },
-  es: {
-    message: "Vaya",
-    unexpected: "Se produjo un error inesperado.",
-    errorLabel: "Error",
-    notFoundDetails: "No se pudo encontrar la página solicitada.",
-  },
-  fr: {
-    message: "Oups",
-    unexpected: "Une erreur inattendue s'est produite.",
-    errorLabel: "Erreur",
-    notFoundDetails: "La page demandée est introuvable.",
-  },
-} as const satisfies Record<
-  Locale,
-  {
-    message: string;
-    unexpected: string;
-    errorLabel: string;
-    notFoundDetails: string;
-  }
->;
+const defaultErrorCopy: ErrorMessages = {
+  message: "Oops!",
+  unexpected: "An unexpected error occurred.",
+  errorLabel: "Error",
+  notFoundDetails: "The requested page could not be found.",
+};
+
+export function links() {
+  return [
+    {
+      rel: "preload",
+      href: notoSansLatinWoff2,
+      as: "font",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
+    {
+      rel: "preload",
+      href: playfairLatinWoff2,
+      as: "font",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
+  ];
+}
+
+export async function loader({ request }: Route.LoaderArgs) {
+  return getRootRouteData(getLocaleFromPathname(new URL(request.url).pathname));
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const locale = getLocaleFromPathname(useLocation().pathname);
+  const rootData = useRouteLoaderData<typeof loader>("root");
+  const locale = rootData?.locale ?? getLocaleFromPathname(useLocation().pathname);
 
   return (
     <html lang={locale}>
@@ -73,13 +69,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
-  return <Outlet />;
+export default function App({ loaderData }: Route.ComponentProps) {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <SiteHeader copy={loaderData.header} locale={loaderData.locale} />
+      <Outlet />
+    </div>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  const locale = getLocaleFromPathname(useLocation().pathname);
-  const copy = errorCopy[locale];
+  const rootData = useRouteLoaderData<typeof loader>("root");
+  const copy = rootData?.error ?? defaultErrorCopy;
 
   let message: string = copy.message;
   let details: string = copy.unexpected;

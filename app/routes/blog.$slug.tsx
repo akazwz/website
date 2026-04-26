@@ -1,22 +1,24 @@
-import { data, useLoaderData } from "react-router";
+import type { Route } from "./+types/blog.$slug";
 
 import { BlogPostPage } from "~/components/pages/blog-post-page";
-import { getPostBySlug } from "~/lib/blog";
-import { renderMarkdown } from "~/lib/blog-renderer";
+import { requireRouteLocale } from "~/lib/route-locale";
+import { getBlogPostRouteData } from "~/lib/route-data";
 
-export function meta({ params }: { params: { slug?: string } }) {
-  const post = getPostBySlug(params.slug ?? "", "en");
-  if (!post) return [{ title: "Post Not Found | akazwz" }];
-  return [{ title: post.title }, { name: "description", content: post.excerpt }];
+export function meta({ loaderData }: Route.MetaArgs) {
+  if (!loaderData) {
+    return [];
+  }
+
+  return [
+    { title: loaderData.post.title },
+    { name: "description", content: loaderData.post.excerpt },
+  ];
 }
 
-export function loader({ params }: { params: { slug?: string } }) {
-  const post = getPostBySlug(params.slug ?? "", "en");
-  if (!post) throw data("Not Found", { status: 404 });
-  return { post, html: renderMarkdown(post.content) };
+export async function loader({ params }: Route.LoaderArgs) {
+  return getBlogPostRouteData(requireRouteLocale(params.locale), params.slug);
 }
 
-export default function BlogPost() {
-  const loaderData = useLoaderData<typeof loader>();
-  return <BlogPostPage locale="en" {...loaderData} />;
+export default function BlogPost({ loaderData }: Route.ComponentProps) {
+  return <BlogPostPage {...loaderData} />;
 }

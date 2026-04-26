@@ -17,66 +17,24 @@ import {
 import { Separator } from "~/components/ui/separator";
 import {
   defaultLocale,
-  getLocaleFromPathname,
+  isLocale,
   localeMetadata,
   localizePath,
   secondaryLocales,
   type Locale,
 } from "~/lib/i18n";
+import type { HeaderMessages } from "~/lib/messages";
 import { cn } from "~/lib/utils";
 
-const headerCopy = {
-  en: {
-    about: "About",
-    projects: "Projects",
-    journal: "Journal",
-    language: "Language",
-    tagline: "Full-stack developer & open-source creator.",
-  },
-  zh: {
-    about: "关于",
-    projects: "项目",
-    journal: "博客",
-    language: "语言",
-    tagline: "全栈开发者与开源创作者。",
-  },
-  ja: {
-    about: "概要",
-    projects: "プロジェクト",
-    journal: "ブログ",
-    language: "言語",
-    tagline: "フルスタック開発者兼オープンソース制作者。",
-  },
-  es: {
-    about: "Sobre mí",
-    projects: "Proyectos",
-    journal: "Blog",
-    language: "Idioma",
-    tagline: "Desarrollador full-stack y creador open source.",
-  },
-  fr: {
-    about: "À propos",
-    projects: "Projets",
-    journal: "Journal",
-    language: "Langue",
-    tagline: "Développeur full-stack et créateur open source.",
-  },
-} as const satisfies Record<
-  Locale,
-  { about: string; projects: string; journal: string; language: string; tagline: string }
->;
-
-export function SiteHeader() {
+export function SiteHeader({ copy, locale }: { copy: HeaderMessages; locale: Locale }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const locale = getLocaleFromPathname(pathname);
-  const copy = headerCopy[locale];
   const navItems = [
     { to: localizePath(locale, "/about"), label: copy.about },
     { to: localizePath(locale, "/projects"), label: copy.projects },
     { to: localizePath(locale, "/blog"), label: copy.journal },
   ];
-  const localeOptions = [defaultLocale, ...secondaryLocales];
+  const localeOptions: Locale[] = [defaultLocale, ...secondaryLocales];
 
   return (
     <header className="border-b border-border">
@@ -128,7 +86,13 @@ export function SiteHeader() {
               <DropdownMenuSeparator />
               <DropdownMenuRadioGroup
                 value={locale}
-                onValueChange={(value) => navigate(localizePath(value as Locale, pathname))}
+                onValueChange={(value) => {
+                  if (!isLocale(value)) {
+                    return;
+                  }
+
+                  void navigate(localizePath(value, pathname));
+                }}
               >
                 {localeOptions.map((targetLocale) => (
                   <DropdownMenuRadioItem

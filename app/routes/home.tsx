@@ -1,16 +1,33 @@
-import { HomePage } from "~/components/pages/home-page";
+import type { Route } from "./+types/home";
 
-export function meta() {
+import { HomePage } from "~/components/pages/home-page";
+import { requireRouteLocale } from "~/lib/route-locale";
+import { getHomeRouteData } from "~/lib/route-data";
+
+export function meta({ loaderData }: Route.MetaArgs) {
+  if (!loaderData) {
+    return [];
+  }
+
   return [
-    { title: "akazwz" },
+    { title: loaderData.pageMeta.title },
     {
       name: "description",
-      content:
-        "Personal site of akazwz, covering open-source work, experiments, and long-form writing.",
+      content: loaderData.pageMeta.description,
     },
   ];
 }
 
-export default function Home() {
-  return <HomePage locale="en" />;
+export async function loader({ params }: Route.LoaderArgs) {
+  return getHomeRouteData(requireRouteLocale(params.locale));
+}
+
+export default function Home({ loaderData }: Route.ComponentProps) {
+  return (
+    <HomePage
+      copy={loaderData.copy}
+      latestPosts={loaderData.latestPosts}
+      locale={loaderData.locale}
+    />
+  );
 }
