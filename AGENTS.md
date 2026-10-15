@@ -46,6 +46,7 @@ akazwz.com：Solid 2 + StyleX 的个人网站，界面组件写在项目里，�
 
 - `pnpm build`（即 `cf build`）跑 Vite：Solid 构建客户端和服务端，`prerender-crawler` 把每个页面渲染成 HTML，Cloudflare 的 Vite 插件把客户端产物写成 `.cloudflare/output/` 下的 Build Output。
 - `pnpm deploy`（即 `cf deploy`）构建并上传；`cf deploy --prebuilt` 上传已有的构建产物。登录用 `cf auth login`。
+- 流量怎么进来：akazwz.com 的 DNS 是一条开了代理的 `AAAA 100::`（没有源站，只为让请求进这个 zone），zone 上的路由 `akazwz.com/*` 指向 `akazwz` Worker。路由写得越具体越优先，`https://akazwz.com/*` 会压过 `akazwz.com/*`；部署后线上没变，先查 zone 上有没有别的 Worker 路由（2026-10-15 旧站的 `blog` Worker 就是这样占着，已删除）。
 - 找不到文件的地址回最近的 `404.html`（中文地址回 `zh/404.html`），状态码 404。缓存头在 `public/_headers`。
 - `cf` 和 `@cloudflare/vite-plugin` 现在都是 beta，版本写死，升级后重新走一遍下面的验证。
 - `vite.config.ts` 里的 `builder.sharedPlugins: true` 不能去掉。Cloudflare 插件把客户端产物挪到了 `.cloudflare/output/`，Solid 插件要靠同一份插件实例记住这个目录，服务端构建才读得到客户端清单。去掉之后构建照样“成功”，但每个页面都没有样式表和脚本，只有在浏览器里打开构建产物才看得出来（2026-10-15 踩过）。
