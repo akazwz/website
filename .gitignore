@@ -1,13 +1,15 @@
-.DS_Store
-.env
-/node_modules/
+node_modules/
+dist/
+*.tsbuildinfo
 
-# React Router
-/.react-router/
-/build/
-
-# wrangler files
-.wrangler
-.dev.vars*
-!.dev.vars.example
+# Local environment variables and secrets
+.env*
 !.env.example
+
+# Logs and editor files
+*.log
+.DS_Store
+
+# cf build output and generated types
+.cloudflare/
+.wrangler/

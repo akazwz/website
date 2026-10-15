@@ -1,0 +1,33 @@
+/* The few rules that are about the document itself. Everything else is StyleX, which also
+   appends the rules it generates to this file: keep it imported from src/App.tsx. */
+
+:root {
+  /* Both schemes are supported, so the browser paints its own dark canvas and controls
+     before the app has drawn anything. The colors themselves are in src/ui/tokens.stylex.ts. */
+  color-scheme: light dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* View transitions (src/ui/transition.ts). By default the whole page takes part and its
+   picture lies over the page while one runs, so a click during it reaches nothing. Only
+   the elements that name themselves take part, and the pictures let clicks through. */
+:root {
+  view-transition-name: none;
+}
+
+::view-transition {
+  pointer-events: none;
+}

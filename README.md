@@ -1,63 +1,64 @@
 # akazwz.com
 
-Personal website and blog built with the modern React ecosystem and deployed to the edge.
+The personal site of akazwz: writing, projects, and a little about me, in English and Chinese.
 
-## Tech Stack
+Built with [Solid 2](https://github.com/solidjs/solid) and [StyleX](https://stylexjs.com), prerendered to static HTML at build time, and served from Cloudflare.
 
-- **Framework**: [React Router v7](https://reactrouter.com/)
-- **Build Tool**: [Vite](https://vite.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
-- **Deployment**: [Cloudflare Workers](https://workers.cloudflare.com/)
+## Requirements
 
-## Features
+Node.js 26 and pnpm 12. The exact versions are in `mise.toml`; with [mise](https://mise.jdx.dev), `mise trust && mise install` sets them up.
 
-- **Static Site Generation (SSG)**: Fully prerendered for maximum performance and SEO.
-- **Internationalization (i18n)**: Built-in support for multiple languages (English, Spanish, French, Japanese, Chinese).
-- **Markdown Blog**: Content authored in Markdown with frontmatter.
-- **Optimized Code Splitting**: Custom Vite plugin extracts frontmatter at build time, ensuring the worker bundle remains minimal while Markdown content is lazy-loaded on demand as separate chunks.
-- **Edge Deployment**: Runs globally on Cloudflare's edge network.
+## Commands
 
-## Development
-
-### Prerequisites
-
-- Node.js (v22+)
-- pnpm
-
-### Setup
-
-1. Install dependencies:
-
-   ```bash
-   pnpm install
-   ```
-
-2. Start the development server:
-   ```bash
-   pnpm run dev
-   ```
-
-### Building for Production
-
-To build the application and prerender static routes:
-
-```bash
-pnpm run build
+```sh
+pnpm install
+pnpm dev
 ```
 
-### Deployment
+| Command        | What it does                                                     |
+| -------------- | ---------------------------------------------------------------- |
+| `pnpm dev`     | Dev server with hot reload                                       |
+| `pnpm build`   | `cf build`: prerenders every page into `.cloudflare/output/`     |
+| `pnpm preview` | Serves the build in workerd, the way Cloudflare will             |
+| `pnpm deploy`  | `cf deploy`: builds and deploys (sign in first: `cf auth login`) |
+| `pnpm check`   | Format check (oxfmt), type check (tsc), and lint (oxlint)        |
+| `pnpm format`  | Formats the sources                                              |
 
-To deploy to Cloudflare Workers:
+## Writing a post
 
-```bash
-pnpm run deploy
+Add `content/posts/<slug>.md` (English, at `/blog/<slug>`) and, for a Chinese version, `content/posts/zh/<slug>.md` (at `/zh/blog/<slug>`):
+
+```md
+---
+title: The title
+date: 2026-10-14
+category: Product
+excerpt: One or two sentences for the list and the link preview.
+readingTime: 5
+---
+
+The body, in Markdown. Sections start with `##`.
 ```
 
-## Architecture Notes
+The build parses posts with Markdoc and fails on anything the page has no style for, naming the file.
 
-### Markdown Code Splitting
+## Layout
 
-To prevent the Cloudflare Worker bundle from exceeding the 1MB size limit, the project uses a custom dual-glob strategy:
+```text
+cloudflare.config.ts   Deployment: assets only, routes, 404 handling
+vite.config.ts         StyleX, content, Solid (SSR start mode), file routes, prerender, Cloudflare
+tools/content.ts       Turns content/posts into `virtual:posts`
+content/posts/         The posts, English at the top level, Chinese under zh/
+public/                Files served as they are (favicon, robots.txt, _headers)
+src/
+  Document.tsx         The document shell
+  App.tsx              Header, page, footer
+  routes/[[lang]]/     The pages, each answering /path and /zh/path
+  components/          Site-specific pieces: header, footer, lists, head tags
+  ui/                  The site's own component library and design tokens
+  i18n/                Languages, interface text, date formatting
+  content/             Post types, the projects list, post body loading
+docs/                  Notes on Solid 2 + StyleX and on the web platform
+```
 
-1. A custom Vite plugin extracts YAML frontmatter (`?frontmatter`) eagerly to render blog listings instantly.
-2. The full Markdown content (`?raw`) is dynamically imported only when a specific blog post is visited, splitting it into separate lazy-loaded chunks.
+How the code is written and checked is in [AGENTS.md](AGENTS.md).

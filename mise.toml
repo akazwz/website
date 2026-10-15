@@ -1,0 +1,19 @@
+[tools]
+node = "26.12.0"
+pnpm = "12.11.2"
+
+[tasks.dev]
+description = "Start the Vite dev server"
+run = "pnpm dev"
+
+[tasks.build]
+description = "Prerender the site into dist/client"
+run = "pnpm build"
+
+[tasks.format]
+description = "Format the sources with oxfmt"
+run = "pnpm format"
+
+[tasks.check]
+description = "Format check (oxfmt), type check (tsc) and lint (oxlint), changing nothing"
+run = "pnpm check"

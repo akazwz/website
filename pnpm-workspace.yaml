@@ -1,14 +1,28 @@
-catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: npm:@voidzero-dev/vite-plus-test@latest
-  vite-plus: latest
-overrides:
-  vite: "catalog:"
-  vitest: "catalog:"
+allowBuilds:
+  esbuild: true
+  workerd: true
+
+# pnpm settings for this project.
+
+# Solid 2 is a release candidate whose packages are released together and
+# often: a release-age policy would refuse the versions pinned in package.json
+# on the day they come out. Remove this once Solid 2 is stable.
+minimumReleaseAgeExclude:
+  - solid-js
+  - "@solidjs/*"
+  - filesystem-routing
+  - miniflare@5.20261012.0-beta
+  - wrangler@4.151.0
+  - "@cloudflare/build-output-utils@0.9.2"
+  - "@cloudflare/config@0.26.0"
+  - "@cloudflare/runtime-types@0.1.11"
+  - "@cloudflare/vite-plugin@2.0.0-beta.sha-67fa336fd"
+  - cf@1.0.0-beta.17
+
+# @stylexjs/unplugin 0.19.1 declares `unplugin ^2.3.11` and has not released a version
+# that widens it. unplugin 3.x works with it (see docs/solid2-stylex.md, "版本"), so the
+# mismatch is allowed here instead of warned about on every install. Remove this once
+# StyleX widens its range.
 peerDependencyRules:
-  allowAny:
-    - vite
-    - vitest
   allowedVersions:
-    vite: "*"
-    vitest: "*"
+    "@stylexjs/unplugin>unplugin": "3"
