@@ -48,6 +48,7 @@ akazwz.com：Solid 2 + StyleX 的个人网站，界面组件写在项目里，�
 - **推到 `main` 就自动上线**：`akazwz` Worker 连着这个仓库（Workers Builds，触发器 “Deploy main”）。构建命令 `pnpm check && pnpm build`，检查不过就不部署；部署命令 `pnpm exec cf deploy --prebuilt`。Node 和 pnpm 的版本由构建变量 `NODE_VERSION`、`PNPM_VERSION` 指定，升级 `mise.toml` 时一起改（`cf builds triggers environment-variables`）。构建记录用 `cf builds list`、`cf builds logs get` 看。
 - 手动部署：`pnpm deploy`（即 `cf deploy`）构建并上传；`cf deploy --prebuilt` 上传已有的构建产物。登录用 `cf auth login`。
 - 流量怎么进来：akazwz.com 的 DNS 是“优选 IP”的写法，一条不开代理的 CNAME 指向 `store.ubi.com`（别家托管在 Cloudflare 上的域名，借它在国内更快的 IP）。请求落到 Cloudflare 边缘后仍按主机名交给这个 zone，zone 上的路由 `akazwz.com/*` 指向 `akazwz` Worker。不要把它“修”成开代理的记录。路由写得越具体越优先，`https://akazwz.com/*` 会压过 `akazwz.com/*`；部署后线上没变，先查 zone 上有没有别的 Worker 路由（2026-10-15 旧站的 `blog` Worker 就是这样占着，已删除），不要先怀疑 DNS。
+- HTTP 跳 HTTPS 靠 zone 设置 “Always Use HTTPS”（`cf zones settings get always_use_https -z akazwz.com`），不在代码里。
 - 找不到文件的地址回最近的 `404.html`（中文地址回 `zh/404.html`），状态码 404。缓存头在 `public/_headers`。
 - `cf` 和 `@cloudflare/vite-plugin` 现在都是 beta，版本写死，升级后重新走一遍下面的验证。
 - `vite.config.ts` 里的 `builder.sharedPlugins: true` 不能去掉。Cloudflare 插件把客户端产物挪到了 `.cloudflare/output/`，Solid 插件要靠同一份插件实例记住这个目录，服务端构建才读得到客户端清单。去掉之后构建照样“成功”，但每个页面都没有样式表和脚本，只有在浏览器里打开构建产物才看得出来（2026-10-15 踩过）。
