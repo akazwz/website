@@ -1,3 +1,4 @@
+import type { JSX } from "@solidjs/web";
 import * as stylex from "@stylexjs/stylex";
 import { Show, type ParentProps } from "solid-js";
 import { color, space, text } from "../ui/tokens.stylex.ts";
@@ -29,7 +30,8 @@ const styles = stylex.create({
 type Props = ParentProps<{
   // The page's <h1>.
   title: string;
-  description?: string;
+  // Text, or text with links in it (src/ui/RichText.tsx).
+  description?: JSX.Element;
 }>;
 
 // The opening of a page: its title, a line about it, and anything that belongs right under

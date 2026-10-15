@@ -12,6 +12,7 @@ import { projects } from "../../content/projects.ts";
 import { localized } from "../../i18n/locale.ts";
 import { useLocale, useMessages } from "../../i18n/use.ts";
 import { site } from "../../site.ts";
+import { RichText } from "../../ui/RichText.tsx";
 import { SectionHeading } from "../../ui/SectionHeading.tsx";
 import { TextLink } from "../../ui/TextLink.tsx";
 import { space } from "../../ui/tokens.stylex.ts";
@@ -29,7 +30,7 @@ const structuredData = JSON.stringify({
       name: site.author,
       url: `${site.origin}/`,
       jobTitle: "Full-stack developer",
-      worksFor: { "@type": "Organization", name: "Felinic" },
+      worksFor: { "@type": "Organization", name: "Felinic", url: site.felinic },
       sameAs: [site.github, site.x],
     },
   ],
@@ -50,7 +51,7 @@ export default function Home() {
       <Script key="structured-data" type="application/ld+json">
         {structuredData}
       </Script>
-      <PageIntro title={t().home.title} description={t().home.intro} />
+      <PageIntro title={t().home.title} description={<RichText content={t().home.intro} />} />
 
       <section aria-labelledby="projects">
         <SectionHeading id="projects" title={t().home.projectsTitle} />

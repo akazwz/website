@@ -6,6 +6,7 @@ import { Page } from "../../components/Page.tsx";
 import { PageIntro } from "../../components/PageIntro.tsx";
 import { useMessages } from "../../i18n/use.ts";
 import { site } from "../../site.ts";
+import { RichText } from "../../ui/RichText.tsx";
 import { SectionHeading } from "../../ui/SectionHeading.tsx";
 import { TextLink } from "../../ui/TextLink.tsx";
 import { color, space, text } from "../../ui/tokens.stylex.ts";
@@ -41,7 +42,7 @@ export default function About() {
   return (
     <Page>
       <Head title={t().about.title} description={t().meta.about} path="/about" />
-      <PageIntro title={t().about.title} description={t().about.intro} />
+      <PageIntro title={t().about.title} description={<RichText content={t().about.intro} />} />
 
       <section aria-labelledby="uses" {...stylex.attrs(styles.section)}>
         <SectionHeading id="uses" title={t().about.usesTitle} />
