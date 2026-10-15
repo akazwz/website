@@ -92,7 +92,7 @@ const zh: Messages = {
     intro: [
       "全栈开发者，在 ",
       felinic,
-      " 开发 AI 智能体平台 Memoh。对 Cloudflare 比较熟，在上面做了不少东西，比如 hostc 和 smail。最近写了一个中国象棋引擎，可以在线和它对弈。",
+      " 开发 AI agent 平台 Memoh。对 Cloudflare 比较熟，在上面做了不少东西，比如 hostc 和 smail。最近写了一个中国象棋引擎，可以在线和它对弈。",
     ],
     latestTitle: "文章",
     allPosts: "全部文章",
@@ -111,14 +111,14 @@ const zh: Messages = {
   },
   projects: {
     title: "项目",
-    description: "我在做的东西：工作里的 AI 智能体，以及我自己的产品。",
+    description: "我在做的东西：工作里的 AI agent，以及我自己的产品。",
   },
   about: {
     title: "关于",
     intro: [
       "我是一名全栈开发者，在 ",
       felinic,
-      " 开发 AI 智能体平台 Memoh。工作之外常在 Cloudflare 上做东西，对它比较熟。最近在做中国象棋项目 XiangqiBench：写了象棋引擎 Riverpawn，可以在线和它对弈；还在做一个让大模型和它对弈、评测棋力的 benchmark。",
+      " 开发 AI agent 平台 Memoh。工作之外常在 Cloudflare 上做东西，对它比较熟。最近在做中国象棋项目 XiangqiBench：写了象棋引擎 Riverpawn，可以在线和它对弈；还在做一个让大模型和它对弈、评测棋力的 benchmark。",
     ],
     usesTitle: "在用",
     usesIntro: "主要写 Go 和 TypeScript，不过现在大部分代码交给 agent 来写。",
@@ -139,7 +139,7 @@ const zh: Messages = {
   },
   meta: {
     description:
-      "akazwz 的个人网站。全栈开发者，在 Felinic 开发 AI 智能体平台 Memoh；自己的项目有 XiangqiBench、hostc 和 smail。",
+      "akazwz 的个人网站。全栈开发者，在 Felinic 开发 AI agent 平台 Memoh；自己的项目有 XiangqiBench、hostc 和 smail。",
     blog: "akazwz 写的文章，从新到旧。",
     projects: "akazwz 的项目：Memoh、XiangqiBench、hostc 和 smail。",
     about: "关于 akazwz：在做什么，用哪些语言和 AI 编程工具，以及在哪里能找到我。",

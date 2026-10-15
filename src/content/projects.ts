@@ -22,7 +22,7 @@ export const projects: Project[] = [
     tags: ["Go", "AI agents"],
     description: {
       en: "A platform for AI agents, available open source and as a hosted service. I develop it at Felinic.",
-      zh: "AI 智能体平台，有开源版，也有 SaaS 版。我在 Felinic 开发它。",
+      zh: "AI agent 平台，有开源版，也有 SaaS 版。我在 Felinic 开发它。",
     },
   },
   {
