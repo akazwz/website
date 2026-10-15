@@ -23,7 +23,7 @@ const en = {
   },
   blog: {
     title: "Writing",
-    description: "Notes on software, products, and building things with restraint.",
+    description: "What I have written, newest first.",
   },
   post: {
     back: "Writing",
@@ -59,10 +59,11 @@ const en = {
   },
   meta: {
     description:
-      "Personal site of akazwz, a full-stack developer working on AI agents: what I build and where to find me.",
-    blog: "Notes on software, products, and building things with restraint, by akazwz.",
-    projects: "Projects by akazwz: Memoh, hostc, smail, and XiangqiBench.",
-    about: "About akazwz, the focus behind the work, and where to find it.",
+      "Personal site of akazwz, a full-stack developer. At Felinic I develop Memoh, a platform for AI agents. My own projects are XiangqiBench, hostc, and smail.",
+    blog: "Posts by akazwz, newest first.",
+    projects: "Projects by akazwz: Memoh, XiangqiBench, hostc, and smail.",
+    about:
+      "About akazwz: what I work on, the languages and AI coding tools I use, and where to find me.",
   },
 };
 
@@ -87,7 +88,7 @@ const zh: Messages = {
   },
   blog: {
     title: "文章",
-    description: "关于软件、产品，以及尽量克制地做东西的一些笔记。",
+    description: "我写的文章，从新到旧。",
   },
   post: {
     back: "文章",
@@ -122,10 +123,11 @@ const zh: Messages = {
     home: "回到首页",
   },
   meta: {
-    description: "akazwz 的个人网站：做 AI 智能体开发的全栈开发者，在做的项目和联系方式。",
-    blog: "akazwz 关于软件、产品，以及克制地做东西的笔记。",
-    projects: "akazwz 的项目：Memoh、hostc、smail 和 XiangqiBench。",
-    about: "关于 akazwz：关注的方向、做过的事，以及在哪里能找到我。",
+    description:
+      "akazwz 的个人网站。全栈开发者，在 Felinic 开发 AI 智能体平台 Memoh；自己的项目有 XiangqiBench、hostc 和 smail。",
+    blog: "akazwz 写的文章，从新到旧。",
+    projects: "akazwz 的项目：Memoh、XiangqiBench、hostc 和 smail。",
+    about: "关于 akazwz：在做什么，用哪些语言和 AI 编程工具，以及在哪里能找到我。",
   },
 };
 

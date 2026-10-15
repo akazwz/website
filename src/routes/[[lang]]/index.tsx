@@ -1,3 +1,4 @@
+import { Script } from "@solidjs/meta";
 import { defineFileRoute } from "@solidjs/router/fs";
 import * as stylex from "@stylexjs/stylex";
 import { createMemo, Show } from "solid-js";
@@ -10,12 +11,29 @@ import { postsIn } from "../../content/posts.ts";
 import { projects } from "../../content/projects.ts";
 import { localized } from "../../i18n/locale.ts";
 import { useLocale, useMessages } from "../../i18n/use.ts";
+import { site } from "../../site.ts";
 import { SectionHeading } from "../../ui/SectionHeading.tsx";
 import { TextLink } from "../../ui/TextLink.tsx";
 import { space } from "../../ui/tokens.stylex.ts";
 
 // `/` and `/zh`: one page, its language from the address.
 export const route = defineFileRoute("/:lang?", { matchFilters: { lang: ["zh"] } });
+
+// Structured data for search engines: the site and the person it belongs to.
+const structuredData = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "WebSite", name: site.name, url: `${site.origin}/` },
+    {
+      "@type": "Person",
+      name: site.author,
+      url: `${site.origin}/`,
+      jobTitle: "Full-stack developer",
+      worksFor: { "@type": "Organization", name: "Felinic" },
+      sameAs: [site.github, site.x],
+    },
+  ],
+});
 
 const styles = stylex.create({
   section: { marginBlockStart: space.section },
@@ -29,6 +47,9 @@ export default function Home() {
   return (
     <Page>
       <Head description={t().meta.description} path="/" />
+      <Script key="structured-data" type="application/ld+json">
+        {structuredData}
+      </Script>
       <PageIntro title={t().home.title} description={t().home.intro} />
 
       <section aria-labelledby="projects">
