@@ -45,7 +45,8 @@ akazwz.com：Solid 2 + StyleX 的个人网站，界面组件写在项目里，�
 用 Cloudflare 的 `cf` CLI，配置在 `cloudflare.config.ts`（不是 wrangler）。站点没有 Worker 脚本，只有静态资源：
 
 - `pnpm build`（即 `cf build`）跑 Vite：Solid 构建客户端和服务端，`prerender-crawler` 把每个页面渲染成 HTML，Cloudflare 的 Vite 插件把客户端产物写成 `.cloudflare/output/` 下的 Build Output。
-- `pnpm deploy`（即 `cf deploy`）构建并上传；`cf deploy --prebuilt` 上传已有的构建产物。登录用 `cf auth login`。
+- **推到 `main` 就自动上线**：`akazwz` Worker 连着这个仓库（Workers Builds，触发器 “Deploy main”）。构建命令 `pnpm check && pnpm build`，检查不过就不部署；部署命令 `pnpm exec cf deploy --prebuilt`。Node 和 pnpm 的版本由构建变量 `NODE_VERSION`、`PNPM_VERSION` 指定，升级 `mise.toml` 时一起改（`cf builds triggers environment-variables`）。构建记录用 `cf builds list`、`cf builds logs get` 看。
+- 手动部署：`pnpm deploy`（即 `cf deploy`）构建并上传；`cf deploy --prebuilt` 上传已有的构建产物。登录用 `cf auth login`。
 - 流量怎么进来：akazwz.com 的 DNS 是一条开了代理的 `AAAA 100::`（没有源站，只为让请求进这个 zone），zone 上的路由 `akazwz.com/*` 指向 `akazwz` Worker。路由写得越具体越优先，`https://akazwz.com/*` 会压过 `akazwz.com/*`；部署后线上没变，先查 zone 上有没有别的 Worker 路由（2026-10-15 旧站的 `blog` Worker 就是这样占着，已删除）。
 - 找不到文件的地址回最近的 `404.html`（中文地址回 `zh/404.html`），状态码 404。缓存头在 `public/_headers`。
 - `cf` 和 `@cloudflare/vite-plugin` 现在都是 beta，版本写死，升级后重新走一遍下面的验证。
