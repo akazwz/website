@@ -8,20 +8,21 @@
 
 ## 版本
 
-2026-10-12 安装并验证的版本（上一次核对是 2026-10-08，这次升了路由、Vite 插件、`oxlint-tsgolint` 和 pnpm）。全部在 `package.json` 里写死，不用范围。
+2026-11-05 核对的版本。这次只把 Node.js 和 pnpm 同步到本机全局安装的版本；其余包此前已经升到表里的版本，这次一起用 `pnpm check` 和 `pnpm build` 验证。全部在 `package.json` 里写死，不用范围。
 
-| 包                                                 | 版本                     | 取自哪个发布标签                                                                                                             |
-| -------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `solid-js`、`@solidjs/web`、`@solidjs/diagnostics` | 2.0.0-rc.14              | `next`                                                                                                                       |
-| `@solidjs/router`                                  | 2.0.0-next.38            | `next`                                                                                                                       |
-| `@solidjs/vite-plugin`                             | 3.0.0-next.49            | `latest`（它的 `next` 是旧的 next.35）                                                                                       |
-| `filesystem-routing`                               | 0.4.0                    | `latest`                                                                                                                     |
-| `@stylexjs/stylex`、`@stylexjs/unplugin`           | 0.19.1                   | `latest`                                                                                                                     |
-| `unplugin`                                         | 3.4.0                    | `latest`（在 StyleX 声明的范围之外，见下）                                                                                   |
-| `vite`                                             | 8.3.4                    | `latest`                                                                                                                     |
-| `typescript`                                       | 7.0.2                    | `latest`                                                                                                                     |
-| `oxlint`、`oxfmt`、`oxlint-tsgolint`               | 1.87.0、0.72.0、7.0.2004 | `latest`                                                                                                                     |
-| Node.js、pnpm（`mise.toml`）                       | 26.11.1、12.11.2         | Node.js 是 `mise ls-remote` 里最新的；pnpm 取 npm 的 `latest`（`mise ls-remote` 里还列着 12.12.x，不在 `latest` 下，没有用） |
+| 包                                                 | 版本                     | 取自哪个发布标签                                                                                                      |
+| -------------------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| `solid-js`、`@solidjs/web`、`@solidjs/diagnostics` | 2.0.0-rc.15              | `next`                                                                                                                |
+| `@solidjs/meta`                                    | 1.0.0-next.2             | `next`                                                                                                                |
+| `@solidjs/router`                                  | 2.0.0-next.39            | `next`                                                                                                                |
+| `@solidjs/vite-plugin`                             | 3.0.0-next.50            | `latest`（它的 `next` 是旧的 next.35）                                                                                |
+| `filesystem-routing`                               | 0.4.0                    | `latest`                                                                                                              |
+| `@stylexjs/stylex`、`@stylexjs/unplugin`           | 0.19.1                   | `latest`                                                                                                              |
+| `unplugin`                                         | 3.4.0                    | `latest`（在 StyleX 声明的范围之外，见下）                                                                            |
+| `vite`                                             | 8.3.4                    | `latest`                                                                                                              |
+| `typescript`                                       | 7.0.2                    | `latest`                                                                                                              |
+| `oxlint`、`oxfmt`、`oxlint-tsgolint`               | 1.88.0、0.73.0、7.0.2004 | `latest`                                                                                                              |
+| Node.js、pnpm（`mise.toml`）                       | 26.13.0、12.16.1         | 本机全局安装的版本（`mise` 全局配置是 `node = "latest"`、`pnpm = "12"`）；不跟着 npm 的 `latest` 走，避免和本机不一致 |
 
 这一组最新版本一次就构建、运行通过，没有哪个包需要退回旧版。
 
@@ -29,9 +30,9 @@
 
 - **Solid 2 还是候选版本**，正式版之前接口可能变。升级后以包里自带的文档为准。
 - **`unplugin` 用的是 3.x，在 StyleX 声明的范围之外。** `@stylexjs/unplugin` 0.19.1（它的 `latest`）的 `peerDependencies` 是 `unplugin ^2.3.11`，还没有发过放宽到 3.x 的版本。实际上能用：2026-10-12 换成 `unplugin` 3.4.0 后，构建出的 CSS 和页面脚本与 2.3.11 时逐字节相同，开发服务上样式照常生效、日志里没有错误。两个版本的差别在打包方式：3.x 只发 ES 模块（2.x 两种都发），所以要 Node.js 20.19 或 22.12 以上；StyleX 的插件只用到它的 `createUnplugin`。`pnpm-workspace.yaml` 里用 `peerDependencyRules.allowedVersions` 把这一处不匹配写明了，安装时不再报警告；StyleX 放宽声明之后把那一条删掉。升级 StyleX 或 `unplugin` 之后照“怎么验证”重新走一遍，这个组合没有上游替我们测。
-- **`@solidjs/router` 跟着 `solid-js` 走。** next.38 的 `peerDependencies` 要求 `solid-js` 和 `@solidjs/web` 是 `^2.0.0-rc.14`。升级前用 `npm view @solidjs/router@<版本> peerDependencies` 看一眼。
+- **`@solidjs/router` 跟着 `solid-js` 走。** next.39 的 `peerDependencies` 要求 `solid-js` 和 `@solidjs/web` 是 `^2.0.0-rc.15`。升级前用 `npm view @solidjs/router@<版本> peerDependencies` 看一眼。
 - **`@solidjs/vite-plugin` 从 next.47 到 next.49 有两处行为变了**（读的是装好的包里的 `dist/esm/index.mjs`，第二条在一份临时拷贝里构建确认过）：外壳渲染失败（处理器回的不是 2xx）时构建直接报错，不再把错误页写成 `index.html`；配置里只要还有别的插件带 `buildApp` 钩子，它就不再删 `dist/server`，留给那个钩子用。后一条关系到“按地址各渲染一份外壳”的做法，见“文档外壳”一节。
-- **间接依赖由锁文件固定。** `@solidjs/compiler`、`@solidjs/babel-plugin`、`@solidjs/signals` 是 Solid 的包自己带进来的，这次解析到的都是 2.0.0-rc.14。`pnpm-lock.yaml` 要提交。
+- **间接依赖由锁文件固定。** `@solidjs/compiler`、`@solidjs/babel-plugin`、`@solidjs/signals` 是 Solid 的包自己带进来的，这次解析到的都是 2.0.0-rc.15。`pnpm-lock.yaml` 要提交。
 
 ### 升级 Solid 的包
 
