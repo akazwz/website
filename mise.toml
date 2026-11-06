@@ -7,7 +7,7 @@ description = "Start the Vite dev server"
 run = "pnpm dev"
 
 [tasks.build]
-description = "Prerender the site into dist/client"
+description = "Prerender the site into .cloudflare/output"
 run = "pnpm build"
 
 [tasks.format]

@@ -55,7 +55,7 @@ export default defineConfig({
     // The pages are thin, so they ship as one bundle: changing page waits for nothing but a
     // post's body, which stays a chunk of its own (see tools/content.ts).
     fileRoutes({ types: true, codeSplitting: false }),
-    // Renders every page reachable by a link from the seeds into dist/client, and lists
+    // Renders every page reachable by a link from the seeds into the client build, and lists
     // them in sitemap.xml (pages marked `noindex`, like the 404 pages, are left out).
     // One page at a time: concurrent renders have mixed pages up on earlier Solid releases.
     prerender({
@@ -72,7 +72,7 @@ export default defineConfig({
     }),
     dropManifest(),
     // Deployment to Cloudflare, configured in cloudflare.config.ts. With no Worker
-    // entrypoint there, it builds no Worker: it describes dist/client as the site's assets
+    // entrypoint there, it builds no Worker: it describes the client build as the site's assets
     // for `cf deploy`.
     cloudflare(),
   ],

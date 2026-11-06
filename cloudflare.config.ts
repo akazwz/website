@@ -2,7 +2,7 @@ import { defineConfig, triggers } from "cf/config";
 
 // How the site is deployed to Cloudflare, read by `cf`. The site is static: every page is
 // prerendered at build time (see vite.config.ts), so there is no Worker entrypoint, only
-// assets: the client build in dist/client.
+// assets: the client build under .cloudflare/output.
 export default defineConfig({
   worker: {
     name: "akazwz",
