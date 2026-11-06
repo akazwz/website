@@ -87,8 +87,18 @@ export function SiteHeader() {
 
   return (
     <header>
-      {/* `target` keeps the router out of it: the browser moves focus to the page itself. */}
-      <a href="#main" target="_self" {...stylex.attrs(styles.skip, base.focusRing)}>
+      {/* `target` keeps the router out of it. Focus moves here rather than through the hash,
+          which would leave #main in the address and a step in the history; the hash is the
+          fallback until the page has hydrated. */}
+      <a
+        href="#main"
+        target="_self"
+        onClick={(event) => {
+          event.preventDefault();
+          document.getElementById("main")?.focus();
+        }}
+        {...stylex.attrs(styles.skip, base.focusRing)}
+      >
         {t().nav.skip}
       </a>
       <div {...stylex.attrs(styles.bar)}>
