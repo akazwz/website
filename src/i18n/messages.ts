@@ -6,6 +6,10 @@ import type { Locale } from "./locale.ts";
 // own: they read it from here.
 
 const felinic = { text: "Felinic", href: site.felinic };
+const memoh = { text: "Memoh", href: site.memoh };
+const xiangqibench = { text: "XiangqiBench", href: site.xiangqibench };
+const hostc = { text: "hostc", href: site.hostc };
+const smail = { text: "smail", href: site.smail };
 
 const en = {
   nav: {
@@ -21,7 +25,15 @@ const en = {
     intro: [
       "A full-stack developer. At ",
       felinic,
-      " I develop Memoh, a platform for AI agents. I know Cloudflare well and have built a lot on it, like hostc and smail. Lately I wrote a Chinese chess engine, and you can play against it online.",
+      " I develop ",
+      memoh,
+      ", a platform for AI agents. I know Cloudflare well and have built a lot on it, like ",
+      hostc,
+      " and ",
+      smail,
+      ". Lately I wrote a Chinese chess engine, and you can ",
+      { text: "play against it online", href: site.xiangqibench },
+      ".",
     ],
     latestTitle: "Writing",
     allPosts: "All posts",
@@ -47,7 +59,13 @@ const en = {
     intro: [
       "I'm a full-stack developer. At ",
       felinic,
-      " I develop Memoh, a platform for AI agents. Outside of work I build on Cloudflare, which I know well. Lately I have been working on Chinese chess with XiangqiBench: I wrote Riverpawn, a Xiangqi engine you can play against online, and I am building a benchmark that has LLMs play against it.",
+      " I develop ",
+      memoh,
+      ", a platform for AI agents. Outside of work I build on Cloudflare, which I know well. Lately I have been working on Chinese chess with ",
+      xiangqibench,
+      ": I wrote Riverpawn, a Xiangqi engine you can ",
+      { text: "play against online", href: site.xiangqibench },
+      ", and I am building a benchmark that has LLMs play against it.",
     ],
     usesTitle: "Uses",
     usesIntro: "I mainly write Go and TypeScript, though these days agents write most of the code.",
@@ -92,7 +110,15 @@ const zh: Messages = {
     intro: [
       "全栈开发者，在 ",
       felinic,
-      " 开发 AI agent 平台 Memoh。对 Cloudflare 比较熟，在上面做了不少东西，比如 hostc 和 smail。最近写了一个中国象棋引擎，可以在线和它对弈。",
+      " 开发 AI agent 平台 ",
+      memoh,
+      "。对 Cloudflare 比较熟，在上面做了不少东西，比如 ",
+      hostc,
+      " 和 ",
+      smail,
+      "。最近写了一个中国象棋引擎，可以",
+      { text: "在线和它对弈", href: site.xiangqibench },
+      "。",
     ],
     latestTitle: "文章",
     allPosts: "全部文章",
@@ -118,7 +144,13 @@ const zh: Messages = {
     intro: [
       "我是一名全栈开发者，在 ",
       felinic,
-      " 开发 AI agent 平台 Memoh。工作之外常在 Cloudflare 上做东西，对它比较熟。最近在做中国象棋项目 XiangqiBench：写了象棋引擎 Riverpawn，可以在线和它对弈；还在做一个让大模型和它对弈、评测棋力的 benchmark。",
+      " 开发 AI agent 平台 ",
+      memoh,
+      "。工作之外常在 Cloudflare 上做东西，对它比较熟。最近在做中国象棋项目 ",
+      xiangqibench,
+      "：写了象棋引擎 Riverpawn，可以",
+      { text: "在线和它对弈", href: site.xiangqibench },
+      "；还在做一个让大模型和它对弈、评测棋力的 benchmark。",
     ],
     usesTitle: "在用",
     usesIntro: "主要写 Go 和 TypeScript，不过现在大部分代码交给 agent 来写。",

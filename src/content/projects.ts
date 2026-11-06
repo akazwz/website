@@ -1,3 +1,4 @@
+import { site } from "../site.ts";
 import type { Locale } from "./types.ts";
 
 export type Project = {
@@ -18,7 +19,7 @@ export const projects: Project[] = [
   {
     name: "Memoh",
     year: "2026",
-    href: "https://memoh.ai",
+    href: site.memoh,
     tags: ["Go", "AI agents"],
     description: {
       en: "A platform for AI agents, available open source and as a hosted service. I develop it at Felinic.",
@@ -28,7 +29,7 @@ export const projects: Project[] = [
   {
     name: "XiangqiBench",
     year: "2026",
-    href: "https://xiangqibench.com",
+    href: site.xiangqibench,
     tags: ["Game", "Engine", "LLM benchmark"],
     description: {
       en: "Chinese chess AI: Riverpawn, an engine I wrote; a 3D game for playing against it in the browser or on macOS; and a benchmark of how well LLMs play against it, still being built.",
@@ -38,7 +39,7 @@ export const projects: Project[] = [
   {
     name: "hostc",
     year: "2026",
-    href: "https://hostc.dev",
+    href: site.hostc,
     tags: ["TypeScript", "Cloudflare Workers", "CLI"],
     description: {
       en: "Localhost, anywhere: one command gives your dev server a public HTTPS URL, with WebSockets and hot reload. Free, no account.",
@@ -48,7 +49,7 @@ export const projects: Project[] = [
   {
     name: "smail",
     year: "2024",
-    href: "https://smail.pw",
+    href: site.smail,
     tags: ["Cloudflare Workers", "Durable Objects", "Solid"],
     description: {
       en: "Temporary email on Cloudflare Workers, with a real-time inbox.",
