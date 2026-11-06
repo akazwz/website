@@ -8,31 +8,33 @@
 
 ## 版本
 
-2026-11-05 核对的版本。这次只把 Node.js 和 pnpm 同步到本机全局安装的版本；其余包此前已经升到表里的版本，这次一起用 `pnpm check` 和 `pnpm build` 验证。全部在 `package.json` 里写死，不用范围。
+2026-11-05 核对的版本。这次把 Solid 整套和工具链升到表里的版本，走完了“怎么验证”到 `pnpm preview` 这一步；`pnpm audit` 从 14 条（`seroval`、`undici`、`zod`）降到 0。全部在 `package.json` 里写死，不用范围。
 
-| 包                                                 | 版本                     | 取自哪个发布标签                                                                                                      |
-| -------------------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------- |
-| `solid-js`、`@solidjs/web`、`@solidjs/diagnostics` | 2.0.0-rc.15              | `next`                                                                                                                |
-| `@solidjs/meta`                                    | 1.0.0-next.2             | `next`                                                                                                                |
-| `@solidjs/router`                                  | 2.0.0-next.39            | `next`                                                                                                                |
-| `@solidjs/vite-plugin`                             | 3.0.0-next.50            | `latest`（它的 `next` 是旧的 next.35）                                                                                |
-| `filesystem-routing`                               | 0.4.0                    | `latest`                                                                                                              |
-| `@stylexjs/stylex`、`@stylexjs/unplugin`           | 0.19.1                   | `latest`                                                                                                              |
-| `unplugin`                                         | 3.4.0                    | `latest`（在 StyleX 声明的范围之外，见下）                                                                            |
-| `vite`                                             | 8.3.4                    | `latest`                                                                                                              |
-| `typescript`                                       | 7.0.2                    | `latest`                                                                                                              |
-| `oxlint`、`oxfmt`、`oxlint-tsgolint`               | 1.88.0、0.73.0、7.0.2004 | `latest`                                                                                                              |
-| Node.js、pnpm（`mise.toml`）                       | 26.13.0、12.16.1         | 本机全局安装的版本（`mise` 全局配置是 `node = "latest"`、`pnpm = "12"`）；不跟着 npm 的 `latest` 走，避免和本机不一致 |
+| 包                                                 | 版本                           | 取自哪个发布标签                                                                                                      |
+| -------------------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| `solid-js`、`@solidjs/web`、`@solidjs/diagnostics` | 2.0.0-rc.21                    | `next`                                                                                                                |
+| `@solidjs/meta`                                    | 1.0.0-next.2                   | `next`                                                                                                                |
+| `@solidjs/router`                                  | 2.0.0-next.44                  | `next`                                                                                                                |
+| `@solidjs/vite-plugin`                             | 3.0.0-next.56                  | `latest`（它的 `next` 是旧的 next.35）                                                                                |
+| `filesystem-routing`                               | 0.4.2                          | `latest`                                                                                                              |
+| `@stylexjs/stylex`、`@stylexjs/unplugin`           | 0.19.1                         | `latest`                                                                                                              |
+| `unplugin`                                         | 3.7.0                          | `latest`（在 StyleX 声明的范围之外，见下）                                                                            |
+| `cf`、`@cloudflare/vite-plugin`                    | 1.0.0-beta.27、2.0.0-beta.v.11 | 发布满 1 天的最新版（`cf` 的 beta.28、插件的 v.12 不足 1 天，见“发布时间策略”）                                       |
+| `prerender-crawler`                                | 0.3.0                          | `latest`                                                                                                              |
+| `vite`                                             | 8.3.5                          | `latest`                                                                                                              |
+| `typescript`                                       | 7.0.2                          | `latest`                                                                                                              |
+| `oxlint`、`oxfmt`、`oxlint-tsgolint`               | 1.91.0、0.76.0、7.0.2005       | `latest`                                                                                                              |
+| Node.js、pnpm（`mise.toml`）                       | 26.13.0、12.16.1               | 本机全局安装的版本（`mise` 全局配置是 `node = "latest"`、`pnpm = "12"`）；不跟着 npm 的 `latest` 走，避免和本机不一致 |
 
-这一组最新版本一次就构建、运行通过，没有哪个包需要退回旧版。
+这一组一次就构建、运行通过，没有哪个包需要退回旧版。`vite`、`cf`、`@cloudflare/vite-plugin` 故意没取当天发布的版本（`vite` 8.3.6、`cf` beta.28、插件 v.12），等它们过了 1 天的发布时间策略再升，不为此加排除项。
 
 几件和版本有关的事：
 
 - **Solid 2 还是候选版本**，正式版之前接口可能变。升级后以包里自带的文档为准。
 - **`unplugin` 用的是 3.x，在 StyleX 声明的范围之外。** `@stylexjs/unplugin` 0.19.1（它的 `latest`）的 `peerDependencies` 是 `unplugin ^2.3.11`，还没有发过放宽到 3.x 的版本。实际上能用：2026-10-12 换成 `unplugin` 3.4.0 后，构建出的 CSS 和页面脚本与 2.3.11 时逐字节相同，开发服务上样式照常生效、日志里没有错误。两个版本的差别在打包方式：3.x 只发 ES 模块（2.x 两种都发），所以要 Node.js 20.19 或 22.12 以上；StyleX 的插件只用到它的 `createUnplugin`。`pnpm-workspace.yaml` 里用 `peerDependencyRules.allowedVersions` 把这一处不匹配写明了，安装时不再报警告；StyleX 放宽声明之后把那一条删掉。升级 StyleX 或 `unplugin` 之后照“怎么验证”重新走一遍，这个组合没有上游替我们测。
-- **`@solidjs/router` 跟着 `solid-js` 走。** next.39 的 `peerDependencies` 要求 `solid-js` 和 `@solidjs/web` 是 `^2.0.0-rc.15`。升级前用 `npm view @solidjs/router@<版本> peerDependencies` 看一眼。
+- **`@solidjs/router` 跟着 `solid-js` 走。** next.44 的 `peerDependencies` 要求 `solid-js` 和 `@solidjs/web` 是 `^2.0.0-rc.19`。升级前用 `npm view @solidjs/router@<版本> peerDependencies` 看一眼。
 - **`@solidjs/vite-plugin` 从 next.47 到 next.49 有两处行为变了**（读的是装好的包里的 `dist/esm/index.mjs`，第二条在一份临时拷贝里构建确认过）：外壳渲染失败（处理器回的不是 2xx）时构建直接报错，不再把错误页写成 `index.html`；配置里只要还有别的插件带 `buildApp` 钩子，它就不再删 `dist/server`，留给那个钩子用。后一条关系到“按地址各渲染一份外壳”的做法，见“文档外壳”一节。
-- **间接依赖由锁文件固定。** `@solidjs/compiler`、`@solidjs/babel-plugin`、`@solidjs/signals` 是 Solid 的包自己带进来的，这次解析到的都是 2.0.0-rc.15。`pnpm-lock.yaml` 要提交。
+- **间接依赖由锁文件固定。** `@solidjs/compiler`、`@solidjs/babel-plugin`、`@solidjs/signals` 是 Solid 的包自己带进来的，这次解析到的都是 2.0.0-rc.21。`pnpm-lock.yaml` 要提交。
 
 ### 升级 Solid 的包
 
@@ -49,7 +51,7 @@
 
 pnpm 12 默认不安装发布不足 1 天（`minimumReleaseAge` 是 1440 分钟）的版本。Solid 2 的包成套发布、发得很勤，写死的版本常常是当天的，所以 `pnpm-workspace.yaml` 里把 `solid-js`、`@solidjs/*`、`filesystem-routing` 排除在这条策略之外（官方模板也是这样做的）。Solid 2 出正式版之后把这几行删掉。
 
-别的包钉到一个发布不足 1 天的版本时，pnpm 不会报错：它自动往 `pnpm-workspace.yaml` 的 `minimumReleaseAgeExclude` 里加一条带确切版本号的记录，并在安装输出里说明。这次的 `vite@8.3.4` 就是这样加进去的（安装时它发布了约 6 小时）。这一条在下次升级 Vite 时删掉。想让它先问一声，设 `minimumReleaseAgeStrict: true`。
+别的包钉到一个发布不足 1 天的版本时，pnpm 不会报错：它自动往 `pnpm-workspace.yaml` 的 `minimumReleaseAgeExclude` 里加一条带确切版本号的记录，并在安装输出里说明。这种带版本号的记录只为那一次安装服务，下次升级时删掉（2026-11-05 删过一批 `cf` 相关的）。想让它先问一声，设 `minimumReleaseAgeStrict: true`。
 
 `pnpm-workspace.yaml` 还有一个作用：它把这个目录标成自己的根。这个目录放在更大的仓库里时，依赖和锁文件仍然留在这里。
 
